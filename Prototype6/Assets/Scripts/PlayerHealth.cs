@@ -10,6 +10,8 @@ public class PlayerHealth : MonoBehaviour
 
     public string enemyTag = "Enemy";
 
+    public bool actuallyDie = false; //for testing
+
     void Start()
     {
         currentHearts = maxHearts;
@@ -44,7 +46,10 @@ public class PlayerHealth : MonoBehaviour
 
         Debug.Log("Player Died");
 
-        MonoBehaviour movement = GetComponent<MonoBehaviour>();
+        if (actuallyDie)
+        {
+            Destroy(this);
+        }
 
     }
 }
