@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c547a993fab2c3499afb53394111989, type: 3}
+  m_Name: BulletWeapon
+  m_EditorClassIdentifier: Assembly-CSharp::A_WeaponData
+  weaponName: Bullet
+  projectilePrefab: {fileID: 4737467778189878158, guid: 7b44c55a9ad82094fb00dc3d068d066a, type: 3}
+  projectileSpeed: 3
+  damage: 1
+  baseFireChance: 1
+  projectileScale: 0.25
+  projectileColor: {r: 1, g: 1, b: 1, a: 1}
