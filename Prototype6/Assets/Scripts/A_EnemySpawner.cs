@@ -14,6 +14,15 @@ public class A_EnemySpawner : MonoBehaviour
     private float spawnTimer;
     private float spawnRadius;
 
+    public int numStages = 4;
+    public float spawnRandmoness = 0.5f;
+    public float[] stageIntervals = { 5, 3, 2, 1 };
+    public float[] enemiesPerStage = { 2, 5, 8, 15 };
+
+
+    public int stageCounter = 0;
+    public int spawnCounter = 0;
+
     void Start()
     {
         if (stageTilemap != null)
@@ -24,6 +33,12 @@ public class A_EnemySpawner : MonoBehaviour
             float halfWidth = (max.x - min.x) * 0.5f;
             float halfHeight = (max.y - min.y) * 0.5f;
             spawnRadius = Mathf.Min(halfWidth, halfHeight);
+
+            stageCounter = 0;
+            spawnCounter = 0;
+            spawnInterval = stageIntervals[stageCounter];
+
+            
         }
     }
 
@@ -34,8 +49,36 @@ public class A_EnemySpawner : MonoBehaviour
         if (spawnTimer <= 0f)
         {
             SpawnEnemy();
-            spawnTimer = spawnInterval;
+            spawnTimer = Random.Range(spawnInterval - spawnRandmoness, spawnInterval - spawnRandmoness); 
+            spawnCounter++;
+            UpdateStage();
         }
+    }
+
+
+    void UpdateStage()
+    {
+        if(stageCounter < numStages && spawnCounter >= enemiesPerStage[stageCounter]) 
+        {
+            spawnCounter = 0;
+            stageCounter++;
+
+
+
+            if (stageCounter >= numStages)
+            {
+                Debug.Log("game over or infinite run");
+            }
+            else
+            {
+                spawnInterval = stageIntervals[stageCounter];
+
+            }
+
+            //Debug.Log("Change stage: " + stageCounter + " interval:" + spawnInterval);
+
+        }
+
     }
 
     void SpawnEnemy()
