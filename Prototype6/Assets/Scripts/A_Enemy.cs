@@ -39,6 +39,15 @@ public class A_Enemy : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        A_Projectile proj = other.GetComponent<A_Projectile>();
+        if (proj != null)
+        {
+            int dmg = proj.damage;
+            Destroy(other.gameObject);
+            TakeDamage(dmg);
+            return;
+        }
+
         Bullet bullet = other.GetComponent<Bullet>();
         if (bullet != null)
         {
