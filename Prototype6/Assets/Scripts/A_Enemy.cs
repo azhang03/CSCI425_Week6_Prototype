@@ -6,6 +6,7 @@ public class A_Enemy : MonoBehaviour
     [Header("Stats")]
     public int maxHitPoints = 2;
     public float moveSpeed = 2f;
+    public int xpValue = 1;
 
     [Header("Hit Flash")]
     public float hitFlashDuration = 0.12f;
@@ -52,6 +53,8 @@ public class A_Enemy : MonoBehaviour
 
         if (currentHP <= 0)
         {
+            if (A_XPManager.Instance != null)
+                A_XPManager.Instance.AddXP(xpValue);
             Destroy(gameObject);
             return;
         }
