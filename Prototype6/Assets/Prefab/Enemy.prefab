@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6154204461682859395}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -182,3 +182,4 @@ MonoBehaviour:
   maxHitPoints: 2
   moveSpeed: 1
   hitFlashDuration: 0.12
+  hitFlashColor: {r: 1, g: 0, b: 0, a: 1}
