@@ -4977,7 +4977,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::A_Shooting
   projectilePrefab: {fileID: 4737467778189878158, guid: 7b44c55a9ad82094fb00dc3d068d066a, type: 3}
-  projectileSpeed: 8
+  projectileSpeed: 2
   fireInterval: 1.5
   spawnOffset: 0.5
 --- !u!1 &1687444356
@@ -5117,9 +5117,58 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2129724268
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2129724270}
+  - component: {fileID: 2129724269}
+  m_Layer: 0
+  m_Name: EnemySpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2129724269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2129724268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae5f89d274087be4d88678cb56963492, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::A_EnemySpawner
+  enemyPrefab: {fileID: 6440736755347924912, guid: 9d842e2c4f323fb4e852f9170e72e687, type: 3}
+  stageTilemap: {fileID: 1174180460}
+  rotateParent: {fileID: 1166228008}
+  spawnInterval: 5
+--- !u!4 &2129724270
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2129724268}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.6608, y: -1.46421, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1687444360}
   - {fileID: 1166228008}
+  - {fileID: 2129724270}
