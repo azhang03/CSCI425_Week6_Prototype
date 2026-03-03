@@ -5165,78 +5165,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!1 &1607385075
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1607385077}
-  - component: {fileID: 1607385076}
-  m_Layer: 0
-  m_Name: EnemySpawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1607385076
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1607385075}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae5f89d274087be4d88678cb56963492, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::A_EnemySpawner
-  stageTilemap: {fileID: 494422132}
-  rotateParent: {fileID: 1166228008}
-  spawnInterval: 5
-  numStages: 4
-  spawnRandmoness: 0.5
-  stageIntervals:
-  - 5
-  - 3
-  - 2
-  - 1
-  enemiesPerStage:
-  - 2
-  - 5
-  - 8
-  - 15
-  stageCounter: 0
-  spawnCounter: 0
-  enemyTypes:
-  - name: default
-    prefab: {fileID: 234427430957938418, guid: 77d942aacb648b046a6ff80170d05911, type: 3}
-    spawnWeight: 10
-  - name: spiral
-    prefab: {fileID: 864394925426953404, guid: c919020ba51382e4b8ef9102bb0dd8e3, type: 3}
-    spawnWeight: 5
-  - name: teleport
-    prefab: {fileID: 7723241571208371256, guid: 6652d07aad816fe4998348a1b3c81bf2, type: 3}
-    spawnWeight: 2
-  totalWeight: 0
---- !u!4 &1607385077
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1607385075}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1687444356
 GameObject:
   m_ObjectHideFlags: 0
@@ -5467,6 +5395,71 @@ MonoBehaviour:
   maxHearts: 3
   enemyTag: Enemy
   actuallyDie: 0
+--- !u!1001 &2232988327376669794
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 768291863247014410, guid: abeed96e3131c9443a048c3d9af1435f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 768291863247014410, guid: abeed96e3131c9443a048c3d9af1435f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 768291863247014410, guid: abeed96e3131c9443a048c3d9af1435f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 768291863247014410, guid: abeed96e3131c9443a048c3d9af1435f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 768291863247014410, guid: abeed96e3131c9443a048c3d9af1435f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 768291863247014410, guid: abeed96e3131c9443a048c3d9af1435f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 768291863247014410, guid: abeed96e3131c9443a048c3d9af1435f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 768291863247014410, guid: abeed96e3131c9443a048c3d9af1435f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 768291863247014410, guid: abeed96e3131c9443a048c3d9af1435f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 768291863247014410, guid: abeed96e3131c9443a048c3d9af1435f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2228488628375707320, guid: abeed96e3131c9443a048c3d9af1435f, type: 3}
+      propertyPath: rotateParent
+      value: 
+      objectReference: {fileID: 1166228008}
+    - target: {fileID: 2228488628375707320, guid: abeed96e3131c9443a048c3d9af1435f, type: 3}
+      propertyPath: stageTilemap
+      value: 
+      objectReference: {fileID: 494422132}
+    - target: {fileID: 5704722836933540992, guid: abeed96e3131c9443a048c3d9af1435f, type: 3}
+      propertyPath: m_Name
+      value: EnemySpawner
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: abeed96e3131c9443a048c3d9af1435f, type: 3}
 --- !u!1001 &2285763910947630468
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5558,4 +5551,4 @@ SceneRoots:
   - {fileID: 2285763910947630468}
   - {fileID: 1166228008}
   - {fileID: 335333109}
-  - {fileID: 1607385077}
+  - {fileID: 2232988327376669794}
