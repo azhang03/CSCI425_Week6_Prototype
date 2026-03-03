@@ -13,9 +13,7 @@ MonoBehaviour:
   m_Name: BulletWeapon
   m_EditorClassIdentifier: Assembly-CSharp::A_WeaponData
   weaponName: Bullet
-  projectilePrefab: {fileID: 4737467778189878158, guid: 7b44c55a9ad82094fb00dc3d068d066a, type: 3}
+  projectilePrefab: {fileID: 4737467778189878158, guid: 621c3521565839643aa334d2e0dd0f99, type: 3}
   projectileSpeed: 3
   damage: 1
   baseFireChance: 1
-  projectileScale: 0.25
-  projectileColor: {r: 1, g: 1, b: 1, a: 1}

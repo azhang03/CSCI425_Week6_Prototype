@@ -6,25 +6,22 @@ public class A_WeaponInventoryUI : MonoBehaviour
     [Header("UI Reference")]
     public TextMeshProUGUI inventoryText;
 
-    void OnEnable()
-    {
-        if (A_WeaponManager.Instance != null)
-            A_WeaponManager.Instance.OnInventoryChanged += UpdateDisplay;
-    }
+    private bool subscribed;
 
-    void OnDisable()
+    void Update()
     {
-        if (A_WeaponManager.Instance != null)
-            A_WeaponManager.Instance.OnInventoryChanged -= UpdateDisplay;
-    }
-
-    void Start()
-    {
-        if (A_WeaponManager.Instance != null)
+        if (!subscribed && A_WeaponManager.Instance != null)
         {
             A_WeaponManager.Instance.OnInventoryChanged += UpdateDisplay;
+            subscribed = true;
             UpdateDisplay();
         }
+    }
+
+    void OnDestroy()
+    {
+        if (subscribed && A_WeaponManager.Instance != null)
+            A_WeaponManager.Instance.OnInventoryChanged -= UpdateDisplay;
     }
 
     void UpdateDisplay()
