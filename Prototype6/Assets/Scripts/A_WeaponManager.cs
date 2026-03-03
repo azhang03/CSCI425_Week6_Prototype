@@ -10,6 +10,12 @@ public class A_WeaponManager : MonoBehaviour
     public A_WeaponData startingWeapon;
 
     public event Action OnInventoryChanged;
+    public event Action<string, float> OnWeaponFired;
+
+    public void NotifyWeaponFired(string weaponName, float duration)
+    {
+        OnWeaponFired?.Invoke(weaponName, duration);
+    }
 
     [Serializable]
     public class WeaponEntry

@@ -89,6 +89,8 @@ public class A_Shooting : MonoBehaviour
         Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
         if (rb != null)
             rb.linearVelocity = direction * weapon.projectileSpeed;
+
+        A_WeaponManager.Instance.NotifyWeaponFired(weapon.weaponName, 0.3f);
     }
 
     void FireArea(A_WeaponManager.WeaponEntry entry)
@@ -112,6 +114,7 @@ public class A_Shooting : MonoBehaviour
         }
 
         A_WeaponManager.Instance.SetCooldown(weapon.weaponName, true);
+        A_WeaponManager.Instance.NotifyWeaponFired(weapon.weaponName, -1f);
     }
 
     void FireLine(A_WeaponManager.WeaponEntry entry)
@@ -134,6 +137,9 @@ public class A_Shooting : MonoBehaviour
             laser.bonusWidth = entry.bonusWidth;
             laser.direction = direction;
             laser.Setup();
+
+            float laserDuration = laser.blinkCount * (laser.blinkOnTime + laser.blinkOffTime) + laser.fadeOutDuration;
+            A_WeaponManager.Instance.NotifyWeaponFired(weapon.weaponName, laserDuration);
         }
     }
 

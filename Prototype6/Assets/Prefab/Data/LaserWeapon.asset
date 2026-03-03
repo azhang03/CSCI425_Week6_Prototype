@@ -16,7 +16,7 @@ MonoBehaviour:
   weaponType: 2
   projectilePrefab: {fileID: 4214189542568667277, guid: ed9e8ccdc5aaf594bb9810be86e1a309, type: 3}
   projectileSpeed: 8
-  damage: 3
+  damage: 4
   baseFireChance: 0.2
   duration: 0
   radius: 0

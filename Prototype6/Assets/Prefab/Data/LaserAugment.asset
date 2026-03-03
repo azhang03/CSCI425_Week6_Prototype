@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: LaserAugment
   m_EditorClassIdentifier: Assembly-CSharp::A_AugmentData
   augmentName: Laser
-  description: 20% chance to fire a powerful laser beam. 3 dmg to all enemies in
-    its path.
+  description: 20% chance to fire a powerful laser beam. 4 dmg to all enemies in
+    its path. -5% Bullet
   type: 0
   weaponToAdd: {fileID: 11400000, guid: 59e3e3cf3b79e6d499190192c9f76510, type: 2}
   weaponToModify: 

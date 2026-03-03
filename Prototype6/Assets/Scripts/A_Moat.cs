@@ -7,6 +7,7 @@ public class A_Moat : MonoBehaviour
     [HideInInspector] public float duration = 4f;
     [HideInInspector] public float radius = 2f;
     [HideInInspector] public string weaponName = "Moat";
+    public float tickInterval = 2f;
 
     private float lifetime;
     private Dictionary<int, float> tickTimers = new Dictionary<int, float>();
@@ -48,7 +49,7 @@ public class A_Moat : MonoBehaviour
         if (tickTimers.ContainsKey(id) && tickTimers[id] > 0f)
             return;
 
-        tickTimers[id] = 1f;
+        tickTimers[id] = tickInterval;
 
         A_Enemy aEnemy = other.GetComponent<A_Enemy>();
         if (aEnemy != null)

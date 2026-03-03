@@ -50,6 +50,7 @@ public class S_Enemy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHP -= damage;
+        A_DamagePopup.Create(transform.position, damage);
 
         if (currentHP <= 0)
         {

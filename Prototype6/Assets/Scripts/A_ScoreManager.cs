@@ -35,10 +35,15 @@ public class A_ScoreManager : MonoBehaviour
 
     }
 
+    public void AddScore(int points)
+    {
+        KillCount += points;
+        OnScoreChanged?.Invoke(KillCount);
+    }
+
     public void AddKill()
     {
-        KillCount++;
-        OnScoreChanged?.Invoke(KillCount);
+        AddScore(1);
     }
 
     public void EndGame()

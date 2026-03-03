@@ -57,8 +57,13 @@ public class A_AugmentPool : MonoBehaviour
         while (result.Count < count && tempPool.Count > 0)
         {
             int idx = Random.Range(0, tempPool.Count);
-            result.Add(tempPool[idx]);
+            A_AugmentData picked = tempPool[idx];
             tempPool.RemoveAt(idx);
+
+            if (result.Contains(picked))
+                continue;
+
+            result.Add(picked);
         }
 
         while (result.Count < count && result.Count > 0)
@@ -99,7 +104,10 @@ public class A_AugmentPool : MonoBehaviour
         {
             case AugmentType.NewWeapon:
                 if (augment.weaponToAdd != null)
+                {
                     A_WeaponManager.Instance.AddWeapon(augment.weaponToAdd);
+                    A_WeaponManager.Instance.ModifyChance("Bullet", -0.05f);
+                }
                 break;
 
             case AugmentType.ModifyWeapon:

@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: FireballAugment
   m_EditorClassIdentifier: Assembly-CSharp::A_AugmentData
   augmentName: Fireball
-  description: 40% chance to shoot a fireball each time step. Deals 2 damage.
+  description: 40% chance to shoot a fireball each time step. Deals 2 damage. -5%
+    Bullet
   type: 0
   weaponToAdd: {fileID: 11400000, guid: b5a9c78de14a4e3418ee001e92c21696, type: 2}
   weaponToModify: 

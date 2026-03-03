@@ -7,6 +7,8 @@ public class A_Enemy : MonoBehaviour
     public int maxHitPoints = 2;
     public float moveSpeed = 2f;
     public int xpValue = 1;
+    public int scoreValue = 1;
+    public int spawnCycle = 0;
 
     [Header("Hit Flash")]
     public float hitFlashDuration = 0.12f;
@@ -59,13 +61,16 @@ public class A_Enemy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHP -= damage;
+        A_DamagePopup.Create(transform.position, damage);
 
         if (currentHP <= 0)
         {
             if (A_XPManager.Instance != null)
                 A_XPManager.Instance.AddXP(xpValue);
             if (A_ScoreManager.Instance != null)
-                A_ScoreManager.Instance.AddKill();
+                A_ScoreManager.Instance.AddScore(scoreValue);
+            if (A_EnemySpawner.Instance != null)
+                A_EnemySpawner.Instance.RegisterKill(spawnCycle);
             Destroy(gameObject);
             return;
         }
