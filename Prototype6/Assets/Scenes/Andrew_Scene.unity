@@ -6177,8 +6177,14 @@ MonoBehaviour:
   stageCounter: 0
   spawnCounter: 0
   enemyTypes:
-  - name: Enemy
-    prefab: {fileID: 6440736755347924912, guid: 9d842e2c4f323fb4e852f9170e72e687, type: 3}
+  - name: Default
+    prefab: {fileID: 234427430957938418, guid: 77d942aacb648b046a6ff80170d05911, type: 3}
+    spawnWeight: 3
+  - name: Spiral
+    prefab: {fileID: 864394925426953404, guid: c919020ba51382e4b8ef9102bb0dd8e3, type: 3}
+    spawnWeight: 1
+  - name: Teleport
+    prefab: {fileID: 7723241571208371256, guid: 6652d07aad816fe4998348a1b3c81bf2, type: 3}
     spawnWeight: 1
   totalWeight: 0
 --- !u!4 &2129724270

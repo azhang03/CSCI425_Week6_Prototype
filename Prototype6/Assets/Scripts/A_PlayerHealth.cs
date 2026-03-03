@@ -48,6 +48,14 @@ public class A_PlayerHealth : MonoBehaviour
         {
             Destroy(collision.gameObject);
             TakeDamage(1);
+            return;
+        }
+
+        S_Enemy sEnemy = collision.GetComponent<S_Enemy>();
+        if (sEnemy != null)
+        {
+            Destroy(collision.gameObject);
+            TakeDamage(1);
         }
     }
 

@@ -20,7 +20,7 @@ public class S_Enemy : MonoBehaviour
     {
         currentHP = maxHitPoints;
         spriteRenderer = GetComponent<SpriteRenderer>();
-
+        originalColor = spriteRenderer.color;
     }
 
     void Update()
