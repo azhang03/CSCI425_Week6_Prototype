@@ -69,6 +69,12 @@ public class A_PauseMenu : MonoBehaviour
     {
         built = true;
 
+        RectTransform selfRect = GetComponent<RectTransform>();
+        selfRect.anchorMin = Vector2.zero;
+        selfRect.anchorMax = Vector2.one;
+        selfRect.offsetMin = Vector2.zero;
+        selfRect.offsetMax = Vector2.zero;
+
         GameObject overlay = new GameObject("Overlay", typeof(RectTransform));
         overlay.transform.SetParent(transform, false);
         RectTransform overlayRect = overlay.GetComponent<RectTransform>();
@@ -82,18 +88,19 @@ public class A_PauseMenu : MonoBehaviour
         GameObject titleObj = new GameObject("Title", typeof(RectTransform));
         titleObj.transform.SetParent(transform, false);
         RectTransform titleRect = titleObj.GetComponent<RectTransform>();
-        titleRect.anchorMin = new Vector2(0.5f, 0.65f);
-        titleRect.anchorMax = new Vector2(0.5f, 0.65f);
-        titleRect.sizeDelta = new Vector2(300f, 60f);
+        titleRect.anchorMin = new Vector2(0.5f, 0.7f);
+        titleRect.anchorMax = new Vector2(0.5f, 0.7f);
+        titleRect.anchoredPosition = Vector2.zero;
+        titleRect.sizeDelta = new Vector2(400f, 80f);
         TextMeshProUGUI titleTMP = titleObj.AddComponent<TextMeshProUGUI>();
         titleTMP.text = "PAUSED";
-        titleTMP.fontSize = 42;
+        titleTMP.fontSize = 48;
         titleTMP.fontStyle = FontStyles.Bold;
         titleTMP.alignment = TextAlignmentOptions.Center;
         titleTMP.color = Color.white;
 
-        CreateButton("ResumeBtn", "Resume", new Vector2(0.5f, 0.45f), Resume);
-        CreateButton("ExitBtn", "Exit Game", new Vector2(0.5f, 0.35f), ExitGame);
+        CreateButton("ResumeBtn", "Resume", new Vector2(0.5f, 0.5f), Resume);
+        CreateButton("ExitBtn", "Exit Game", new Vector2(0.5f, 0.38f), ExitGame);
     }
 
     void CreateButton(string name, string label, Vector2 anchorPos, UnityEngine.Events.UnityAction action)
@@ -104,7 +111,8 @@ public class A_PauseMenu : MonoBehaviour
         RectTransform btnRect = btnObj.GetComponent<RectTransform>();
         btnRect.anchorMin = anchorPos;
         btnRect.anchorMax = anchorPos;
-        btnRect.sizeDelta = new Vector2(200f, 50f);
+        btnRect.anchoredPosition = Vector2.zero;
+        btnRect.sizeDelta = new Vector2(220f, 50f);
 
         Image btnImg = btnObj.AddComponent<Image>();
         btnImg.color = new Color(0.2f, 0.2f, 0.25f, 0.95f);

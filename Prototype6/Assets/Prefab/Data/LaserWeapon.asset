@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: LaserWeapon
   m_EditorClassIdentifier: Assembly-CSharp::A_WeaponData
   weaponName: Laser
-  weaponType: 0
+  weaponType: 2
   projectilePrefab: {fileID: 4214189542568667277, guid: ed9e8ccdc5aaf594bb9810be86e1a309, type: 3}
   projectileSpeed: 8
   damage: 3
-  baseFireChance: 0.1
+  baseFireChance: 0.2
   duration: 0
   radius: 0

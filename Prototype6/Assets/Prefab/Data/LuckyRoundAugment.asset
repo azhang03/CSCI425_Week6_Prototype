@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LuckyRoundAugment
   m_EditorClassIdentifier: Assembly-CSharp::A_AugmentData
   augmentName: Lucky Round
-  description: All weapons +3%
+  description: All weapons +7%
   type: 3
   weaponToAdd: {fileID: 0}
   weaponToModify: 
@@ -22,7 +22,7 @@ MonoBehaviour:
   boostDelta: 0
   nerfTarget: 0
   nerfDelta: 0
-  allChanceDelta: 0.03
+  allChanceDelta: 0.07
   healthDelta: 0
   intervalDelta: 0
   statWeaponName: 

@@ -9,6 +9,7 @@ public class A_AugmentPool : MonoBehaviour
     public List<A_AugmentData> allAugments = new List<A_AugmentData>();
 
     private List<A_AugmentData> availablePool = new List<A_AugmentData>();
+    private bool firstLevelUp = true;
 
     void Awake()
     {
@@ -28,6 +29,18 @@ public class A_AugmentPool : MonoBehaviour
     public List<A_AugmentData> GetCards(int count)
     {
         List<A_AugmentData> result = new List<A_AugmentData>();
+
+        if (firstLevelUp)
+        {
+            firstLevelUp = false;
+            foreach (var aug in availablePool)
+            {
+                if (aug.type == AugmentType.NewWeapon)
+                    result.Add(aug);
+                if (result.Count >= count) break;
+            }
+            if (result.Count > 0) return result;
+        }
 
         List<A_AugmentData> eligible = new List<A_AugmentData>();
         foreach (var aug in availablePool)
