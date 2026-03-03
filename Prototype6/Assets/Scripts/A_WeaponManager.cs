@@ -16,6 +16,10 @@ public class A_WeaponManager : MonoBehaviour
     {
         public A_WeaponData data;
         public float currentChance;
+        public bool isOnCooldown;
+        public float bonusDuration;
+        public float bonusRadius;
+        public int bonusDamage;
     }
 
     private List<WeaponEntry> weapons = new List<WeaponEntry>();
@@ -60,6 +64,73 @@ public class A_WeaponManager : MonoBehaviour
             if (entry.data.weaponName == weaponName)
             {
                 entry.currentChance = Mathf.Clamp01(entry.currentChance + delta);
+                OnInventoryChanged?.Invoke();
+                return;
+            }
+        }
+    }
+
+    public void ModifyAllChances(float delta)
+    {
+        foreach (var entry in weapons)
+            entry.currentChance = Mathf.Clamp01(entry.currentChance + delta);
+        OnInventoryChanged?.Invoke();
+    }
+
+    public void SetCooldown(string weaponName, bool value)
+    {
+        foreach (var entry in weapons)
+        {
+            if (entry.data.weaponName == weaponName)
+            {
+                entry.isOnCooldown = value;
+                return;
+            }
+        }
+    }
+
+    public WeaponEntry GetHighestChanceEntry()
+    {
+        if (weapons.Count == 0) return null;
+        WeaponEntry best = weapons[0];
+        for (int i = 1; i < weapons.Count; i++)
+        {
+            if (weapons[i].currentChance > best.currentChance)
+                best = weapons[i];
+        }
+        return best;
+    }
+
+    public WeaponEntry GetLowestChanceEntry()
+    {
+        if (weapons.Count == 0) return null;
+        WeaponEntry worst = weapons[0];
+        for (int i = 1; i < weapons.Count; i++)
+        {
+            if (weapons[i].currentChance < worst.currentChance)
+                worst = weapons[i];
+        }
+        return worst;
+    }
+
+    public void ModifyWeaponStat(string weaponName, string stat, float delta)
+    {
+        foreach (var entry in weapons)
+        {
+            if (entry.data.weaponName == weaponName)
+            {
+                switch (stat)
+                {
+                    case "duration":
+                        entry.bonusDuration += delta;
+                        break;
+                    case "radius":
+                        entry.bonusRadius += delta;
+                        break;
+                    case "damage":
+                        entry.bonusDamage += Mathf.RoundToInt(delta);
+                        break;
+                }
                 OnInventoryChanged?.Invoke();
                 return;
             }

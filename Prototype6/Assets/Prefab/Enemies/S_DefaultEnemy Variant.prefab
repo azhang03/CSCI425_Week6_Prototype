@@ -77,4 +77,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5811ff3a5fc9694408cbd1e9609fcc13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::S_DefaultMove
-  moveSpeed: 2
+  moveSpeed: 1

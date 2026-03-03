@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c91f22a388007164f9773158e573bbbb, type: 3}
-  m_Name: FireballAugment
+  m_Name: MoatAugment
   m_EditorClassIdentifier: Assembly-CSharp::A_AugmentData
-  augmentName: Fireball
-  description: 40% chance to shoot a fireball each time step. Deals 2 damage.
+  augmentName: Moat
+  description: 25% chance to lay a poison moat. Deals 1 dmg/sec for 4s.
   type: 0
-  weaponToAdd: {fileID: 11400000, guid: b5a9c78de14a4e3418ee001e92c21696, type: 2}
+  weaponToAdd: {fileID: 11400000, guid: 2453480704d64464fa9984526c71d20f, type: 2}
   weaponToModify: 
   chanceDelta: 0
   boostTarget: 0

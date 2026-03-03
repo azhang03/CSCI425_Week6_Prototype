@@ -31,6 +31,24 @@ public class A_AugmentUI : MonoBehaviour
             A_XPManager.Instance.OnLevelUp += ShowAugmentSelection;
     }
 
+    void Update()
+    {
+        if (isShowing && UnityEngine.InputSystem.Keyboard.current.digit2Key.wasPressedThisFrame)
+            Reroll();
+    }
+
+    void Reroll()
+    {
+        ClearCards();
+
+        if (A_AugmentPool.Instance == null) return;
+        List<A_AugmentData> cards = A_AugmentPool.Instance.GetCards(3);
+        if (cards.Count == 0) return;
+
+        foreach (var augment in cards)
+            CreateCard(augment);
+    }
+
     void OnDestroy()
     {
         if (A_XPManager.Instance != null)

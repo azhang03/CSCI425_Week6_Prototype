@@ -30,16 +30,33 @@ public class A_Shooting : MonoBehaviour
 
         foreach (var entry in weapons)
         {
+            if (entry.isOnCooldown) continue;
             if (Random.value < entry.currentChance)
                 toFire.Add(entry);
         }
 
         for (int i = 0; i < toFire.Count; i++)
         {
-            FireProjectile(toFire[i]);
+            FireWeapon(toFire[i]);
 
             if (i < toFire.Count - 1)
                 yield return new WaitForSeconds(staggerDelay);
+        }
+    }
+
+    void FireWeapon(A_WeaponManager.WeaponEntry entry)
+    {
+        switch (entry.data.weaponType)
+        {
+            case WeaponType.Projectile:
+                FireProjectile(entry);
+                break;
+            case WeaponType.Area:
+                FireArea(entry);
+                break;
+            case WeaponType.Line:
+                FireLine(entry);
+                break;
         }
     }
 
@@ -64,11 +81,55 @@ public class A_Shooting : MonoBehaviour
 
         A_Projectile proj = projectile.GetComponent<A_Projectile>();
         if (proj != null)
-            proj.damage = weapon.damage;
+            proj.damage = weapon.damage + entry.bonusDamage;
 
         Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
         if (rb != null)
             rb.linearVelocity = direction * weapon.projectileSpeed;
+    }
+
+    void FireArea(A_WeaponManager.WeaponEntry entry)
+    {
+        A_WeaponData weapon = entry.data;
+        if (weapon.projectilePrefab == null) return;
+
+        GameObject moatObj = Instantiate(
+            weapon.projectilePrefab,
+            transform.position,
+            Quaternion.identity
+        );
+
+        A_Moat moat = moatObj.GetComponent<A_Moat>();
+        if (moat != null)
+        {
+            moat.damage = weapon.damage + entry.bonusDamage;
+            moat.duration = weapon.duration + entry.bonusDuration;
+            moat.radius = weapon.radius + entry.bonusRadius;
+            moat.weaponName = weapon.weaponName;
+        }
+
+        A_WeaponManager.Instance.SetCooldown(weapon.weaponName, true);
+    }
+
+    void FireLine(A_WeaponManager.WeaponEntry entry)
+    {
+        A_WeaponData weapon = entry.data;
+        if (weapon.projectilePrefab == null) return;
+
+        Vector2 direction = GetRandomDirection();
+
+        GameObject laserObj = Instantiate(
+            weapon.projectilePrefab,
+            transform.position,
+            Quaternion.identity
+        );
+
+        A_Laser laser = laserObj.GetComponent<A_Laser>();
+        if (laser != null)
+        {
+            laser.damage = weapon.damage + entry.bonusDamage;
+            laser.direction = direction;
+        }
     }
 
     Vector2 GetRandomDirection()

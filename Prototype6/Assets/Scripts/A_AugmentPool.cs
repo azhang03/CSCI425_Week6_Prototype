@@ -63,9 +63,51 @@ public class A_AugmentPool : MonoBehaviour
             case AugmentType.ModifyWeapon:
                 A_WeaponManager.Instance.ModifyChance(augment.weaponToModify, augment.chanceDelta);
                 break;
+
+            case AugmentType.Tradeoff:
+                ApplyTradeoff(augment);
+                break;
+
+            case AugmentType.ModifyAllWeapons:
+                A_WeaponManager.Instance.ModifyAllChances(augment.allChanceDelta);
+                break;
+
+            case AugmentType.ModifyHealth:
+                if (A_PlayerHealth.Instance != null)
+                    A_PlayerHealth.Instance.AddMaxHearts(augment.healthDelta);
+                if (augment.allChanceDelta != 0f)
+                    A_WeaponManager.Instance.ModifyAllChances(augment.allChanceDelta);
+                break;
+
+            case AugmentType.ModifyFireInterval:
+                A_Shooting shooter = FindAnyObjectByType<A_Shooting>();
+                if (shooter != null)
+                    shooter.fireInterval = Mathf.Max(0.5f, shooter.fireInterval + augment.intervalDelta);
+                break;
+
+            case AugmentType.ModifyWeaponStat:
+                A_WeaponManager.Instance.ModifyWeaponStat(
+                    augment.statWeaponName, augment.statName, augment.statDelta);
+                break;
         }
 
         if (augment.isUnique)
             availablePool.Remove(augment);
+    }
+
+    void ApplyTradeoff(A_AugmentData augment)
+    {
+        var boost = augment.boostTarget == TargetMode.Highest
+            ? A_WeaponManager.Instance.GetHighestChanceEntry()
+            : A_WeaponManager.Instance.GetLowestChanceEntry();
+
+        var nerf = augment.nerfTarget == TargetMode.Highest
+            ? A_WeaponManager.Instance.GetHighestChanceEntry()
+            : A_WeaponManager.Instance.GetLowestChanceEntry();
+
+        if (boost != null)
+            A_WeaponManager.Instance.ModifyChance(boost.data.weaponName, augment.boostDelta);
+        if (nerf != null)
+            A_WeaponManager.Instance.ModifyChance(nerf.data.weaponName, augment.nerfDelta);
     }
 }

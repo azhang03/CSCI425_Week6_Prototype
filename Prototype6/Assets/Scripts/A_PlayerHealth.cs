@@ -96,6 +96,26 @@ public class A_PlayerHealth : MonoBehaviour
         isInvincible = false;
     }
 
+    public void AddMaxHearts(int amount)
+    {
+        maxHearts += amount;
+        if (amount > 0)
+            CurrentHearts = Mathf.Min(CurrentHearts + amount, maxHearts);
+        else
+            CurrentHearts = Mathf.Min(CurrentHearts, maxHearts);
+
+        if (maxHearts < 1) maxHearts = 1;
+        if (CurrentHearts < 1 && !IsDead)
+        {
+            CurrentHearts = 0;
+            OnHealthChanged?.Invoke(CurrentHearts, maxHearts);
+            Die();
+            return;
+        }
+
+        OnHealthChanged?.Invoke(CurrentHearts, maxHearts);
+    }
+
     void Die()
     {
         IsDead = true;
