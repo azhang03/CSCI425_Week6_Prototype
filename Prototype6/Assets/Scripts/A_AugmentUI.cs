@@ -17,28 +17,38 @@ public class A_AugmentUI : MonoBehaviour
 
     private List<GameObject> activeCards = new List<GameObject>();
     private bool isShowing;
+    private CanvasGroup canvasGroup;
 
-    void OnEnable()
+    void Start()
     {
+        canvasGroup = GetComponent<CanvasGroup>();
+        if (canvasGroup == null)
+            canvasGroup = gameObject.AddComponent<CanvasGroup>();
+
+        Hide();
+
         if (A_XPManager.Instance != null)
             A_XPManager.Instance.OnLevelUp += ShowAugmentSelection;
     }
 
-    void OnDisable()
+    void OnDestroy()
     {
         if (A_XPManager.Instance != null)
             A_XPManager.Instance.OnLevelUp -= ShowAugmentSelection;
     }
 
-    void Start()
+    void Hide()
     {
-        if (A_XPManager.Instance != null)
-            A_XPManager.Instance.OnLevelUp += ShowAugmentSelection;
+        canvasGroup.alpha = 0f;
+        canvasGroup.blocksRaycasts = false;
+        canvasGroup.interactable = false;
+    }
 
-        if (dimOverlay != null)
-            dimOverlay.SetActive(false);
-
-        gameObject.SetActive(false);
+    void Show()
+    {
+        canvasGroup.alpha = 1f;
+        canvasGroup.blocksRaycasts = true;
+        canvasGroup.interactable = true;
     }
 
     void ShowAugmentSelection(int newLevel)
@@ -50,7 +60,7 @@ public class A_AugmentUI : MonoBehaviour
 
         Time.timeScale = 0f;
         isShowing = true;
-        gameObject.SetActive(true);
+        Show();
 
         if (dimOverlay != null)
             dimOverlay.SetActive(true);
@@ -139,7 +149,7 @@ public class A_AugmentUI : MonoBehaviour
 
         ClearCards();
         isShowing = false;
-        gameObject.SetActive(false);
+        Hide();
 
         if (dimOverlay != null)
             dimOverlay.SetActive(false);

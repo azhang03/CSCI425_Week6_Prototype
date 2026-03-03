@@ -10,7 +10,4 @@ public class A_WeaponData : ScriptableObject
 
     [Range(0f, 1f)]
     public float baseFireChance = 1f;
-
-    public float projectileScale = 0.25f;
-    public Color projectileColor = Color.white;
 }

@@ -62,12 +62,6 @@ public class A_Shooting : MonoBehaviour
             Quaternion.identity
         );
 
-        projectile.transform.localScale = Vector3.one * weapon.projectileScale;
-
-        SpriteRenderer sr = projectile.GetComponent<SpriteRenderer>();
-        if (sr != null)
-            sr.color = weapon.projectileColor;
-
         A_Projectile proj = projectile.GetComponent<A_Projectile>();
         if (proj != null)
             proj.damage = weapon.damage;
