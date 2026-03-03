@@ -1,10 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UIElements;
 
 public class A_EnemySpawner : MonoBehaviour
 {
     [Header("References")]
-    public GameObject enemyPrefab;
     public Tilemap stageTilemap;
     public Transform rotateParent;
 
@@ -19,9 +20,22 @@ public class A_EnemySpawner : MonoBehaviour
     public float[] stageIntervals = { 5, 3, 2, 1 };
     public float[] enemiesPerStage = { 2, 5, 8, 15 };
 
-
     public int stageCounter = 0;
     public int spawnCounter = 0;
+
+
+    [System.Serializable]
+    public class EnemyType
+    {
+        public string name;
+        public GameObject prefab;
+        public float spawnWeight = 1f;
+    }
+
+    [Header("Enemy Types")]
+    public List<EnemyType> enemyTypes = new List<EnemyType>();
+    public float totalWeight = 0;
+
 
     void Start()
     {
@@ -38,7 +52,12 @@ public class A_EnemySpawner : MonoBehaviour
             spawnCounter = 0;
             spawnInterval = stageIntervals[stageCounter];
 
-            
+
+            foreach (var enemy in enemyTypes)
+            {
+                totalWeight += enemy.spawnWeight;
+            }
+
         }
     }
 
@@ -83,19 +102,46 @@ public class A_EnemySpawner : MonoBehaviour
 
     void SpawnEnemy()
     {
-        if (enemyPrefab == null || stageTilemap == null) return;
+        if (enemyTypes.Count > 0)
+        {
+            GameObject enemyPrefab = GetRandomEnemyByWeight();
+            if (enemyPrefab == null || stageTilemap == null) return;
 
-        Vector3 center = stageTilemap.transform.position;
-        float angle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
-        Vector3 spawnPos = center + new Vector3(
-            Mathf.Cos(angle) * spawnRadius,
-            Mathf.Sin(angle) * spawnRadius,
-            0f
-        );
+            Vector3 center = stageTilemap.transform.position;
+            float angle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
+            Vector3 spawnPos = center + new Vector3(
+                Mathf.Cos(angle) * spawnRadius,
+                Mathf.Sin(angle) * spawnRadius,
+                0f
+            );
 
-        GameObject enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+            GameObject enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
 
-        if (rotateParent != null)
-            enemy.transform.SetParent(rotateParent);
+            if (rotateParent != null)
+                enemy.transform.SetParent(rotateParent);
+        }
     }
+
+
+    GameObject GetRandomEnemyByWeight()
+    {
+
+        
+        float randomValue = Random.Range(0, totalWeight);
+        float cumulativeWeight = 0f;
+
+        foreach (var enemy in enemyTypes)
+        {
+            cumulativeWeight += enemy.spawnWeight;
+
+            if (randomValue <= cumulativeWeight)
+            {
+                Debug.Log("Enemy anem :" + enemy.name);
+                return enemy.prefab;
+            }
+        }
+
+        return null;
+    }
+
 }
