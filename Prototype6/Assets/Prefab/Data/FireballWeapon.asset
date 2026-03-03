@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::A_WeaponData
   weaponName: Fireball
   projectilePrefab: {fileID: 4737467778189878158, guid: 5bfde4fc4d6196f4bbf3d6c9817550dd, type: 3}
-  projectileSpeed: 5
+  projectileSpeed: 3
   damage: 2
   baseFireChance: 0.4
