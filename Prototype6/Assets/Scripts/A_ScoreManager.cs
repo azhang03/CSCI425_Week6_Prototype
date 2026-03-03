@@ -1,5 +1,8 @@
 using System;
+using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class A_ScoreManager : MonoBehaviour
 {
@@ -7,21 +10,57 @@ public class A_ScoreManager : MonoBehaviour
 
     public int KillCount { get; private set; }
 
+    public int highScore = 0;
+
     public event Action<int> OnScoreChanged;
+
+
+
+
 
     void Awake()
     {
-        if (Instance != null && Instance != this)
+        KillCount = 0;
+
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
         {
             Destroy(gameObject);
             return;
         }
-        Instance = this;
+
     }
 
     public void AddKill()
     {
         KillCount++;
         OnScoreChanged?.Invoke(KillCount);
+    }
+
+    public void EndGame()
+    {
+        if (KillCount > highScore)
+        {
+            highScore = KillCount;
+
+        }
+
+    }
+
+
+    public void ResetGame()
+    {
+
+        if (KillCount > highScore)
+        {
+            highScore = KillCount;
+        }
+        KillCount = 0;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
     }
 }
