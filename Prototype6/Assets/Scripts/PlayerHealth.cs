@@ -19,12 +19,17 @@ public class PlayerHealth : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (isDead) return;
 
         if (collision.gameObject.CompareTag(enemyTag))
         {
             Destroy(collision.gameObject);
-            TakeDamage(1);
+
+            if (!isDead)
+            {
+                TakeDamage(1);
+
+
+            }
         }
     }
 
