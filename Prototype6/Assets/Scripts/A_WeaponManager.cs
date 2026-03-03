@@ -19,6 +19,7 @@ public class A_WeaponManager : MonoBehaviour
         public bool isOnCooldown;
         public float bonusDuration;
         public float bonusRadius;
+        public float bonusWidth;
         public int bonusDamage;
     }
 
@@ -127,6 +128,9 @@ public class A_WeaponManager : MonoBehaviour
                     case "radius":
                         entry.bonusRadius += delta;
                         break;
+                    case "width":
+                        entry.bonusWidth += delta;
+                        break;
                     case "damage":
                         entry.bonusDamage += Mathf.RoundToInt(delta);
                         break;
@@ -140,5 +144,20 @@ public class A_WeaponManager : MonoBehaviour
     public List<WeaponEntry> GetActiveWeapons()
     {
         return weapons;
+    }
+
+    public bool HasWeapon(string weaponName)
+    {
+        foreach (var entry in weapons)
+        {
+            if (entry.data.weaponName == weaponName)
+                return true;
+        }
+        return false;
+    }
+
+    public int GetWeaponCount()
+    {
+        return weapons.Count;
     }
 }

@@ -29,10 +29,17 @@ public class A_AugmentPool : MonoBehaviour
     {
         List<A_AugmentData> result = new List<A_AugmentData>();
 
-        if (availablePool.Count == 0)
+        List<A_AugmentData> eligible = new List<A_AugmentData>();
+        foreach (var aug in availablePool)
+        {
+            if (IsEligible(aug))
+                eligible.Add(aug);
+        }
+
+        if (eligible.Count == 0)
             return result;
 
-        List<A_AugmentData> tempPool = new List<A_AugmentData>(availablePool);
+        List<A_AugmentData> tempPool = new List<A_AugmentData>(eligible);
 
         while (result.Count < count && tempPool.Count > 0)
         {
@@ -41,12 +48,34 @@ public class A_AugmentPool : MonoBehaviour
             tempPool.RemoveAt(idx);
         }
 
-        while (result.Count < count)
+        while (result.Count < count && result.Count > 0)
         {
             result.Add(result[Random.Range(0, result.Count)]);
         }
 
         return result;
+    }
+
+    bool IsEligible(A_AugmentData augment)
+    {
+        if (A_WeaponManager.Instance == null) return true;
+
+        switch (augment.type)
+        {
+            case AugmentType.ModifyWeaponStat:
+                return A_WeaponManager.Instance.HasWeapon(augment.statWeaponName);
+
+            case AugmentType.Tradeoff:
+                return A_WeaponManager.Instance.GetWeaponCount() >= 2;
+
+            case AugmentType.ModifyHealth:
+                if (augment.healthDelta < 0 && A_PlayerHealth.Instance != null)
+                    return A_PlayerHealth.Instance.CurrentHearts > Mathf.Abs(augment.healthDelta);
+                return true;
+
+            default:
+                return true;
+        }
     }
 
     public void ApplyAugment(A_AugmentData augment)

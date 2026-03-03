@@ -16,7 +16,7 @@ public class A_AugmentUI : MonoBehaviour
     public GameObject dimOverlay;
 
     private List<GameObject> activeCards = new List<GameObject>();
-    private bool isShowing;
+    public bool IsShowing { get; private set; }
     private CanvasGroup canvasGroup;
 
     void Start()
@@ -33,7 +33,7 @@ public class A_AugmentUI : MonoBehaviour
 
     void Update()
     {
-        if (isShowing && UnityEngine.InputSystem.Keyboard.current.digit2Key.wasPressedThisFrame)
+        if (IsShowing && !A_PauseMenu.IsPaused && UnityEngine.InputSystem.Keyboard.current.digit2Key.wasPressedThisFrame)
             Reroll();
     }
 
@@ -77,7 +77,7 @@ public class A_AugmentUI : MonoBehaviour
         if (cards.Count == 0) return;
 
         Time.timeScale = 0f;
-        isShowing = true;
+        IsShowing = true;
         Show();
 
         if (dimOverlay != null)
@@ -161,12 +161,12 @@ public class A_AugmentUI : MonoBehaviour
 
     public void OnCardSelected(A_AugmentData data)
     {
-        if (!isShowing) return;
+        if (!IsShowing) return;
 
         A_AugmentPool.Instance.ApplyAugment(data);
 
         ClearCards();
-        isShowing = false;
+        IsShowing = false;
         Hide();
 
         if (dimOverlay != null)

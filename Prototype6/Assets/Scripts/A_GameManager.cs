@@ -8,6 +8,7 @@ public class A_GameManager : MonoBehaviour
     {
         if (Keyboard.current.rKey.wasPressedThisFrame)
         {
+            Time.timeScale = 1f;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 

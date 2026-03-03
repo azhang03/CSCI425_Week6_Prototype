@@ -55,6 +55,8 @@ public class S_Enemy : MonoBehaviour
         {
             if (A_XPManager.Instance != null)
                 A_XPManager.Instance.AddXP(xpValue);
+            if (A_ScoreManager.Instance != null)
+                A_ScoreManager.Instance.AddKill();
             Destroy(gameObject);
             return;
         }

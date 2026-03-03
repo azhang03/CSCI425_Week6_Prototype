@@ -111,5 +111,5 @@ MonoBehaviour:
   blinkOffTime: 0.15
   telegraphAlpha: 0.35
   fadeOutDuration: 0.3
-  boxWidth: 0.3
+  boxWidth: 1
   boxLength: 24

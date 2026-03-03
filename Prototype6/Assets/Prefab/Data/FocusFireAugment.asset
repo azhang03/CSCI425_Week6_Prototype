@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c91f22a388007164f9773158e573bbbb, type: 3}
-  m_Name: LaserAugment
+  m_Name: FocusFireAugment
   m_EditorClassIdentifier: Assembly-CSharp::A_AugmentData
-  augmentName: Laser
-  description: 10% chance to fire a laser beam. 3 dmg to all enemies in its path.
-  type: 0
-  weaponToAdd: {fileID: 11400000, guid: 59e3e3cf3b79e6d499190192c9f76510, type: 2}
+  augmentName: Focus Fire
+  description: +15% to your best weapon, -10% to your worst
+  type: 2
+  weaponToAdd: {fileID: 0}
   weaponToModify: 
   chanceDelta: 0
   boostTarget: 0
-  boostDelta: 0
-  nerfTarget: 0
-  nerfDelta: 0
+  boostDelta: 0.15
+  nerfTarget: 1
+  nerfDelta: -0.1
   allChanceDelta: 0
   healthDelta: 0
   intervalDelta: 0
   statWeaponName: 
   statName: 
   statDelta: 0
-  isUnique: 1
+  isUnique: 0

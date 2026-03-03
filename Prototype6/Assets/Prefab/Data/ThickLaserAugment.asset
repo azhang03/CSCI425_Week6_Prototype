@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c91f22a388007164f9773158e573bbbb, type: 3}
-  m_Name: LaserAugment
+  m_Name: ThickLaserAugment
   m_EditorClassIdentifier: Assembly-CSharp::A_AugmentData
-  augmentName: Laser
-  description: 10% chance to fire a laser beam. 3 dmg to all enemies in its path.
-  type: 0
-  weaponToAdd: {fileID: 11400000, guid: 59e3e3cf3b79e6d499190192c9f76510, type: 2}
+  augmentName: Laser Upgrade
+  description: Laser width +0.2
+  type: 6
+  weaponToAdd: {fileID: 0}
   weaponToModify: 
   chanceDelta: 0
   boostTarget: 0
@@ -25,7 +25,7 @@ MonoBehaviour:
   allChanceDelta: 0
   healthDelta: 0
   intervalDelta: 0
-  statWeaponName: 
-  statName: 
-  statDelta: 0
-  isUnique: 1
+  statWeaponName: Laser
+  statName: width
+  statDelta: 0.2
+  isUnique: 0

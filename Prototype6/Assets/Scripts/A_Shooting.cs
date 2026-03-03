@@ -83,6 +83,9 @@ public class A_Shooting : MonoBehaviour
         if (proj != null)
             proj.damage = weapon.damage + entry.bonusDamage;
 
+        if (entry.bonusRadius > 0f)
+            projectile.transform.localScale *= (1f + entry.bonusRadius);
+
         Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
         if (rb != null)
             rb.linearVelocity = direction * weapon.projectileSpeed;
@@ -128,7 +131,9 @@ public class A_Shooting : MonoBehaviour
         if (laser != null)
         {
             laser.damage = weapon.damage + entry.bonusDamage;
+            laser.bonusWidth = entry.bonusWidth;
             laser.direction = direction;
+            laser.Setup();
         }
     }
 

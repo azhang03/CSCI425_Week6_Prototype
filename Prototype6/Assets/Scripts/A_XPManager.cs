@@ -5,9 +5,8 @@ public class A_XPManager : MonoBehaviour
 {
     public static A_XPManager Instance { get; private set; }
 
-    [Header("Leveling Curve")]
-    public int baseXP = 5;
-    public float growthFactor = 1.5f;
+    [Header("Leveling")]
+    public int xpPerLevel = 5;
 
     public int CurrentXP { get; private set; }
     public int XPToNextLevel { get; private set; }
@@ -30,7 +29,7 @@ public class A_XPManager : MonoBehaviour
     {
         CurrentLevel = 1;
         CurrentXP = 0;
-        XPToNextLevel = baseXP;
+        XPToNextLevel = xpPerLevel;
         OnXPChanged?.Invoke(CurrentXP, XPToNextLevel);
     }
 
@@ -42,7 +41,7 @@ public class A_XPManager : MonoBehaviour
         {
             CurrentXP -= XPToNextLevel;
             CurrentLevel++;
-            XPToNextLevel = Mathf.RoundToInt(baseXP * Mathf.Pow(growthFactor, CurrentLevel - 1));
+            XPToNextLevel = xpPerLevel;
             OnLevelUp?.Invoke(CurrentLevel);
         }
 

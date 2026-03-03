@@ -4,6 +4,7 @@ using UnityEngine;
 public class A_Laser : MonoBehaviour
 {
     [HideInInspector] public int damage = 2;
+    [HideInInspector] public float bonusWidth = 0f;
     [HideInInspector] public Vector2 direction = Vector2.up;
 
     [Header("Telegraph")]
@@ -21,16 +22,23 @@ public class A_Laser : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
 
-    void Start()
+    void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+            spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0f);
+    }
+
+    public void Setup()
+    {
+        float totalWidth = boxWidth + bonusWidth;
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
         transform.rotation = Quaternion.Euler(0, 0, angle);
-        transform.localScale = new Vector3(boxWidth, boxLength, 1f);
+        transform.localScale = new Vector3(totalWidth, boxLength, 1f);
 
-        Vector2 center = (Vector2)transform.position + direction * (boxLength * 0.5f);
-        transform.position = new Vector3(center.x, center.y, 0f);
+        Vector2 offset = direction * (boxLength * 0.5f);
+        transform.position += new Vector3(offset.x, offset.y, 0f);
 
         StartCoroutine(LaserSequence());
     }
@@ -65,7 +73,7 @@ public class A_Laser : MonoBehaviour
     void DealDamage()
     {
         Vector2 center = transform.position;
-        Vector2 size = new Vector2(boxWidth, boxLength);
+        Vector2 size = new Vector2(boxWidth + bonusWidth, boxLength);
         float angle = transform.eulerAngles.z;
 
         Collider2D[] hits = Physics2D.OverlapBoxAll(center, size, angle);
