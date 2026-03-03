@@ -14,25 +14,23 @@ The core skill is **rotating enemies into the paths of your own bullets**. Posit
 
 ## Randomness Design
 
-This prototype uses **both input and output randomness** in layered ways.
+This prototype uses **input randomness** throughout — randomness always produces visible state that the player then reacts to.
+
+### Input Randomness — Weapons Firing
+
+Each fire interval (default 1.5 seconds), every weapon in the player's inventory independently rolls against its fire chance. The results — which weapons fired and in which random cardinal directions — appear on screen *before* the player decides how to rotate. The player reads that state (laser telegraphing left, bullet going up) and rotates enemies into those paths.
+
+The randomness is the input to the rotation decision, not a consequence of it. A well-timed laser proc or a fortunate bullet direction is something the player must act on in real time.
+
+Fire chances are **non-uniform by design**. Starting weapons are reliable (Bullet at 100%), new weapons are impactful but infrequent (Laser at 10%), and augments let the player deliberately shift these distributions toward whatever playstyle they prefer.
 
 ### Input Randomness — the Augment System
 
-Every 5 kills, the player levels up and is presented with 3 augment cards to choose from. These cards are drawn randomly from the available pool and shape what the player's build looks like going forward.
+Every 5 kills, the player levels up and is presented with 3 augment cards drawn randomly from the available pool. The player sees the options and chooses — the randomness shapes the decision space before the choice is made.
 
-This is input randomness: the random draw happens *before* the player makes a decision. The player sees what they got and must decide how to use it — commit to a high-damage weapon, trade off reliability for power, or shore up survivability with extra hearts.
+The first level-up always presents the three new weapons (Fireball, Moat, Laser), giving players a guaranteed and meaningful first choice. Subsequent draws use eligibility filtering — upgrade cards only appear if you own the weapon, tradeoff cards only appear with two or more weapons, and health-loss cards never appear if they would kill you.
 
-The first level-up always presents the three new weapons (Fireball, Moat, Laser), giving players a guaranteed and meaningful first choice. Subsequent draws are random, with eligibility filtering — you won't see upgrade cards for weapons you don't own, tradeoff cards unless you have two weapons, or health-loss cards if they would kill you.
-
-The augment pool uses **weighted-by-rarity** behavior through the `isUnique` flag. New weapon cards disappear after being picked, ensuring each weapon can only be acquired once. Repeatable cards (Lucky Round, Quickdraw, Focus Fire) remain in the pool, making them increasingly likely to appear as the unique cards thin out.
-
-### Output Randomness — Weapons Firing
-
-Each fire interval (default 1.5 seconds), every weapon in the player's inventory independently rolls against its fire chance. A bullet at 100% always fires. A fireball at 40% fires roughly two out of every five intervals. A laser at 10% fires rarely.
-
-This is output randomness: the player has already built their loadout and the room rotation is already in progress — the dice rolls happen *after* the player's strategic decisions are made. 
-
-Fire chances are **non-uniform by design**. Starting weapons are reliable (Bullet at 100%), new weapons are impactful but infrequent (Laser at 20%), and augments let the player deliberately shift these distributions toward whatever playstyle they prefer.
+The augment pool uses **weighted-by-rarity** behavior through the `isUnique` flag. New weapon cards disappear after being picked, ensuring each weapon can only be acquired once. Repeatable cards (Lucky Round, Quickdraw, Focus Fire) remain in the pool, becoming more likely to surface as unique cards are exhausted.
 
 ### Enemy Spawning — Weighted Randomness
 
