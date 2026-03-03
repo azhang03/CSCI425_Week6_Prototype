@@ -20,6 +20,12 @@ public class A_GameManager : MonoBehaviour
                 A_XPManager.Instance.AddXP(1);
         }
 
+        if (Keyboard.current.digit3Key.wasPressedThisFrame)
+        {
+            if (A_PlayerHealth.Instance != null)
+                A_PlayerHealth.Instance.TakeDamage(1);
+        }
+
         if (Keyboard.current.escapeKey.isPressed)
         {
             Application.Quit();
