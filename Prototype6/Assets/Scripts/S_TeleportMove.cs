@@ -27,7 +27,7 @@ public class S_TeleportMove : MonoBehaviour
             target = player.transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        audioManager = Object.FindAnyObjectByType<S_AudioManager>(); 
+        audioManager = FindAnyObjectByType<S_AudioManager>(); 
 
 
     }

@@ -26,9 +26,9 @@ public class A_GameManager : MonoBehaviour
                 A_PlayerHealth.Instance.TakeDamage(1);
         }
 
-        if (Keyboard.current.escapeKey.isPressed)
-        {
-            Application.Quit();
-        }
+        //if (Keyboard.current.escapeKey.isPressed)
+        //{
+        //    Application.Quit();
+        //}
     }
 }
