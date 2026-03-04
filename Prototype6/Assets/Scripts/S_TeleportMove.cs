@@ -38,7 +38,7 @@ public class S_TeleportMove : MonoBehaviour
 
         if (timer >= teleportInterval)
         {
-            audioManager.PlayEnemyTp();        
+            S_AudioManager.Instance?.PlayEnemyTp();
             StartCoroutine(TeleportRoutine());
             timer = 0f;
         }
