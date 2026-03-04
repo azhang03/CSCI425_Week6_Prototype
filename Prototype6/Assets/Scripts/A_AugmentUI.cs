@@ -27,7 +27,7 @@ public class A_AugmentUI : MonoBehaviour
 
         Hide();
 
-        if (A_XPManager.Instance != null)
+        if (A_PauseMenu.AugmentsEnabled && A_XPManager.Instance != null)
             A_XPManager.Instance.OnLevelUp += ShowAugmentSelection;
     }
 

@@ -11,6 +11,12 @@ public class A_ScoreUI : MonoBehaviour
 
     private bool subscribed;
 
+    void Start()
+    {
+        if (scoreText != null)
+            scoreText.text = prefix + "0";
+    }
+
     void Update()
     {
         if (!subscribed && A_ScoreManager.Instance != null)

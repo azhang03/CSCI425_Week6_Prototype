@@ -27,6 +27,7 @@ public class A_XPBar : MonoBehaviour
             A_XPManager.Instance.OnXPChanged += UpdateBar;
             UpdateBar(A_XPManager.Instance.CurrentXP, A_XPManager.Instance.XPToNextLevel);
         }
+        gameObject.SetActive(A_PauseMenu.AugmentsEnabled);
     }
 
     void UpdateBar(int currentXP, int xpToNextLevel)

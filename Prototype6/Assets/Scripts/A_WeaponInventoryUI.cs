@@ -10,8 +10,16 @@ public class A_WeaponInventoryUI : MonoBehaviour
     private bool subscribed;
     private Dictionary<string, float> highlightTimers = new Dictionary<string, float>();
 
+    void Start()
+    {
+        if (!A_PauseMenu.AugmentsEnabled && inventoryText != null)
+            inventoryText.gameObject.SetActive(false);
+    }
+
     void Update()
     {
+        if (!A_PauseMenu.AugmentsEnabled) return;
+
         if (!subscribed && A_WeaponManager.Instance != null)
         {
             A_WeaponManager.Instance.OnInventoryChanged += UpdateDisplay;

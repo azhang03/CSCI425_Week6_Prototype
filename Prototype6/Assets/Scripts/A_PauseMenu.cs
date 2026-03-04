@@ -6,9 +6,11 @@ using TMPro;
 public class A_PauseMenu : MonoBehaviour
 {
     public static bool IsPaused { get; private set; }
+    public static bool AugmentsEnabled { get; private set; } = false;
 
     private CanvasGroup canvasGroup;
     private bool built;
+    private TextMeshProUGUI toggleLabel;
 
     void Start()
     {
@@ -99,11 +101,25 @@ public class A_PauseMenu : MonoBehaviour
         titleTMP.alignment = TextAlignmentOptions.Center;
         titleTMP.color = Color.white;
 
-        CreateButton("ResumeBtn", "Resume", new Vector2(0.5f, 0.5f), Resume);
-        CreateButton("ExitBtn", "Exit Game", new Vector2(0.5f, 0.38f), ExitGame);
+        CreateButton("ResumeBtn", "Resume", new Vector2(0.5f, 0.55f), Resume);
+        CreateButton("ExitBtn", "Exit Game", new Vector2(0.5f, 0.43f), ExitGame);
+
+        toggleLabel = CreateButton("ToggleAugments", GetToggleText(), new Vector2(0.5f, 0.28f), ToggleAugments);
     }
 
-    void CreateButton(string name, string label, Vector2 anchorPos, UnityEngine.Events.UnityAction action)
+    string GetToggleText()
+    {
+        return "Augments: " + (AugmentsEnabled ? "ON" : "OFF");
+    }
+
+    void ToggleAugments()
+    {
+        AugmentsEnabled = !AugmentsEnabled;
+        if (toggleLabel != null)
+            toggleLabel.text = GetToggleText();
+    }
+
+    TextMeshProUGUI CreateButton(string name, string label, Vector2 anchorPos, UnityEngine.Events.UnityAction action)
     {
         GameObject btnObj = new GameObject(name, typeof(RectTransform));
         btnObj.transform.SetParent(transform, false);
@@ -138,6 +154,8 @@ public class A_PauseMenu : MonoBehaviour
         txtTMP.fontSize = 22;
         txtTMP.alignment = TextAlignmentOptions.Center;
         txtTMP.color = Color.white;
+
+        return txtTMP;
     }
 
     void ExitGame()

@@ -34,6 +34,14 @@ public class A_Shooting : MonoBehaviour
         foreach (var entry in weapons)
         {
             if (entry.isOnCooldown) continue;
+
+            if (!A_PauseMenu.AugmentsEnabled)
+            {
+                if (entry.data.weaponType == WeaponType.Projectile)
+                    toFire.Add(entry);
+                continue;
+            }
+
             if (Random.value < entry.currentChance)
                 toFire.Add(entry);
         }
