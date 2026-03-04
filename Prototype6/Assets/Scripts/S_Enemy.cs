@@ -23,6 +23,8 @@ public class S_Enemy : MonoBehaviour
         currentHP = maxHitPoints;
         spriteRenderer = GetComponent<SpriteRenderer>();
         originalColor = spriteRenderer.color;
+        audioManager = FindAnyObjectByType<S_AudioManager>();
+
     }
 
     void Update()

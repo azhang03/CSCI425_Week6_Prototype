@@ -10,6 +10,7 @@ public class S_AudioManager : MonoBehaviour
     [Header("Sources")]
     public AudioSource musicSource;
     public AudioSource weaponSource;
+    public AudioSource spawnSource;
     public AudioSource sfxSource;
 
     [Header("Sfx")]
@@ -31,13 +32,13 @@ public class S_AudioManager : MonoBehaviour
     }
     public void PlayPlayerHurt()
     {
-        Debug.Log("Player hurt");
+        //Debug.Log("Player hurt");
         PlaySFX(playerDmg);
     }
 
     public void PlayPlayerDie()
     {
-        Debug.Log("Player die");
+       // Debug.Log("Player die");
         PlaySFX(playerDie);
     }
     public void PlayEnemyHurt()
@@ -54,9 +55,12 @@ public class S_AudioManager : MonoBehaviour
     }
     public void PlayEnemySpawn()
     {
-        Debug.Log("enemy spwn");
+        //Debug.Log("enemy spwn");
+        if(spawnSource != null && enemySpawn != null)
+        {
+            spawnSource.PlayOneShot(enemySpawn);
+        }
 
-        PlaySFX(enemySpawn);
     }
     public void PlayEnemyTp()
     {
@@ -68,6 +72,10 @@ public class S_AudioManager : MonoBehaviour
         if(sfxSource != null && clip != null)
         {
             sfxSource.PlayOneShot(clip);
+        }
+        else
+        {
+            Debug.Log("null");
         }
     }
 
@@ -81,7 +89,7 @@ public class S_AudioManager : MonoBehaviour
 
     public void PlayBullet()
     {
-       Debug.Log("bullet snd");
+      // Debug.Log("bullet snd");
        PlayWeapon(bullet);
     }
 

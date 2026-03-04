@@ -21,7 +21,6 @@ public class A_Shooting : MonoBehaviour
         {
             fireTimer = fireInterval;
             audioManager.PlayBullet();
-
             StartCoroutine(FireWeapons());
         }
     }

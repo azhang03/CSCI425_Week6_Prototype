@@ -32,6 +32,8 @@ public class A_Enemy : MonoBehaviour
         GameObject player = GameObject.Find("Player");
         if (player != null)
             target = player.transform;
+        audioManager = FindAnyObjectByType<S_AudioManager>();
+
     }
 
     void Update()
