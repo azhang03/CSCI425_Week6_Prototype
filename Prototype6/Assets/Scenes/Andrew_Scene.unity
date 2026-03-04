@@ -286,7 +286,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71fdf55cc5527f04d900fd68da901f32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::A_ScoreManager
-  highScore: 0
 --- !u!1 &740058945
 GameObject:
   m_ObjectHideFlags: 0
@@ -793,7 +792,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1308610326}
   - {fileID: 559987914}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5420,6 +5418,7 @@ GameObject:
   - component: {fileID: 1308610327}
   - component: {fileID: 1308610329}
   - component: {fileID: 1308610330}
+  - component: {fileID: 1308610331}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -5499,7 +5498,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1166228008}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1308610327
 Rigidbody2D:
@@ -5594,6 +5593,22 @@ MonoBehaviour:
   maxHearts: 3
   iFrameDuration: 1
   flashInterval: 0.1
+--- !u!114 &1308610331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1308610324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3c1445d35bc1664fadd54a51aee3910, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_Playermovement
+  moveSpeed: 5
+  stageTilemap: {fileID: 1174180460}
+  radius: 0
+  centerPoint: {fileID: 1166228008}
 --- !u!1 &1337522519
 GameObject:
   m_ObjectHideFlags: 0
@@ -6667,6 +6682,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1687444360}
+  - {fileID: 1308610326}
   - {fileID: 1166228008}
   - {fileID: 670264511}
   - {fileID: 1405233720}
