@@ -20,6 +20,8 @@ public class A_Shooting : MonoBehaviour
         if (fireTimer <= 0f)
         {
             fireTimer = fireInterval;
+            audioManager.PlayBullet();
+
             StartCoroutine(FireWeapons());
         }
     }
@@ -60,14 +62,14 @@ public class A_Shooting : MonoBehaviour
         {
             case WeaponType.Projectile:
                 FireProjectile(entry);
-                audioManager.PlayBullet();
+                //audioManager.PlayBullet();
                 break;
             case WeaponType.Area:
-                audioManager.PlayAreaWeapon();
+                //audioManager.PlayAreaWeapon();
                 FireArea(entry);
                 break;
             case WeaponType.Line:
-                audioManager.PlayLaser();
+               // audioManager.PlayLaser();
                 FireLine(entry);
                 break;
         }
