@@ -1,0 +1,146 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &828007681366035593
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5462717441275598915}
+  - component: {fileID: 1544589315504490412}
+  - component: {fileID: 3619113566970902681}
+  - component: {fileID: 3442819867565672222}
+  - component: {fileID: 4632736420972211610}
+  - component: {fileID: 5985586301246172748}
+  - component: {fileID: 4336387172393711562}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5462717441275598915
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828007681366035593}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.6608, y: -1.46421, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1544589315504490412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828007681366035593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b63954a55d3471346add7d72243ba42b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::A_GameManager
+  scoreManager: {fileID: 5985586301246172748}
+--- !u!114 &3619113566970902681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828007681366035593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c081334e158d6854faf7ea2a0de9c8e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::A_XPManager
+  xpPerLevel: 5
+--- !u!114 &3442819867565672222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828007681366035593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecc44345273b496409c03795e2d9cf21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::A_WeaponManager
+  startingWeapon: {fileID: 11400000, guid: 1e8a447eff7150a41a49d4474db57954, type: 2}
+--- !u!114 &4632736420972211610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828007681366035593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29cf3987692bc03469de7b4662a421fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::A_AugmentPool
+  allAugments:
+  - {fileID: 11400000, guid: 25f2d1ec73a0f7947b755439a05fef00, type: 2}
+  - {fileID: 11400000, guid: 4aab8170b13524f468b9837d054a326c, type: 2}
+  - {fileID: 11400000, guid: 2fb2edd6bbe166b418324b9eea65ed1a, type: 2}
+  - {fileID: 11400000, guid: 5d6e33076ed4612448c5e83034bb1da6, type: 2}
+  - {fileID: 11400000, guid: a543a60f863e16148a5b621faf159d0d, type: 2}
+  - {fileID: 11400000, guid: 24af028885c09594b834ddd25928befe, type: 2}
+  - {fileID: 11400000, guid: 4c9f0e0b5e80a9343a9f5931289e10c8, type: 2}
+  - {fileID: 11400000, guid: bf16e156702b6bb459daa75963cc35f7, type: 2}
+  - {fileID: 11400000, guid: f9763b8985b093848af2aa218dfce6a8, type: 2}
+  - {fileID: 11400000, guid: fd7302128178b18499d0c1dc2802d350, type: 2}
+  - {fileID: 11400000, guid: a60a94663d00ef14eb3da96a94666150, type: 2}
+  - {fileID: 11400000, guid: 491dba82fdef3d8469dab4e2c609d4fd, type: 2}
+  - {fileID: 11400000, guid: 93954e5a97885024dbd58fabdfa6d745, type: 2}
+  - {fileID: 11400000, guid: 9e5b8398dae5f214daa5a96f35fb5a83, type: 2}
+  - {fileID: 11400000, guid: 5d6e33076ed4612448c5e83034bb1da6, type: 2}
+  - {fileID: 11400000, guid: a543a60f863e16148a5b621faf159d0d, type: 2}
+  - {fileID: 11400000, guid: 24af028885c09594b834ddd25928befe, type: 2}
+  - {fileID: 11400000, guid: fd7302128178b18499d0c1dc2802d350, type: 2}
+  - {fileID: 11400000, guid: a60a94663d00ef14eb3da96a94666150, type: 2}
+  - {fileID: 11400000, guid: 491dba82fdef3d8469dab4e2c609d4fd, type: 2}
+  - {fileID: 11400000, guid: 93954e5a97885024dbd58fabdfa6d745, type: 2}
+  - {fileID: 11400000, guid: 9e5b8398dae5f214daa5a96f35fb5a83, type: 2}
+--- !u!114 &5985586301246172748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828007681366035593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71fdf55cc5527f04d900fd68da901f32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::A_ScoreManager
+--- !u!114 &4336387172393711562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828007681366035593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66394a59cf93794489a3c0fb5ac47a71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_AudioManager
+  musicSource: {fileID: 0}
+  bulletSource: {fileID: 0}
+  sfxSource: {fileID: 0}
+  playerDmg: {fileID: 0}
+  playerDie: {fileID: 0}
+  enemyDmg: {fileID: 0}
+  enemyDeath: {fileID: 0}
+  enemyTp: {fileID: 0}
+  enemySpawn: {fileID: 0}

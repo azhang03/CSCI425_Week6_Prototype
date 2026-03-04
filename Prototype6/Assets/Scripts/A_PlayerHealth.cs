@@ -6,6 +6,9 @@ public class A_PlayerHealth : MonoBehaviour
 {
     public static A_PlayerHealth Instance { get; private set; }
 
+    public S_AudioManager audioManager;
+
+
     [Header("Health Settings")]
     public int maxHearts = 3;
 
@@ -63,11 +66,14 @@ public class A_PlayerHealth : MonoBehaviour
     {
         if (IsDead || isInvincible) return;
 
+        audioManager.PlayPlayerHurt();
+
         CurrentHearts = Mathf.Max(0, CurrentHearts - amount);
         OnHealthChanged?.Invoke(CurrentHearts, maxHearts);
 
         if (CurrentHearts <= 0)
         {
+            audioManager.PlayPlayerDie();
             Die();
             return;
         }

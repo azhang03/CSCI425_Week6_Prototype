@@ -92,3 +92,4 @@ MonoBehaviour:
   teleportInterval: 3
   shrinkFactor: 0.75
   fadeDuration: 0.4
+  audioManager: {fileID: 4336387172393711562, guid: fbdb87669d648c84e9b5627c2609e6e0, type: 3}

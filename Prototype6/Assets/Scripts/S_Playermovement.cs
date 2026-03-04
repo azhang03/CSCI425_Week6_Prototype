@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 using static A_EnemySpawner;
 
-public class S_Playermovement : MonoBehaviour
+public class S_PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
 

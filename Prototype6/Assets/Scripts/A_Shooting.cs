@@ -10,6 +10,9 @@ public class A_Shooting : MonoBehaviour
 
     private float fireTimer;
 
+    public S_AudioManager audioManager;
+
+
     void Update()
     {
         fireTimer -= Time.deltaTime;
@@ -38,7 +41,6 @@ public class A_Shooting : MonoBehaviour
         for (int i = 0; i < toFire.Count; i++)
         {
             FireWeapon(toFire[i]);
-
             if (i < toFire.Count - 1)
                 yield return new WaitForSeconds(staggerDelay);
         }
@@ -50,11 +52,14 @@ public class A_Shooting : MonoBehaviour
         {
             case WeaponType.Projectile:
                 FireProjectile(entry);
+                audioManager.PlayBullet();
                 break;
             case WeaponType.Area:
+                audioManager.PlayAreaWeapon();
                 FireArea(entry);
                 break;
             case WeaponType.Line:
+                audioManager.PlayLaser();
                 FireLine(entry);
                 break;
         }

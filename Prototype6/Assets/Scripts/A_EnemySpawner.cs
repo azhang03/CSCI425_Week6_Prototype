@@ -7,6 +7,9 @@ public class A_EnemySpawner : MonoBehaviour
 {
     public static A_EnemySpawner Instance { get; private set; }
 
+    public S_AudioManager audioManager;
+
+
     [Header("References")]
     public Tilemap stageTilemap;
     public Transform rotateParent;
@@ -30,6 +33,8 @@ public class A_EnemySpawner : MonoBehaviour
 
     private Dictionary<int, int> cycleKillCounts = new Dictionary<int, int>();
     public event System.Action OnCycleProgressChanged;
+
+
 
     [System.Serializable]
     public class EnemyType
@@ -136,7 +141,7 @@ public class A_EnemySpawner : MonoBehaviour
                 spawnInterval = stageIntervals[0];
                 cycleKillCounts[cycleCount] = 0;
                 OnCycleProgressChanged?.Invoke();
-                Debug.Log("Cycle " + cycleCount + " — enemies now have +" + (cycleCount * bonusHPPerCycle) + " HP, worth " + (1 + cycleCount * 2) + " pts");
+                //Debug.Log("Cycle " + cycleCount + " — enemies now have +" + (cycleCount * bonusHPPerCycle) + " HP, worth " + (1 + cycleCount * 2) + " pts");
             }
             else
             {
@@ -178,6 +183,8 @@ public class A_EnemySpawner : MonoBehaviour
 
             if (rotateParent != null)
                 enemy.transform.SetParent(rotateParent);
+
+            audioManager.PlayEnemySpawn();
         }
     }
 
@@ -192,7 +199,7 @@ public class A_EnemySpawner : MonoBehaviour
 
             if (randomValue <= cumulativeWeight)
             {
-                Debug.Log("Enemy anem :" + enemy.name);
+                //Debug.Log("Enemy anem :" + enemy.name);
                 return enemy.prefab;
             }
         }

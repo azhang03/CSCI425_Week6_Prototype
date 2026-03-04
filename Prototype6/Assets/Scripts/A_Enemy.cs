@@ -3,6 +3,9 @@ using System.Collections;
 
 public class A_Enemy : MonoBehaviour
 {
+
+    public S_AudioManager audioManager;
+
     [Header("Stats")]
     public int maxHitPoints = 2;
     public float moveSpeed = 2f;
@@ -63,8 +66,13 @@ public class A_Enemy : MonoBehaviour
         currentHP -= damage;
         A_DamagePopup.Create(transform.position, damage);
 
+        audioManager.PlayEnemyHurt();
+
+
         if (currentHP <= 0)
         {
+            audioManager.PlayEnemyDie();
+
             if (A_XPManager.Instance != null)
                 A_XPManager.Instance.AddXP(xpValue);
             if (A_ScoreManager.Instance != null)

@@ -17,6 +17,9 @@ public class S_TeleportMove : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private bool isTeleporting = false;
 
+    public S_AudioManager audioManager;
+
+
     void Start()
     {
         GameObject player = GameObject.Find("Player");
@@ -35,10 +38,13 @@ public class S_TeleportMove : MonoBehaviour
 
         if (timer >= teleportInterval)
         {
+            audioManager.PlayEnemyTp();        
             StartCoroutine(TeleportRoutine());
             timer = 0f;
         }
     }
+
+
 
 
 

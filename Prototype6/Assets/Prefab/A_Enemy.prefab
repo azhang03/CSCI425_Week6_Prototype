@@ -179,7 +179,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40a3e21256800b743b522bcba5df35cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::A_Enemy
+  audioManager: {fileID: 4336387172393711562, guid: fbdb87669d648c84e9b5627c2609e6e0, type: 3}
   maxHitPoints: 2
   moveSpeed: 1
+  xpValue: 1
+  scoreValue: 1
+  spawnCycle: 0
   hitFlashDuration: 0.12
   hitFlashColor: {r: 1, g: 0, b: 0, a: 1}

@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
+
+    public S_AudioManager audioManager;
+
     [Header("Health Settings")]
     public int maxHearts = 3;
 
@@ -36,8 +39,9 @@ public class PlayerHealth : MonoBehaviour
     void TakeDamage(int amount)
     {
         currentHearts -= amount;
+        audioManager.PlayPlayerHurt();
 
-        Debug.Log("Player Hearts: " + currentHearts);
+
 
         if (currentHearts <= 0)
         {
@@ -48,11 +52,12 @@ public class PlayerHealth : MonoBehaviour
     void Die()
     {
         isDead = true;
+        audioManager.PlayPlayerDie();
 
-        Debug.Log("Player Died");
 
         if (actuallyDie)
         {
+
             Destroy(this);
         }
 
