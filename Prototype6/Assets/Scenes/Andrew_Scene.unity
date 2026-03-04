@@ -6880,6 +6880,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 4336387172393711562, guid: fbdb87669d648c84e9b5627c2609e6e0, type: 3}
+      propertyPath: enemyTp
+      value: 
+      objectReference: {fileID: 8300000, guid: b28d85fec173edb46b1fef883ae387ad, type: 3}
+    - target: {fileID: 4336387172393711562, guid: fbdb87669d648c84e9b5627c2609e6e0, type: 3}
+      propertyPath: playerDie
+      value: 
+      objectReference: {fileID: 8300000, guid: cca3b0043d08ed74a870353c5bc425a2, type: 3}
+    - target: {fileID: 4336387172393711562, guid: fbdb87669d648c84e9b5627c2609e6e0, type: 3}
+      propertyPath: playerDmg
+      value: 
+      objectReference: {fileID: 8300000, guid: 1e682e97c58a22540bf081512d5d4f3b, type: 3}
+    - target: {fileID: 4336387172393711562, guid: fbdb87669d648c84e9b5627c2609e6e0, type: 3}
+      propertyPath: sfxSource
+      value: 
+      objectReference: {fileID: 1880669222}
+    - target: {fileID: 4336387172393711562, guid: fbdb87669d648c84e9b5627c2609e6e0, type: 3}
+      propertyPath: musicSource
+      value: 
+      objectReference: {fileID: 1880669221}
+    - target: {fileID: 4336387172393711562, guid: fbdb87669d648c84e9b5627c2609e6e0, type: 3}
+      propertyPath: weaponSource
+      value: 
+      objectReference: {fileID: 1880669220}
     - target: {fileID: 5462717441275598915, guid: fbdb87669d648c84e9b5627c2609e6e0, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.6608
