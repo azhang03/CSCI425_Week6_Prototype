@@ -61,7 +61,6 @@ public class S_AudioManager : MonoBehaviour
     public void PlayEnemyTp()
     {
         Debug.Log("enemy tp");
-
         PlaySFX(enemyTp);
     }
     public void PlaySFX(AudioClip clip)
