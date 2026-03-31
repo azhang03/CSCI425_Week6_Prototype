@@ -27,7 +27,20 @@ public class A_XPBar : MonoBehaviour
             A_XPManager.Instance.OnXPChanged += UpdateBar;
             UpdateBar(A_XPManager.Instance.CurrentXP, A_XPManager.Instance.XPToNextLevel);
         }
-        gameObject.SetActive(A_PauseMenu.AugmentsEnabled);
+        SetVisible(A_PauseMenu.AugmentsEnabled);
+    }
+
+    void Update()
+    {
+        bool shouldShow = A_PauseMenu.AugmentsEnabled;
+        if (fillImage != null && fillImage.gameObject.activeSelf != shouldShow)
+            SetVisible(shouldShow);
+    }
+
+    void SetVisible(bool visible)
+    {
+        if (fillImage != null) fillImage.gameObject.SetActive(visible);
+        if (label != null) label.gameObject.SetActive(visible);
     }
 
     void UpdateBar(int currentXP, int xpToNextLevel)

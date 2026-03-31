@@ -18,6 +18,7 @@ public class A_AugmentUI : MonoBehaviour
     private List<GameObject> activeCards = new List<GameObject>();
     public bool IsShowing { get; private set; }
     private CanvasGroup canvasGroup;
+    private bool subscribedToLevelUp = false;
 
     void Start()
     {
@@ -26,15 +27,25 @@ public class A_AugmentUI : MonoBehaviour
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
 
         Hide();
-
-        if (A_PauseMenu.AugmentsEnabled && A_XPManager.Instance != null)
-            A_XPManager.Instance.OnLevelUp += ShowAugmentSelection;
+        TrySubscribe();
     }
 
     void Update()
     {
+        if (!subscribedToLevelUp)
+            TrySubscribe();
+
         if (IsShowing && !A_PauseMenu.IsPaused && UnityEngine.InputSystem.Keyboard.current.digit2Key.wasPressedThisFrame)
             Reroll();
+    }
+
+    void TrySubscribe()
+    {
+        if (A_PauseMenu.AugmentsEnabled && A_XPManager.Instance != null && !subscribedToLevelUp)
+        {
+            A_XPManager.Instance.OnLevelUp += ShowAugmentSelection;
+            subscribedToLevelUp = true;
+        }
     }
 
     void Reroll()
