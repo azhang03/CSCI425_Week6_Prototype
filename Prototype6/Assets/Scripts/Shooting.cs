@@ -1,49 +1,159 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class Shooting : MonoBehaviour
+public class A_Shooting : MonoBehaviour
 {
-    public GameObject projectilePrefab;
-    public float projectileSpeed = 8f;
-    public float fireCooldown = 0.2f;
-
+    public float fireInterval = 1.5f;
     public float spawnOffset = 0.5f;
+    public float staggerDelay = 0.15f;
 
-    private float cooldownTimer;
+    private float fireTimer;
+
+    public S_AudioManager audioManager;
+
 
     void Update()
     {
-        cooldownTimer -= Time.deltaTime;
+        fireTimer -= Time.deltaTime;
 
-        if (Mouse.current.leftButton.wasPressedThisFrame && cooldownTimer <= 0f)
+        if (fireTimer <= 0f)
         {
-            Shoot();
-            cooldownTimer = fireCooldown;
+            fireTimer = fireInterval;
+            audioManager.PlayBullet();
+            StartCoroutine(FireWeapons());
         }
     }
 
-    void Shoot()
+    IEnumerator FireWeapons()
     {
-        if (projectilePrefab == null) return;
+        if (A_WeaponManager.Instance == null) yield break;
+
+        var weapons = A_WeaponManager.Instance.GetActiveWeapons();
+        List<A_WeaponManager.WeaponEntry> toFire = new List<A_WeaponManager.WeaponEntry>();
+
+        foreach (var entry in weapons)
+        {
+            if (entry.isOnCooldown) continue;
+
+            if (!A_PauseMenu.AugmentsEnabled)
+            {
+                if (entry.data.weaponType == WeaponType.Projectile)
+                    toFire.Add(entry);
+                continue;
+            }
+
+            if (Random.value < entry.currentChance)
+                toFire.Add(entry);
+        }
+
+        for (int i = 0; i < toFire.Count; i++)
+        {
+            FireWeapon(toFire[i]);
+            if (i < toFire.Count - 1)
+                yield return new WaitForSeconds(staggerDelay);
+        }
+    }
+
+    void FireWeapon(A_WeaponManager.WeaponEntry entry)
+    {
+        switch (entry.data.weaponType)
+        {
+            case WeaponType.Projectile:
+                FireProjectile(entry);
+                //audioManager.PlayBullet();
+                break;
+            case WeaponType.Area:
+                //audioManager.PlayAreaWeapon();
+                FireArea(entry);
+                break;
+            case WeaponType.Line:
+               // audioManager.PlayLaser();
+                FireLine(entry);
+                break;
+        }
+    }
+
+    void FireProjectile(A_WeaponManager.WeaponEntry entry)
+    {
+        A_WeaponData weapon = entry.data;
+        if (weapon.projectilePrefab == null) return;
 
         Vector2 direction = GetRandomDirection();
 
-        Vector3 bulletPosition= new Vector3(transform.position.x + spawnOffset*direction.x, transform.position.y + spawnOffset * direction.y, transform.position.z);
+        Vector3 spawnPos = new Vector3(
+            transform.position.x + spawnOffset * direction.x,
+            transform.position.y + spawnOffset * direction.y,
+            transform.position.z
+        );
 
-
-        // Spawn projectile at player position
         GameObject projectile = Instantiate(
-            projectilePrefab,
-            bulletPosition,
+            weapon.projectilePrefab,
+            spawnPos,
             Quaternion.identity
         );
 
+        A_Projectile proj = projectile.GetComponent<A_Projectile>();
+        if (proj != null)
+            proj.damage = weapon.damage + entry.bonusDamage;
+
+        if (entry.bonusRadius > 0f)
+            projectile.transform.localScale *= (1f + entry.bonusRadius);
 
         Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
-
         if (rb != null)
+            rb.linearVelocity = direction * weapon.projectileSpeed;
+
+        A_WeaponManager.Instance.NotifyWeaponFired(weapon.weaponName, 0.3f);
+    }
+
+    void FireArea(A_WeaponManager.WeaponEntry entry)
+    {
+        A_WeaponData weapon = entry.data;
+        if (weapon.projectilePrefab == null) return;
+
+        GameObject moatObj = Instantiate(
+            weapon.projectilePrefab,
+            transform.position,
+            Quaternion.identity
+        );
+
+        A_Moat moat = moatObj.GetComponent<A_Moat>();
+        if (moat != null)
         {
-            rb.linearVelocity = direction * projectileSpeed;
+            moat.damage = weapon.damage + entry.bonusDamage;
+            moat.duration = weapon.duration + entry.bonusDuration;
+            moat.radius = weapon.radius + entry.bonusRadius;
+            moat.weaponName = weapon.weaponName;
+        }
+
+        A_WeaponManager.Instance.SetCooldown(weapon.weaponName, true);
+        A_WeaponManager.Instance.NotifyWeaponFired(weapon.weaponName, -1f);
+    }
+
+    void FireLine(A_WeaponManager.WeaponEntry entry)
+    {
+        A_WeaponData weapon = entry.data;
+        if (weapon.projectilePrefab == null) return;
+
+        Vector2 direction = GetRandomDirection();
+
+        GameObject laserObj = Instantiate(
+            weapon.projectilePrefab,
+            transform.position,
+            Quaternion.identity
+        );
+
+        A_Laser laser = laserObj.GetComponent<A_Laser>();
+        if (laser != null)
+        {
+            laser.damage = weapon.damage + entry.bonusDamage;
+            laser.bonusWidth = entry.bonusWidth;
+            laser.direction = direction;
+            laser.Setup();
+
+            float laserDuration = laser.blinkCount * (laser.blinkOnTime + laser.blinkOffTime) + laser.fadeOutDuration;
+            A_WeaponManager.Instance.NotifyWeaponFired(weapon.weaponName, laserDuration);
         }
     }
 

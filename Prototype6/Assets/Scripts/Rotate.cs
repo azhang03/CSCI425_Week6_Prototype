@@ -1,37 +1,33 @@
-
-
-
-    using UnityEngine;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class WorldRotator2D : MonoBehaviour
+public class A_WorldRotator2D : MonoBehaviour
 {
     [Header("Assign the player transform here")]
     public Transform player;
 
     [Header("Rotation Settings")]
-    public float rotationStep = 90f;
-
-    private bool isRotating = false;
+    public float rotationSpeed = 120f;
 
     void Update()
     {
-        if (!isRotating)
+        float direction = 0f;
+
+        if (Keyboard.current.leftArrowKey.isPressed ||
+            Keyboard.current.qKey.isPressed)
         {
-            if (Keyboard.current.qKey.wasPressedThisFrame)
-            {
-                RotateWorld(rotationStep);
-                Debug.Log("q pressed");
+            direction += 1f;
+        }
 
-            }
+        if (Keyboard.current.rightArrowKey.isPressed ||
+            Keyboard.current.eKey.isPressed)
+        {
+            direction -= 1f;
+        }
 
-            if (Keyboard.current.eKey.wasPressedThisFrame)
-            {
-                RotateWorld(rotationStep);
-                Debug.Log("e pressed");
-
-
-            }
+        if (direction != 0f)
+        {
+            RotateWorld(direction * rotationSpeed * Time.deltaTime);
         }
     }
 
@@ -39,19 +35,12 @@ public class WorldRotator2D : MonoBehaviour
     {
         if (player == null) return;
 
-        isRotating = true;
-
-        // Store player's world position and rotation
         Vector3 playerWorldPos = player.position;
         Quaternion playerWorldRot = player.rotation;
 
-        // Rotate the entire world around Z axis (2D axis)
         transform.Rotate(0f, 0f, angle);
 
-        // Restore player's world position and rotation
         player.position = playerWorldPos;
         player.rotation = playerWorldRot;
-
-        isRotating = false;
     }
 }

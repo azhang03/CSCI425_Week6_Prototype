@@ -1,65 +1,129 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour
+public class A_PlayerHealth : MonoBehaviour
 {
+    public static A_PlayerHealth Instance { get; private set; }
 
     public S_AudioManager audioManager;
+
 
     [Header("Health Settings")]
     public int maxHearts = 3;
 
-    private int currentHearts;
-    private bool isDead = false;
+    [Header("Invincibility")]
+    public float iFrameDuration = 1f;
+    public float flashInterval = 0.1f;
 
-    public string enemyTag = "Enemy";
+    public int CurrentHearts { get; private set; }
+    public bool IsDead { get; private set; }
 
-    public bool actuallyDie = false; //for testing
+    public event Action<int, int> OnHealthChanged;
+    public event Action OnPlayerDied;
+
+    private bool isInvincible;
+    private SpriteRenderer spriteRenderer;
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+            return;
+        }
+        Instance = this;
+    }
 
     void Start()
     {
-        currentHearts = maxHearts;
+        CurrentHearts = maxHearts;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        OnHealthChanged?.Invoke(CurrentHearts, maxHearts);
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+        if (IsDead || isInvincible) return;
 
-        if (collision.gameObject.CompareTag(enemyTag))
+
+        S_Enemy sEnemy = collision.GetComponent<S_Enemy>();
+        if (sEnemy != null)
         {
             Destroy(collision.gameObject);
-
-            if (!isDead)
-            {
-                TakeDamage(1);
-
-
-            }
+            TakeDamage(1);
         }
     }
 
-    void TakeDamage(int amount)
+    public void TakeDamage(int amount)
     {
-        currentHearts -= amount;
+        if (IsDead || isInvincible) return;
+
         audioManager.PlayPlayerHurt();
 
+        CurrentHearts = Mathf.Max(0, CurrentHearts - amount);
+        OnHealthChanged?.Invoke(CurrentHearts, maxHearts);
 
-
-        if (currentHearts <= 0)
+        if (CurrentHearts <= 0)
         {
+            audioManager.PlayPlayerDie();
             Die();
+            return;
         }
+
+        StartCoroutine(IFrames());
+    }
+
+    IEnumerator IFrames()
+    {
+        isInvincible = true;
+        float elapsed = 0f;
+        bool visible = true;
+
+        while (elapsed < iFrameDuration)
+        {
+            visible = !visible;
+            if (spriteRenderer != null)
+                spriteRenderer.enabled = visible;
+
+            yield return new WaitForSeconds(flashInterval);
+            elapsed += flashInterval;
+        }
+
+        if (spriteRenderer != null)
+            spriteRenderer.enabled = true;
+        isInvincible = false;
+    }
+
+    public void AddMaxHearts(int amount)
+    {
+        maxHearts += amount;
+        if (amount > 0)
+            CurrentHearts = Mathf.Min(CurrentHearts + amount, maxHearts);
+        else
+            CurrentHearts = Mathf.Min(CurrentHearts, maxHearts);
+
+        if (maxHearts < 1) maxHearts = 1;
+        if (CurrentHearts < 1 && !IsDead)
+        {
+            CurrentHearts = 0;
+            OnHealthChanged?.Invoke(CurrentHearts, maxHearts);
+            Die();
+            return;
+        }
+
+        OnHealthChanged?.Invoke(CurrentHearts, maxHearts);
     }
 
     void Die()
     {
-        isDead = true;
-        audioManager.PlayPlayerDie();
+        IsDead = true;
+        OnPlayerDied?.Invoke();
+    }
 
-
-        if (actuallyDie)
-        {
-
-            Destroy(this);
-        }
-
+    void OnDestroy()
+    {
+        if (Instance == this)
+            Instance = null;
     }
 }
