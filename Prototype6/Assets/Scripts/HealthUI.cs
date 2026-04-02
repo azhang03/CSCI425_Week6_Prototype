@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-public class A_HealthUI : MonoBehaviour
+public class HealthUI : MonoBehaviour
 {
     [Header("UI Reference")]
     public TextMeshProUGUI heartsText;
@@ -15,21 +15,21 @@ public class A_HealthUI : MonoBehaviour
 
     void Update()
     {
-        if (!subscribed && A_PlayerHealth.Instance != null)
+        if (!subscribed && PlayerHealth.Instance != null)
         {
-            A_PlayerHealth.Instance.OnHealthChanged += UpdateHearts;
-            A_PlayerHealth.Instance.OnPlayerDied += OnDied;
+            PlayerHealth.Instance.OnHealthChanged += UpdateHearts;
+            PlayerHealth.Instance.OnPlayerDied += OnDied;
             subscribed = true;
-            UpdateHearts(A_PlayerHealth.Instance.CurrentHearts, A_PlayerHealth.Instance.maxHearts);
+            UpdateHearts(PlayerHealth.Instance.CurrentHearts, PlayerHealth.Instance.maxHearts);
         }
     }
 
     void OnDestroy()
     {
-        if (subscribed && A_PlayerHealth.Instance != null)
+        if (subscribed && PlayerHealth.Instance != null)
         {
-            A_PlayerHealth.Instance.OnHealthChanged -= UpdateHearts;
-            A_PlayerHealth.Instance.OnPlayerDied -= OnDied;
+            PlayerHealth.Instance.OnHealthChanged -= UpdateHearts;
+            PlayerHealth.Instance.OnPlayerDied -= OnDied;
         }
     }
 

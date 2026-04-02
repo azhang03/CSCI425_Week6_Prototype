@@ -3,11 +3,11 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
 
-public class A_EnemySpawner : MonoBehaviour
+public class EnemySpawner : MonoBehaviour
 {
-    public static A_EnemySpawner Instance { get; private set; }
+    public static EnemySpawner Instance { get; private set; }
 
-    public S_AudioManager audioManager;
+    public AudioManager audioManager;
 
 
     [Header("References")]
@@ -168,9 +168,9 @@ public class A_EnemySpawner : MonoBehaviour
             GameObject enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
 
 
-            S_Enemy sEnemy = enemy.GetComponent<S_Enemy>();
-            if (sEnemy != null)
-                sEnemy.maxHitPoints += cycleCount * bonusHPPerCycle;
+            Enemy enemyComponent = enemy.GetComponent<Enemy>();
+            if (enemyComponent != null)
+                enemyComponent.maxHitPoints += cycleCount * bonusHPPerCycle;
             
 
             if (rotateParent != null)

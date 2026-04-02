@@ -1,9 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
-public class S_Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
-    public S_AudioManager audioManager;
+    public AudioManager audioManager;
 
     [Header("Stats")]
     public int maxHitPoints = 2;
@@ -23,7 +23,7 @@ public class S_Enemy : MonoBehaviour
         currentHP = maxHitPoints;
         spriteRenderer = GetComponent<SpriteRenderer>();
         originalColor = spriteRenderer.color;
-        audioManager = FindAnyObjectByType<S_AudioManager>();
+        audioManager = FindAnyObjectByType<AudioManager>();
 
     }
 
@@ -34,7 +34,7 @@ public class S_Enemy : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        A_Projectile proj = other.GetComponent<A_Projectile>();
+        Projectile proj = other.GetComponent<Projectile>();
         if (proj != null)
         {
             int dmg = proj.damage;
@@ -54,15 +54,15 @@ public class S_Enemy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHP -= damage;
-        A_DamagePopup.Create(transform.position, damage);
+        DamagePopup.Create(transform.position, damage);
 
         audioManager.PlayEnemyHurt();
         if (currentHP <= 0)
         {
             audioManager.PlayEnemyDie();
 
-            if (A_XPManager.Instance != null)
-                A_XPManager.Instance.AddXP(xpValue);
+            if (XPManager.Instance != null)
+                XPManager.Instance.AddXP(xpValue);
             if (A_ScoreManager.Instance != null)
                 A_ScoreManager.Instance.AddKill();
             Destroy(gameObject);

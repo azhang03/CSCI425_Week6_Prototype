@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class A_Projectile : MonoBehaviour
+public class Projectile : MonoBehaviour
 {
     [HideInInspector]
     public int damage = 1;

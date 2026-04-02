@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class A_XPBar : MonoBehaviour
+public class XPBar : MonoBehaviour
 {
     [Header("UI References")]
     public Image fillImage;
@@ -10,29 +10,29 @@ public class A_XPBar : MonoBehaviour
 
     void OnEnable()
     {
-        if (A_XPManager.Instance != null)
-            A_XPManager.Instance.OnXPChanged += UpdateBar;
+        if (XPManager.Instance != null)
+            XPManager.Instance.OnXPChanged += UpdateBar;
     }
 
     void OnDisable()
     {
-        if (A_XPManager.Instance != null)
-            A_XPManager.Instance.OnXPChanged -= UpdateBar;
+        if (XPManager.Instance != null)
+            XPManager.Instance.OnXPChanged -= UpdateBar;
     }
 
     void Start()
     {
-        if (A_XPManager.Instance != null)
+        if (XPManager.Instance != null)
         {
-            A_XPManager.Instance.OnXPChanged += UpdateBar;
-            UpdateBar(A_XPManager.Instance.CurrentXP, A_XPManager.Instance.XPToNextLevel);
+            XPManager.Instance.OnXPChanged += UpdateBar;
+            UpdateBar(XPManager.Instance.CurrentXP, XPManager.Instance.XPToNextLevel);
         }
-        SetVisible(A_PauseMenu.AugmentsEnabled);
+        SetVisible(PauseMenu.AugmentsEnabled);
     }
 
     void Update()
     {
-        bool shouldShow = A_PauseMenu.AugmentsEnabled;
+        bool shouldShow = PauseMenu.AugmentsEnabled;
         if (fillImage != null && fillImage.gameObject.activeSelf != shouldShow)
             SetVisible(shouldShow);
     }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class S_DefaultMove : MonoBehaviour
+public class DefaultMove : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private Transform target;

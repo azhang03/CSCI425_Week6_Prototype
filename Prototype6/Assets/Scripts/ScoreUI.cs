@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-public class A_ScoreUI : MonoBehaviour
+public class ScoreUI : MonoBehaviour
 {
     [Header("UI Reference")]
     public TextMeshProUGUI scoreText;

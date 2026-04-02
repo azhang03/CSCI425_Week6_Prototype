@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class A_AugmentPool : MonoBehaviour
+public class AugmentPool : MonoBehaviour
 {
-    public static A_AugmentPool Instance { get; private set; }
+    public static AugmentPool Instance { get; private set; }
 
     [Header("All Augments")]
-    public List<A_AugmentData> allAugments = new List<A_AugmentData>();
+    public List<AugmentData> allAugments = new List<AugmentData>();
 
-    private List<A_AugmentData> availablePool = new List<A_AugmentData>();
+    private List<AugmentData> availablePool = new List<AugmentData>();
     private bool firstLevelUp = true;
 
     void Awake()
@@ -23,12 +23,12 @@ public class A_AugmentPool : MonoBehaviour
 
     void Start()
     {
-        availablePool = new List<A_AugmentData>(allAugments);
+        availablePool = new List<AugmentData>(allAugments);
     }
 
-    public List<A_AugmentData> GetCards(int count)
+    public List<AugmentData> GetCards(int count)
     {
-        List<A_AugmentData> result = new List<A_AugmentData>();
+        List<AugmentData> result = new List<AugmentData>();
 
         if (firstLevelUp)
         {
@@ -42,7 +42,7 @@ public class A_AugmentPool : MonoBehaviour
             if (result.Count > 0) return result;
         }
 
-        List<A_AugmentData> eligible = new List<A_AugmentData>();
+        List<AugmentData> eligible = new List<AugmentData>();
         foreach (var aug in availablePool)
         {
             if (IsEligible(aug))
@@ -52,12 +52,12 @@ public class A_AugmentPool : MonoBehaviour
         if (eligible.Count == 0)
             return result;
 
-        List<A_AugmentData> tempPool = new List<A_AugmentData>(eligible);
+        List<AugmentData> tempPool = new List<AugmentData>(eligible);
 
         while (result.Count < count && tempPool.Count > 0)
         {
             int idx = Random.Range(0, tempPool.Count);
-            A_AugmentData picked = tempPool[idx];
+            AugmentData picked = tempPool[idx];
             tempPool.RemoveAt(idx);
 
             if (result.Contains(picked))
@@ -74,21 +74,21 @@ public class A_AugmentPool : MonoBehaviour
         return result;
     }
 
-    bool IsEligible(A_AugmentData augment)
+    bool IsEligible(AugmentData augment)
     {
-        if (A_WeaponManager.Instance == null) return true;
+        if (WeaponManager.Instance == null) return true;
 
         switch (augment.type)
         {
             case AugmentType.ModifyWeaponStat:
-                return A_WeaponManager.Instance.HasWeapon(augment.statWeaponName);
+                return WeaponManager.Instance.HasWeapon(augment.statWeaponName);
 
             case AugmentType.Tradeoff:
-                return A_WeaponManager.Instance.GetWeaponCount() >= 2;
+                return WeaponManager.Instance.GetWeaponCount() >= 2;
 
             case AugmentType.ModifyHealth:
-                if (augment.healthDelta < 0 && A_PlayerHealth.Instance != null)
-                    return A_PlayerHealth.Instance.CurrentHearts > Mathf.Abs(augment.healthDelta);
+                if (augment.healthDelta < 0 && PlayerHealth.Instance != null)
+                    return PlayerHealth.Instance.CurrentHearts > Mathf.Abs(augment.healthDelta);
                 return true;
 
             default:
@@ -96,22 +96,22 @@ public class A_AugmentPool : MonoBehaviour
         }
     }
 
-    public void ApplyAugment(A_AugmentData augment)
+    public void ApplyAugment(AugmentData augment)
     {
-        if (A_WeaponManager.Instance == null) return;
+        if (WeaponManager.Instance == null) return;
 
         switch (augment.type)
         {
             case AugmentType.NewWeapon:
                 if (augment.weaponToAdd != null)
                 {
-                    A_WeaponManager.Instance.AddWeapon(augment.weaponToAdd);
-                    A_WeaponManager.Instance.ModifyChance("Bullet", -0.05f);
+                    WeaponManager.Instance.AddWeapon(augment.weaponToAdd);
+                    WeaponManager.Instance.ModifyChance("Bullet", -0.05f);
                 }
                 break;
 
             case AugmentType.ModifyWeapon:
-                A_WeaponManager.Instance.ModifyChance(augment.weaponToModify, augment.chanceDelta);
+                WeaponManager.Instance.ModifyChance(augment.weaponToModify, augment.chanceDelta);
                 break;
 
             case AugmentType.Tradeoff:
@@ -119,24 +119,24 @@ public class A_AugmentPool : MonoBehaviour
                 break;
 
             case AugmentType.ModifyAllWeapons:
-                A_WeaponManager.Instance.ModifyAllChances(augment.allChanceDelta);
+                WeaponManager.Instance.ModifyAllChances(augment.allChanceDelta);
                 break;
 
             case AugmentType.ModifyHealth:
-                if (A_PlayerHealth.Instance != null)
-                    A_PlayerHealth.Instance.AddMaxHearts(augment.healthDelta);
+                if (PlayerHealth.Instance != null)
+                    PlayerHealth.Instance.AddMaxHearts(augment.healthDelta);
                 if (augment.allChanceDelta != 0f)
-                    A_WeaponManager.Instance.ModifyAllChances(augment.allChanceDelta);
+                    WeaponManager.Instance.ModifyAllChances(augment.allChanceDelta);
                 break;
 
             case AugmentType.ModifyFireInterval:
-                A_Shooting shooter = FindAnyObjectByType<A_Shooting>();
+                Shooting shooter = FindAnyObjectByType<Shooting>();
                 if (shooter != null)
                     shooter.fireInterval = Mathf.Max(0.5f, shooter.fireInterval + augment.intervalDelta);
                 break;
 
             case AugmentType.ModifyWeaponStat:
-                A_WeaponManager.Instance.ModifyWeaponStat(
+                WeaponManager.Instance.ModifyWeaponStat(
                     augment.statWeaponName, augment.statName, augment.statDelta);
                 break;
         }
@@ -145,19 +145,19 @@ public class A_AugmentPool : MonoBehaviour
             availablePool.Remove(augment);
     }
 
-    void ApplyTradeoff(A_AugmentData augment)
+    void ApplyTradeoff(AugmentData augment)
     {
         var boost = augment.boostTarget == TargetMode.Highest
-            ? A_WeaponManager.Instance.GetHighestChanceEntry()
-            : A_WeaponManager.Instance.GetLowestChanceEntry();
+            ? WeaponManager.Instance.GetHighestChanceEntry()
+            : WeaponManager.Instance.GetLowestChanceEntry();
 
         var nerf = augment.nerfTarget == TargetMode.Highest
-            ? A_WeaponManager.Instance.GetHighestChanceEntry()
-            : A_WeaponManager.Instance.GetLowestChanceEntry();
+            ? WeaponManager.Instance.GetHighestChanceEntry()
+            : WeaponManager.Instance.GetLowestChanceEntry();
 
         if (boost != null)
-            A_WeaponManager.Instance.ModifyChance(boost.data.weaponName, augment.boostDelta);
+            WeaponManager.Instance.ModifyChance(boost.data.weaponName, augment.boostDelta);
         if (nerf != null)
-            A_WeaponManager.Instance.ModifyChance(nerf.data.weaponName, augment.nerfDelta);
+            WeaponManager.Instance.ModifyChance(nerf.data.weaponName, augment.nerfDelta);
     }
 }

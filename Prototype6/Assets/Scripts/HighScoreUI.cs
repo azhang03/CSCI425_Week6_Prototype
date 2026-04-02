@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class ScoreUI : MonoBehaviour
+public class HighScoreUI : MonoBehaviour
 {
     public TextMeshProUGUI highScoreText;
     public string prefix = "HighScore: ";

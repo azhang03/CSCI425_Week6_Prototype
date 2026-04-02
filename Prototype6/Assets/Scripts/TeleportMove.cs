@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 
-public class S_TeleportMove : MonoBehaviour
+public class TeleportMove : MonoBehaviour
 {
     [Header("Teleport Settings")]
     public float teleportInterval = 2f;
@@ -17,7 +17,7 @@ public class S_TeleportMove : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private bool isTeleporting = false;
 
-    public S_AudioManager audioManager;
+    public AudioManager audioManager;
 
 
     void Start()
@@ -27,7 +27,7 @@ public class S_TeleportMove : MonoBehaviour
             target = player.transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        audioManager = FindAnyObjectByType<S_AudioManager>(); 
+        audioManager = FindAnyObjectByType<AudioManager>(); 
 
 
     }
@@ -41,7 +41,7 @@ public class S_TeleportMove : MonoBehaviour
 
         if (timer >= teleportInterval)
         {
-            S_AudioManager.Instance?.PlayEnemyTp();
+            AudioManager.Instance?.PlayEnemyTp();
             StartCoroutine(TeleportRoutine());
             timer = 0f;
         }

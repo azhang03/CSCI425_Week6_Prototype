@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class A_WeaponInventoryUI : MonoBehaviour
+public class WeaponInventoryUI : MonoBehaviour
 {
     [Header("UI Reference")]
     public TextMeshProUGUI inventoryText;
@@ -12,18 +12,18 @@ public class A_WeaponInventoryUI : MonoBehaviour
 
     void Start()
     {
-        if (!A_PauseMenu.AugmentsEnabled && inventoryText != null)
+        if (!PauseMenu.AugmentsEnabled && inventoryText != null)
             inventoryText.gameObject.SetActive(false);
     }
 
     void Update()
     {
-        if (!A_PauseMenu.AugmentsEnabled) return;
+        if (!PauseMenu.AugmentsEnabled) return;
 
-        if (!subscribed && A_WeaponManager.Instance != null)
+        if (!subscribed && WeaponManager.Instance != null)
         {
-            A_WeaponManager.Instance.OnInventoryChanged += UpdateDisplay;
-            A_WeaponManager.Instance.OnWeaponFired += OnWeaponFired;
+            WeaponManager.Instance.OnInventoryChanged += UpdateDisplay;
+            WeaponManager.Instance.OnWeaponFired += OnWeaponFired;
             subscribed = true;
             UpdateDisplay();
         }
@@ -34,10 +34,10 @@ public class A_WeaponInventoryUI : MonoBehaviour
 
     void OnDestroy()
     {
-        if (subscribed && A_WeaponManager.Instance != null)
+        if (subscribed && WeaponManager.Instance != null)
         {
-            A_WeaponManager.Instance.OnInventoryChanged -= UpdateDisplay;
-            A_WeaponManager.Instance.OnWeaponFired -= OnWeaponFired;
+            WeaponManager.Instance.OnInventoryChanged -= UpdateDisplay;
+            WeaponManager.Instance.OnWeaponFired -= OnWeaponFired;
         }
     }
 
@@ -71,9 +71,9 @@ public class A_WeaponInventoryUI : MonoBehaviour
 
     void UpdateDisplay()
     {
-        if (inventoryText == null || A_WeaponManager.Instance == null) return;
+        if (inventoryText == null || WeaponManager.Instance == null) return;
 
-        var weapons = A_WeaponManager.Instance.GetActiveWeapons();
+        var weapons = WeaponManager.Instance.GetActiveWeapons();
 
         System.Text.StringBuilder sb = new System.Text.StringBuilder();
         sb.AppendLine("<b>Weapons</b>");

@@ -35,15 +35,15 @@ public class A_AugmentUI : MonoBehaviour
         if (!subscribedToLevelUp)
             TrySubscribe();
 
-        if (IsShowing && !A_PauseMenu.IsPaused && UnityEngine.InputSystem.Keyboard.current.digit2Key.wasPressedThisFrame)
+        if (IsShowing && !PauseMenu.IsPaused && UnityEngine.InputSystem.Keyboard.current.digit2Key.wasPressedThisFrame)
             Reroll();
     }
 
     void TrySubscribe()
     {
-        if (A_PauseMenu.AugmentsEnabled && A_XPManager.Instance != null && !subscribedToLevelUp)
+        if (PauseMenu.AugmentsEnabled && XPManager.Instance != null && !subscribedToLevelUp)
         {
-            A_XPManager.Instance.OnLevelUp += ShowAugmentSelection;
+            XPManager.Instance.OnLevelUp += ShowAugmentSelection;
             subscribedToLevelUp = true;
         }
     }
@@ -52,8 +52,8 @@ public class A_AugmentUI : MonoBehaviour
     {
         ClearCards();
 
-        if (A_AugmentPool.Instance == null) return;
-        List<A_AugmentData> cards = A_AugmentPool.Instance.GetCards(3);
+        if (AugmentPool.Instance == null) return;
+        List<AugmentData> cards = AugmentPool.Instance.GetCards(3);
         if (cards.Count == 0) return;
 
         foreach (var augment in cards)
@@ -62,8 +62,8 @@ public class A_AugmentUI : MonoBehaviour
 
     void OnDestroy()
     {
-        if (A_XPManager.Instance != null)
-            A_XPManager.Instance.OnLevelUp -= ShowAugmentSelection;
+        if (XPManager.Instance != null)
+            XPManager.Instance.OnLevelUp -= ShowAugmentSelection;
     }
 
     void Hide()
@@ -82,9 +82,9 @@ public class A_AugmentUI : MonoBehaviour
 
     void ShowAugmentSelection(int newLevel)
     {
-        if (A_AugmentPool.Instance == null) return;
+        if (AugmentPool.Instance == null) return;
 
-        List<A_AugmentData> cards = A_AugmentPool.Instance.GetCards(3);
+        List<AugmentData> cards = AugmentPool.Instance.GetCards(3);
         if (cards.Count == 0) return;
 
         Time.timeScale = 0f;
@@ -107,7 +107,7 @@ public class A_AugmentUI : MonoBehaviour
         activeCards.Clear();
     }
 
-    GameObject CreateCard(A_AugmentData data)
+    GameObject CreateCard(AugmentData data)
     {
         GameObject cardObj = new GameObject(data.augmentName + "_Card", typeof(RectTransform));
         cardObj.transform.SetParent(transform, false);
@@ -157,7 +157,7 @@ public class A_AugmentUI : MonoBehaviour
         descTMP.textWrappingMode = TextWrappingModes.Normal;
 
         // Card script
-        A_AugmentCard card = cardObj.AddComponent<A_AugmentCard>();
+        AugmentCard card = cardObj.AddComponent<AugmentCard>();
         card.backgroundImage = bgImage;
         card.outline = outline;
         card.titleText = titleTMP;
@@ -170,11 +170,11 @@ public class A_AugmentUI : MonoBehaviour
         return cardObj;
     }
 
-    public void OnCardSelected(A_AugmentData data)
+    public void OnCardSelected(AugmentData data)
     {
         if (!IsShowing) return;
 
-        A_AugmentPool.Instance.ApplyAugment(data);
+        AugmentPool.Instance.ApplyAugment(data);
 
         ClearCards();
         IsShowing = false;

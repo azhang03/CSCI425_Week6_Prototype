@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class A_WeaponManager : MonoBehaviour
+public class WeaponManager : MonoBehaviour
 {
-    public static A_WeaponManager Instance { get; private set; }
+    public static WeaponManager Instance { get; private set; }
 
     [Header("Starting Weapon")]
-    public A_WeaponData startingWeapon;
+    public WeaponData startingWeapon;
 
     public event Action OnInventoryChanged;
     public event Action<string, float> OnWeaponFired;
@@ -20,7 +20,7 @@ public class A_WeaponManager : MonoBehaviour
     [Serializable]
     public class WeaponEntry
     {
-        public A_WeaponData data;
+        public WeaponData data;
         public float currentChance;
         public bool isOnCooldown;
         public float bonusDuration;
@@ -54,7 +54,7 @@ public class A_WeaponManager : MonoBehaviour
         }
     }
 
-    public void AddWeapon(A_WeaponData data)
+    public void AddWeapon(WeaponData data)
     {
         weapons.Add(new WeaponEntry
         {

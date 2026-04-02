@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
-public class A_AugmentCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class AugmentCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [Header("References")]
     public Image backgroundImage;
@@ -15,10 +15,10 @@ public class A_AugmentCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public Color defaultOutlineColor = new Color(0.25f, 0.25f, 0.25f, 1f);
     public Color hoverOutlineColor = new Color(1f, 0.85f, 0.3f, 1f);
 
-    private A_AugmentData augmentData;
+    private AugmentData augmentData;
     private A_AugmentUI parentUI;
 
-    public void Setup(A_AugmentData data, A_AugmentUI parent)
+    public void Setup(AugmentData data, A_AugmentUI parent)
     {
         augmentData = data;
         parentUI = parent;

@@ -1,9 +1,9 @@
 using System;
 using UnityEngine;
 
-public class A_XPManager : MonoBehaviour
+public class XPManager : MonoBehaviour
 {
-    public static A_XPManager Instance { get; private set; }
+    public static XPManager Instance { get; private set; }
 
     [Header("Leveling")]
     public int xpPerLevel = 5;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class S_SpiralMove : MonoBehaviour
+public class SpiralMove : MonoBehaviour
 {
     [Header("Movement Settings")]
     private Transform target;

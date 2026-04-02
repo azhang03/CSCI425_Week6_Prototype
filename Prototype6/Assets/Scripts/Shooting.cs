@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class A_Shooting : MonoBehaviour
+public class Shooting : MonoBehaviour
 {
     public float fireInterval = 1.5f;
     public float spawnOffset = 0.5f;
@@ -10,7 +10,7 @@ public class A_Shooting : MonoBehaviour
 
     private float fireTimer;
 
-    public S_AudioManager audioManager;
+    public AudioManager audioManager;
 
 
     void Update()
@@ -27,16 +27,16 @@ public class A_Shooting : MonoBehaviour
 
     IEnumerator FireWeapons()
     {
-        if (A_WeaponManager.Instance == null) yield break;
+        if (WeaponManager.Instance == null) yield break;
 
-        var weapons = A_WeaponManager.Instance.GetActiveWeapons();
-        List<A_WeaponManager.WeaponEntry> toFire = new List<A_WeaponManager.WeaponEntry>();
+        var weapons = WeaponManager.Instance.GetActiveWeapons();
+        List<WeaponManager.WeaponEntry> toFire = new List<WeaponManager.WeaponEntry>();
 
         foreach (var entry in weapons)
         {
             if (entry.isOnCooldown) continue;
 
-            if (!A_PauseMenu.AugmentsEnabled)
+            if (!PauseMenu.AugmentsEnabled)
             {
                 if (entry.data.weaponType == WeaponType.Projectile)
                     toFire.Add(entry);
@@ -55,7 +55,7 @@ public class A_Shooting : MonoBehaviour
         }
     }
 
-    void FireWeapon(A_WeaponManager.WeaponEntry entry)
+    void FireWeapon(WeaponManager.WeaponEntry entry)
     {
         switch (entry.data.weaponType)
         {
@@ -74,9 +74,9 @@ public class A_Shooting : MonoBehaviour
         }
     }
 
-    void FireProjectile(A_WeaponManager.WeaponEntry entry)
+    void FireProjectile(WeaponManager.WeaponEntry entry)
     {
-        A_WeaponData weapon = entry.data;
+        WeaponData weapon = entry.data;
         if (weapon.projectilePrefab == null) return;
 
         Vector2 direction = GetRandomDirection();
@@ -93,7 +93,7 @@ public class A_Shooting : MonoBehaviour
             Quaternion.identity
         );
 
-        A_Projectile proj = projectile.GetComponent<A_Projectile>();
+        Projectile proj = projectile.GetComponent<Projectile>();
         if (proj != null)
             proj.damage = weapon.damage + entry.bonusDamage;
 
@@ -104,12 +104,12 @@ public class A_Shooting : MonoBehaviour
         if (rb != null)
             rb.linearVelocity = direction * weapon.projectileSpeed;
 
-        A_WeaponManager.Instance.NotifyWeaponFired(weapon.weaponName, 0.3f);
+        WeaponManager.Instance.NotifyWeaponFired(weapon.weaponName, 0.3f);
     }
 
-    void FireArea(A_WeaponManager.WeaponEntry entry)
+    void FireArea(WeaponManager.WeaponEntry entry)
     {
-        A_WeaponData weapon = entry.data;
+        WeaponData weapon = entry.data;
         if (weapon.projectilePrefab == null) return;
 
         GameObject moatObj = Instantiate(
@@ -118,7 +118,7 @@ public class A_Shooting : MonoBehaviour
             Quaternion.identity
         );
 
-        A_Moat moat = moatObj.GetComponent<A_Moat>();
+        Moat moat = moatObj.GetComponent<Moat>();
         if (moat != null)
         {
             moat.damage = weapon.damage + entry.bonusDamage;
@@ -127,13 +127,13 @@ public class A_Shooting : MonoBehaviour
             moat.weaponName = weapon.weaponName;
         }
 
-        A_WeaponManager.Instance.SetCooldown(weapon.weaponName, true);
-        A_WeaponManager.Instance.NotifyWeaponFired(weapon.weaponName, -1f);
+        WeaponManager.Instance.SetCooldown(weapon.weaponName, true);
+        WeaponManager.Instance.NotifyWeaponFired(weapon.weaponName, -1f);
     }
 
-    void FireLine(A_WeaponManager.WeaponEntry entry)
+    void FireLine(WeaponManager.WeaponEntry entry)
     {
-        A_WeaponData weapon = entry.data;
+        WeaponData weapon = entry.data;
         if (weapon.projectilePrefab == null) return;
 
         Vector2 direction = GetRandomDirection();
@@ -144,7 +144,7 @@ public class A_Shooting : MonoBehaviour
             Quaternion.identity
         );
 
-        A_Laser laser = laserObj.GetComponent<A_Laser>();
+        Laser laser = laserObj.GetComponent<Laser>();
         if (laser != null)
         {
             laser.damage = weapon.damage + entry.bonusDamage;
@@ -153,7 +153,7 @@ public class A_Shooting : MonoBehaviour
             laser.Setup();
 
             float laserDuration = laser.blinkCount * (laser.blinkOnTime + laser.blinkOffTime) + laser.fadeOutDuration;
-            A_WeaponManager.Instance.NotifyWeaponFired(weapon.weaponName, laserDuration);
+            WeaponManager.Instance.NotifyWeaponFired(weapon.weaponName, laserDuration);
         }
     }
 

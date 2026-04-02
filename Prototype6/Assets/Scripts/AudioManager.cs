@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class S_AudioManager : MonoBehaviour
+public class AudioManager : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    public static S_AudioManager Instance;
+    public static AudioManager Instance;
 
 
     [Header("Sources")]

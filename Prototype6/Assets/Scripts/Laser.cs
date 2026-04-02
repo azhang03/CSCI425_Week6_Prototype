@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class A_Laser : MonoBehaviour
+public class Laser : MonoBehaviour
 {
     [HideInInspector] public int damage = 2;
     [HideInInspector] public float bonusWidth = 0f;
@@ -81,7 +81,7 @@ public class A_Laser : MonoBehaviour
         foreach (var hit in hits)
         {
 
-            S_Enemy sEnemy = hit.GetComponent<S_Enemy>();
+            Enemy sEnemy = hit.GetComponent<Enemy>();
             if (sEnemy != null)
                 sEnemy.TakeDamage(damage);
         }

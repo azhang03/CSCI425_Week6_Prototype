@@ -14,7 +14,7 @@ public enum AugmentType
 public enum TargetMode { Highest, Lowest }
 
 [CreateAssetMenu(fileName = "NewAugment", menuName = "Game/AugmentData")]
-public class A_AugmentData : ScriptableObject
+public class AugmentData : ScriptableObject
 {
     public string augmentName = "Augment";
     [TextArea(2, 4)]
@@ -22,7 +22,7 @@ public class A_AugmentData : ScriptableObject
     public AugmentType type = AugmentType.NewWeapon;
 
     [Header("NewWeapon")]
-    public A_WeaponData weaponToAdd;
+    public WeaponData weaponToAdd;
 
     [Header("ModifyWeapon (by name)")]
     public string weaponToModify;

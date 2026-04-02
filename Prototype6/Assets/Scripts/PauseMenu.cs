@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
 
-public class A_PauseMenu : MonoBehaviour
+public class PauseMenu : MonoBehaviour
 {
     public static bool IsPaused { get; private set; }
     public static bool AugmentsEnabled { get; private set; } = false;

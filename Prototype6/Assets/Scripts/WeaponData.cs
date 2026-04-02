@@ -3,7 +3,7 @@ using UnityEngine;
 public enum WeaponType { Projectile, Area, Line }
 
 [CreateAssetMenu(fileName = "NewWeapon", menuName = "Game/WeaponData")]
-public class A_WeaponData : ScriptableObject
+public class WeaponData : ScriptableObject
 {
     public string weaponName = "Weapon";
     public WeaponType weaponType = WeaponType.Projectile;

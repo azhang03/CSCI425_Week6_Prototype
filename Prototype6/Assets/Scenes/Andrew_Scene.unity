@@ -5879,7 +5879,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5704722836933540992, guid: abeed96e3131c9443a048c3d9af1435f, type: 3}
       propertyPath: m_Name
-      value: S_EnemySpawner
+      value: EnemySpawner
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

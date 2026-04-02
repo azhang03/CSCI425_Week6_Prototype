@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class A_DeathScreen : MonoBehaviour
+public class DeathScreen : MonoBehaviour
 {
     private CanvasGroup canvasGroup;
     private TextMeshProUGUI scoreText;
@@ -17,17 +17,17 @@ public class A_DeathScreen : MonoBehaviour
 
     void Update()
     {
-        if (!subscribed && A_PlayerHealth.Instance != null)
+        if (!subscribed && PlayerHealth.Instance != null)
         {
-            A_PlayerHealth.Instance.OnPlayerDied += OnPlayerDied;
+            PlayerHealth.Instance.OnPlayerDied += OnPlayerDied;
             subscribed = true;
         }
     }
 
     void OnDestroy()
     {
-        if (subscribed && A_PlayerHealth.Instance != null)
-            A_PlayerHealth.Instance.OnPlayerDied -= OnPlayerDied;
+        if (subscribed && PlayerHealth.Instance != null)
+            PlayerHealth.Instance.OnPlayerDied -= OnPlayerDied;
     }
 
     void OnPlayerDied()

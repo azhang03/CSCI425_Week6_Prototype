@@ -2,11 +2,11 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class A_PlayerHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviour
 {
-    public static A_PlayerHealth Instance { get; private set; }
+    public static PlayerHealth Instance { get; private set; }
 
-    public S_AudioManager audioManager;
+    public AudioManager audioManager;
 
 
     [Header("Health Settings")]
@@ -47,7 +47,7 @@ public class A_PlayerHealth : MonoBehaviour
         if (IsDead || isInvincible) return;
 
 
-        S_Enemy sEnemy = collision.GetComponent<S_Enemy>();
+        Enemy sEnemy = collision.GetComponent<Enemy>();
         if (sEnemy != null)
         {
             Destroy(collision.gameObject);

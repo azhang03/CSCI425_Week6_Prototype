@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-public class A_DamagePopup : MonoBehaviour
+public class DamagePopup : MonoBehaviour
 {
     private CanvasGroup canvasGroup;
     private float lifetime = 0.8f;
@@ -43,7 +43,7 @@ public class A_DamagePopup : MonoBehaviour
         textRt.offsetMin = Vector2.zero;
         textRt.offsetMax = Vector2.zero;
 
-        go.AddComponent<A_DamagePopup>();
+        go.AddComponent<DamagePopup>();
     }
 
     void Awake()

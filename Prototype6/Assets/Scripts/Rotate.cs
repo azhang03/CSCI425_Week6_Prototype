@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class A_WorldRotator2D : MonoBehaviour
+public class WorldRotator2D : MonoBehaviour
 {
     [Header("Assign the player transform here")]
     public Transform player;

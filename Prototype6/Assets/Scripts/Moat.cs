@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class A_Moat : MonoBehaviour
+public class Moat : MonoBehaviour
 {
     [HideInInspector] public int damage = 1;
     [HideInInspector] public float duration = 4f;
@@ -51,15 +51,15 @@ public class A_Moat : MonoBehaviour
 
         tickTimers[id] = tickInterval;
 
-        S_Enemy sEnemy = other.GetComponent<S_Enemy>();
+        Enemy sEnemy = other.GetComponent<Enemy>();
         if (sEnemy != null)
             sEnemy.TakeDamage(damage);
     }
 
     void OnDestroy()
     {
-        if (A_WeaponManager.Instance != null)
-            A_WeaponManager.Instance.SetCooldown(weaponName, false);
+        if (WeaponManager.Instance != null)
+            WeaponManager.Instance.SetCooldown(weaponName, false);
     }
 
     static Sprite CreateCircleSprite(int resolution)
