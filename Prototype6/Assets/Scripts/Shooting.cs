@@ -20,7 +20,8 @@ public class Shooting : MonoBehaviour
         if (fireTimer <= 0f)
         {
             fireTimer = fireInterval;
-            audioManager.PlayBullet();
+            if(audioManager != null ) 
+                audioManager.PlayBullet();
             StartCoroutine(FireWeapons());
         }
     }

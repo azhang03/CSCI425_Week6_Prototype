@@ -176,7 +176,8 @@ public class EnemySpawner : MonoBehaviour
             if (rotateParent != null)
                 enemy.transform.SetParent(rotateParent);
 
-            audioManager.PlayEnemySpawn();
+            if(audioManager != null)
+                audioManager.PlayEnemySpawn();
         }
     }
 
