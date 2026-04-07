@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEngine.UIElements;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -31,8 +30,13 @@ public class EnemySpawner : MonoBehaviour
     public int bonusHPPerCycle = 2;
     public int bonusEnemiesPerStage = 2;
 
-    private Dictionary<int, int> cycleKillCounts = new Dictionary<int, int>();
-    public event System.Action OnCycleProgressChanged;
+    public int baseHPBonus = 0;
+    public bool finiteMode = false;
+    public bool IsComplete { get; private set; }
+    public int activeEnemyCount { get; private set; }
+    private bool doneSpawning;
+    public event System.Action OnAllWavesComplete;
+
 
 
 
@@ -72,44 +76,56 @@ public class EnemySpawner : MonoBehaviour
             stageCounter = 0;
             spawnCounter = 0;
             spawnInterval = stageIntervals[stageCounter];
-
-            cycleKillCounts[0] = 0;
+            spawnTimer = spawnInterval;
 
             foreach (var enemy in enemyTypes)
             {
                 totalWeight += enemy.spawnWeight;
             }
+
         }
     }
 
-    public void RegisterKill(int cycle)
+    public void RegisterEnemyDeath()
     {
-        if (!cycleKillCounts.ContainsKey(cycle))
-            cycleKillCounts[cycle] = 0;
-        cycleKillCounts[cycle]++;
-        OnCycleProgressChanged?.Invoke();
+        activeEnemyCount--;
+        if (finiteMode && doneSpawning && activeEnemyCount <= 0)
+        {
+            IsComplete = true;
+            OnAllWavesComplete?.Invoke();
+        }
     }
 
-    public int GetCycleKills(int cycle)
+    public void Configure(StageData data)
     {
-        return cycleKillCounts.ContainsKey(cycle) ? cycleKillCounts[cycle] : 0;
-    }
+        numStages = data.waveCount;
+        stageIntervals = data.spawnIntervals;
+        enemiesPerStage = data.enemiesPerWave;
+        enemyTypes = new List<EnemyType>(data.enemyRoster);
+        bonusHPPerCycle = data.bonusHPPerCycle;
+        bonusEnemiesPerStage = data.bonusEnemiesPerWave;
+        spawnRandmoness = data.spawnRandomness;
+        baseHPBonus = data.enemyHPBonus;
+        finiteMode = true;
+        IsComplete = false;
+        doneSpawning = false;
+        activeEnemyCount = 0;
 
-    public int GetTotalEnemiesInCycle(int cycle)
-    {
-        int total = 0;
-        for (int i = 0; i < numStages; i++)
-            total += (int)enemiesPerStage[i] + cycle * bonusEnemiesPerStage;
-        return total;
-    }
+        totalWeight = 0f;
+        foreach (var enemy in enemyTypes)
+            totalWeight += enemy.spawnWeight;
 
-    public Dictionary<int, int> GetCycleKillCounts()
-    {
-        return cycleKillCounts;
+        stageCounter = 0;
+        spawnCounter = 0;
+        cycleCount = 0;
+        spawnInterval = stageIntervals[0];
+        spawnTimer = spawnInterval;
     }
 
     void Update()
     {
+        if (IsComplete || doneSpawning) return;
+
         spawnTimer -= Time.deltaTime;
 
         if (spawnTimer <= 0f)
@@ -135,13 +151,21 @@ public class EnemySpawner : MonoBehaviour
 
             if (stageCounter >= numStages)
             {
+                if (finiteMode)
+                {
+                    doneSpawning = true;
+                    if (activeEnemyCount <= 0)
+                    {
+                        IsComplete = true;
+                        OnAllWavesComplete?.Invoke();
+                    }
+                    return;
+                }
+
                 cycleCount++;
                 stageCounter = 0;
                 spawnCounter = 0;
                 spawnInterval = stageIntervals[0];
-                cycleKillCounts[cycleCount] = 0;
-                OnCycleProgressChanged?.Invoke();
-                //Debug.Log("Cycle " + cycleCount + " — enemies now have +" + (cycleCount * bonusHPPerCycle) + " HP, worth " + (1 + cycleCount * 2) + " pts");
             }
             else
             {
@@ -166,11 +190,11 @@ public class EnemySpawner : MonoBehaviour
             );
 
             GameObject enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
-
+            activeEnemyCount++;
 
             Enemy enemyComponent = enemy.GetComponent<Enemy>();
             if (enemyComponent != null)
-                enemyComponent.maxHitPoints += cycleCount * bonusHPPerCycle;
+                enemyComponent.maxHitPoints += baseHPBonus + cycleCount * bonusHPPerCycle;
             
 
             if (rotateParent != null)

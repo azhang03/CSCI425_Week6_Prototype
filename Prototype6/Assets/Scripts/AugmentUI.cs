@@ -82,6 +82,7 @@ public class A_AugmentUI : MonoBehaviour
 
     void ShowAugmentSelection(int newLevel)
     {
+        if (StageManager.Instance != null && StageManager.Instance.Result != StageManager.StageResult.None) return;
         if (AugmentPool.Instance == null) return;
 
         List<AugmentData> cards = AugmentPool.Instance.GetCards(3);
@@ -183,6 +184,7 @@ public class A_AugmentUI : MonoBehaviour
         if (dimOverlay != null)
             dimOverlay.SetActive(false);
 
-        Time.timeScale = 1f;
+        if (StageManager.Instance == null || StageManager.Instance.Result == StageManager.StageResult.None)
+            Time.timeScale = 1f;
     }
 }

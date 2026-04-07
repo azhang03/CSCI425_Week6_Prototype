@@ -334,6 +334,50 @@ The enemy partner's workflow is **completely unaffected**. Here's what they do a
 
 ## Phased Implementation Plan
 
+### Implementation Status
+- [x] **Phase 1:** StageData + EnemySpawner.Configure()
+- [x] **Phase 2:** StageManager (Win/Loss + Stars)
+- [x] **Phase 3:** Stage Progress Persistence
+- [x] **Phase 4:** SceneFlowManager + LobbyScene Skeleton
+- [x] **Phase 5:** StageSelectUI (Full Lobby UI)
+- [ ] **Phase 6:** ResultsScreen (Replaces DeathScreen) ← next
+- [ ] **Phase 7:** Integration + Polish
+
+#### Notes from implementation (Phases 1-5)
+
+**EnemySpawner changes (beyond what the plan originally described):**
+- Win condition waits for all enemies to die, not just done spawning. Uses `doneSpawning` + `activeEnemyCount` tracked via `RegisterEnemyDeath()`.
+- `spawnTimer` initialized to `spawnInterval` in both `Start()` and `Configure()` to prevent a rogue spawn on frame 1 before Configure runs.
+- Dead cycle-tracking code removed: `RegisterKill`, `GetCycleKills`, `GetTotalEnemiesInCycle`, `GetCycleKillCounts`, `OnCycleProgressChanged`, `cycleKillCounts`. None were called from outside EnemySpawner.
+- Unused `using UnityEngine.UIElements` removed.
+
+**Enemy.cs death ordering (critical timing fix):**
+- `Enemy.TakeDamage()` calls `RegisterDeath()` BEFORE `AddXP()` so the win condition is detected before a level-up triggers the augment UI.
+- `deathRegistered` bool flag prevents double-decrement.
+- `OnDestroy()` fallback calls `RegisterDeath()` for enemies destroyed externally (e.g. player contact via PlayerHealth).
+
+**AugmentUI integration:**
+- `ShowAugmentSelection` suppressed when `StageManager.Result != None` (no augment popup after winning).
+- Card selection doesn't resume `timeScale` if stage already ended.
+
+**StageData custom editor:**
+- `waveCount` is now a derived property (`spawnIntervals.Length`), not a serialized field.
+- Custom Inspector in `Assets/Scripts/Editor/StageDataEditor.cs` shows waves as grouped boxes with "+ Add Wave" / "Remove" buttons that keep both arrays in sync.
+
+**StageSelectUI (Phase 5) — editor-built UI, not code-generated:**
+- Script only handles logic (navigation, refresh, play). All visual elements are built in the Unity Editor and assigned via Inspector serialized fields.
+- Stars use Image components tinted gold (earned) or near-black (unearned) at runtime.
+- Arrows always visible when multiple stages exist; greyed out + non-interactable when the adjacent stage is locked.
+- Debug keys in lobby: P = clear current stage with 3 stars, O = wipe all progress.
+
+**Other changes:**
+- Augments default changed to ON in `PauseMenu.cs`.
+- StageManager component added to GameManager GameObject in Andrew_Scene.
+- LobbyScene created with Canvas (Background, Card, Stars, PlayButton, Arrows, LockIcon), SceneFlowManager, and EventSystem.
+- Both scenes added to Build Settings (LobbyScene at index 0).
+
+---
+
 ### Phase 1: StageData + EnemySpawner.Configure()
 
 **Goal:** Make the spawner data-driven with a "stage complete" signal. Existing game still works unchanged if no StageData is provided.

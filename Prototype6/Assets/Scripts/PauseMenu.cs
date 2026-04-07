@@ -6,7 +6,7 @@ using TMPro;
 public class PauseMenu : MonoBehaviour
 {
     public static bool IsPaused { get; private set; }
-    public static bool AugmentsEnabled { get; private set; } = false;
+    public static bool AugmentsEnabled { get; private set; } = true;
 
     private CanvasGroup canvasGroup;
     private bool built;

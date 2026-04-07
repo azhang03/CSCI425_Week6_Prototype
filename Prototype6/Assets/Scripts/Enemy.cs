@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
     private Coroutine flashRoutine;
+    private bool deathRegistered;
 
     void Start()
     {
@@ -61,6 +62,8 @@ public class Enemy : MonoBehaviour
         {
             audioManager.PlayEnemyDie();
 
+            RegisterDeath();
+
             if (XPManager.Instance != null)
                 XPManager.Instance.AddXP(xpValue);
             if (A_ScoreManager.Instance != null)
@@ -72,6 +75,19 @@ public class Enemy : MonoBehaviour
         if (flashRoutine != null)
             StopCoroutine(flashRoutine);
         flashRoutine = StartCoroutine(HitFlash());
+    }
+
+    void RegisterDeath()
+    {
+        if (deathRegistered) return;
+        deathRegistered = true;
+        if (EnemySpawner.Instance != null)
+            EnemySpawner.Instance.RegisterEnemyDeath();
+    }
+
+    void OnDestroy()
+    {
+        RegisterDeath();
     }
 
     IEnumerator HitFlash()
