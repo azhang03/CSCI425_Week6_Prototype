@@ -174,7 +174,7 @@ The core progression mechanic. Each timestep, every weapon in the player's inven
 
 ## Stage / Level System
 
-A multi-phase level system is being implemented. See `Prototype6/Docs/LEVEL_SYSTEM_PLAN.md` for the full plan and implementation status. Phases 1-5 are complete; Phases 6-7 remain.
+The level system is fully implemented (all 7 phases complete). See `Prototype6/Docs/LEVEL_SYSTEM_PLAN.md` for the full plan and implementation notes.
 
 ### Two Scenes
 
@@ -201,10 +201,22 @@ When an enemy dies in `Enemy.TakeDamage()`:
 
 This ordering ensures the win condition is set BEFORE the augment UI checks whether to show. `AugmentUI.ShowAugmentSelection` is suppressed when `StageManager.Result != None`, and card selection doesn't resume `timeScale` if the stage already ended.
 
-### What's NOT built yet (Phases 6-7)
+### ResultsScreen
 
-- **ResultsScreen**: Post-stage win/loss screen with stars, kill count, Next Stage / Retry / Lobby buttons. Will replace DeathScreen.
-- **Integration**: PauseMenu "Return to Lobby" button, R-key routing through SceneFlowManager, real StageData assets for 3+ stages, end-to-end testing.
+- **ResultsScreen** (`Assets/Scripts/ResultsScreen.cs`): Code-generated win/loss overlay on gameplay Canvas. Subscribes to `StageManager.OnStageEnded`. On win: calls `StageProgressData.SaveResult()`, shows stars + kill count, Next Stage / Lobby buttons. On loss: shows kill count, Retry / Lobby buttons. Has serialized `starSprite` field (assign in Inspector for proper star visuals). DeathScreen.cs still exists as fallback for non-staged play.
+
+### Debug Keys
+
+| Key | Where | Action |
+|-----|-------|--------|
+| P | Lobby | 3-star clear current stage |
+| O | Lobby | Wipe all progress |
+| 4 | Gameplay | Force win (StageManager.ForceWin) |
+| R | Gameplay | Retry via SceneFlowManager (or fallback reload) |
+
+### Stage Assets
+
+3 stages in `Assets/Stages/`: Stage_1, Stage_2, Stage_3. Create more via Project > right-click > Create > Game > StageData, then add to SceneFlowManager.allStages in LobbyScene.
 
 ## Design Notes / Gotchas
 

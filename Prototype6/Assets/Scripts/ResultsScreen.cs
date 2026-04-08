@@ -129,8 +129,7 @@ public class ResultsScreen : MonoBehaviour
         MakeLabel(root, "Title", "STAGE CLEAR!", 56, FontStyles.Bold, Color.white, new Vector2(0f, 140f), new Vector2(500f, 80f));
 
         // Star images — assign starSprite in Inspector for star shape
-        Sprite fallback = Resources.GetBuiltinResource<Sprite>("UI/Skin/Knob.psd");
-        Sprite sprite = (starSprite != null) ? starSprite : fallback;
+        Sprite sprite = starSprite;
 
         starImages = new Image[3];
         float[] starX = { -65f, 0f, 65f };

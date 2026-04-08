@@ -340,8 +340,8 @@ The enemy partner's workflow is **completely unaffected**. Here's what they do a
 - [x] **Phase 3:** Stage Progress Persistence
 - [x] **Phase 4:** SceneFlowManager + LobbyScene Skeleton
 - [x] **Phase 5:** StageSelectUI (Full Lobby UI)
-- [ ] **Phase 6:** ResultsScreen (Replaces DeathScreen) ← next
-- [ ] **Phase 7:** Integration + Polish
+- [x] **Phase 6:** ResultsScreen (Replaces DeathScreen)
+- [x] **Phase 7:** Integration + Polish
 
 #### Notes from implementation (Phases 1-5)
 
@@ -375,6 +375,14 @@ The enemy partner's workflow is **completely unaffected**. Here's what they do a
 - StageManager component added to GameManager GameObject in Andrew_Scene.
 - LobbyScene created with Canvas (Background, Card, Stars, PlayButton, Arrows, LockIcon), SceneFlowManager, and EventSystem.
 - Both scenes added to Build Settings (LobbyScene at index 0).
+
+**Phase 6-7 (implemented by partner):**
+- `ResultsScreen.cs`: Code-generated win/loss screen. Subscribes to `StageManager.OnStageEnded`. On win: saves progress via `StageProgressData.SaveResult()`, shows stars + kill count + Next Stage / Lobby buttons. On loss: shows kill count + Retry / Lobby buttons. Uses CanvasGroup for visibility. Has a serialized `starSprite` field for custom star image (falls back to no sprite if unassigned). Added to Andrew_Scene Canvas.
+- `PauseMenu.cs`: Added "Return to Lobby" button calling `SceneFlowManager.Instance.GoToLobby()`.
+- `GameManager.cs`: R-key now routes through `SceneFlowManager.Instance.RetryCurrentStage()` when available. Debug key 4 calls `StageManager.Instance.ForceWin()`.
+- `StageManager.cs`: Added `ForceWin()` public method for debug testing.
+- `DeathScreen.cs`: NOT removed — still exists as fallback for non-staged play.
+- 3 stage assets created in `Assets/Stages/` (Stage_1, Stage_2, Stage_3).
 
 ---
 
