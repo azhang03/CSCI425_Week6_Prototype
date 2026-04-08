@@ -15,11 +15,11 @@ MonoBehaviour:
   stageName: Teleport Chaos
   stageNumber: 3
   spawnIntervals:
-  - 3
-  - 2
-  - 1.5
-  - 1
-  - 0.8
+  - 5
+  - 6
+  - 6
+  - 5
+  - 6
   enemiesPerWave:
   - 5
   - 8
@@ -33,10 +33,10 @@ MonoBehaviour:
   - name: 'SpiralEnemy '
     prefab: {fileID: 864394925426953404, guid: c919020ba51382e4b8ef9102bb0dd8e3, type: 3}
     spawnWeight: 0.3
-  - name: TeleportEnemy
-    prefab: {fileID: 7723241571208371256, guid: 6652d07aad816fe4998348a1b3c81bf2, type: 3}
+  - name: Shield
+    prefab: {fileID: 7663235475073626573, guid: 303818a4845eb1e47bbc76280e2e4d4b, type: 3}
     spawnWeight: 0.4
-  enemyHPBonus: 3
+  enemyHPBonus: 0
   bonusHPPerCycle: 2
   bonusEnemiesPerWave: 2
   spawnRandomness: 0.5
