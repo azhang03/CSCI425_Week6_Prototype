@@ -49,6 +49,8 @@ public class StageManager : MonoBehaviour
         }
     }
 
+    public void ForceWin() => HandleWin();
+
     void HandleWin()
     {
         if (Result != StageResult.None) return;

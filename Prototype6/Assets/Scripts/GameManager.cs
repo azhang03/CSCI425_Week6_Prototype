@@ -9,9 +9,13 @@ public class GameManager : MonoBehaviour
     {
         if (Keyboard.current.rKey.wasPressedThisFrame)
         {
-            Time.timeScale = 1f;
-            scoreManager.ResetGame();
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            if (SceneFlowManager.Instance != null)
+                SceneFlowManager.Instance.RetryCurrentStage();
+            else
+            {
+                Time.timeScale = 1f;
+                scoreManager.ResetGame();
+            }
         }
 
         if (Keyboard.current.digit1Key.wasPressedThisFrame)
@@ -24,6 +28,12 @@ public class GameManager : MonoBehaviour
         {
             if (PlayerHealth.Instance != null)
                 PlayerHealth.Instance.TakeDamage(1);
+        }
+
+        if (Keyboard.current.digit4Key.wasPressedThisFrame)
+        {
+            if (StageManager.Instance != null)
+                StageManager.Instance.ForceWin();
         }
 
         //if (Keyboard.current.escapeKey.isPressed)

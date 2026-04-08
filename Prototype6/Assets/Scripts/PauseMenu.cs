@@ -101,10 +101,11 @@ public class PauseMenu : MonoBehaviour
         titleTMP.alignment = TextAlignmentOptions.Center;
         titleTMP.color = Color.white;
 
-        CreateButton("ResumeBtn", "Resume", new Vector2(0.5f, 0.55f), Resume);
-        CreateButton("ExitBtn", "Exit Game", new Vector2(0.5f, 0.43f), ExitGame);
+        CreateButton("ResumeBtn", "Resume", new Vector2(0.5f, 0.57f), Resume);
+        CreateButton("LobbyBtn", "Return to Lobby", new Vector2(0.5f, 0.46f), ReturnToLobby);
+        CreateButton("ExitBtn", "Exit Game", new Vector2(0.5f, 0.35f), ExitGame);
 
-        toggleLabel = CreateButton("ToggleAugments", GetToggleText(), new Vector2(0.5f, 0.28f), ToggleAugments);
+        toggleLabel = CreateButton("ToggleAugments", GetToggleText(), new Vector2(0.5f, 0.22f), ToggleAugments);
     }
 
     string GetToggleText()
@@ -156,6 +157,13 @@ public class PauseMenu : MonoBehaviour
         txtTMP.color = Color.white;
 
         return txtTMP;
+    }
+
+    void ReturnToLobby()
+    {
+        Resume();
+        if (SceneFlowManager.Instance != null)
+            SceneFlowManager.Instance.GoToLobby();
     }
 
     void ExitGame()
