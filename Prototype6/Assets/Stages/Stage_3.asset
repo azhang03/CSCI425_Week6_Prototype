@@ -35,7 +35,10 @@ MonoBehaviour:
     spawnWeight: 0.3
   - name: Shield
     prefab: {fileID: 7663235475073626573, guid: 303818a4845eb1e47bbc76280e2e4d4b, type: 3}
-    spawnWeight: 0.4
+    spawnWeight: 0.2
+  - name: TeleportEnemy
+    prefab: {fileID: 7723241571208371256, guid: 6652d07aad816fe4998348a1b3c81bf2, type: 3}
+    spawnWeight: 0.2
   enemyHPBonus: 0
   bonusHPPerCycle: 2
   bonusEnemiesPerWave: 2
