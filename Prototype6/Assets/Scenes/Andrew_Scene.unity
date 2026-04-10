@@ -5500,7 +5500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58bfc42a74d45fa47b76212ad9692209, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::A_Shooting
-  fireInterval: 1.5
+  fireInterval: 0.5
   spawnOffset: 0.5
   staggerDelay: 0.15
   audioManager: {fileID: 670264515}
@@ -6630,7 +6630,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 19.6, y: -74.7}
+  m_AnchoredPosition: {x: 19.599976, y: -74.70001}
   m_SizeDelta: {x: 250, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2010464723
