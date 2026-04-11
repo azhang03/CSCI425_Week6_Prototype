@@ -432,6 +432,7 @@ MonoBehaviour:
   lockIcon: {fileID: 1303152105}
   earnedColor: {r: 1, g: 0.84, b: 0, a: 1}
   unearnedColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
+  debugMode: 0
 --- !u!114 &324795337
 MonoBehaviour:
   m_ObjectHideFlags: 0

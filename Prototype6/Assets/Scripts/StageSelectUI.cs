@@ -29,6 +29,7 @@ public class StageSelectUI : MonoBehaviour
     private List<StageData> allStages;
     private int currentIndex;
 
+    public bool debugMode = true;
     void Start()
     {
         if (SceneFlowManager.Instance == null) return;
@@ -36,7 +37,17 @@ public class StageSelectUI : MonoBehaviour
         allStages = new List<StageData>(SceneFlowManager.Instance.allStages);
         allStages.Sort((a, b) => a.stageNumber.CompareTo(b.stageNumber));
 
-        currentIndex = 0;
+        if (debugMode)
+        {
+            currentIndex = allStages.Count - 1;
+
+        }
+        else
+        {
+            currentIndex = 0;
+
+        }
+
 
         playButton.onClick.AddListener(OnPlayClicked);
         leftArrowButton.onClick.AddListener(NavigateLeft);
