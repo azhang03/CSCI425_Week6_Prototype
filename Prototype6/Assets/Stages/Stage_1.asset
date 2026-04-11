@@ -26,6 +26,10 @@ MonoBehaviour:
   - name: 'DefaultEnemy '
     prefab: {fileID: 234427430957938418, guid: 77d942aacb648b046a6ff80170d05911, type: 3}
     spawnWeight: 1
+  obstacleLayout:
+  - localPosition: {x: 5, y: 0, z: 0}
+    localScale: {x: 3, y: 1, z: 0}
+    localRotationZ: 90
   enemyHPBonus: 0
   bonusHPPerCycle: 2
   bonusEnemiesPerWave: 2

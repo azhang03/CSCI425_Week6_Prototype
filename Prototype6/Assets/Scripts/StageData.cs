@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewStage", menuName = "Game/StageData")]
-public class StageData : ScriptableObject
+[CreateAssetMenu(fileName = "NewStage", menuName = "Game/StageData2")]
+public class StageData: ScriptableObject
 {
     [Header("Identity")]
     public string stageName;
@@ -16,6 +16,9 @@ public class StageData : ScriptableObject
 
     [Header("Enemy Roster")]
     public List<EnemySpawner.EnemyType> enemyRoster = new List<EnemySpawner.EnemyType>();
+
+    [Header("Obstacles")]
+    public List<ObstaclePlacement> obstacleLayout = new List<ObstaclePlacement>();
 
     [Header("Difficulty")]
     public int enemyHPBonus = 0;

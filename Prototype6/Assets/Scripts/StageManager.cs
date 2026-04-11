@@ -5,7 +5,12 @@ public class StageManager : MonoBehaviour
 {
     public static StageManager Instance { get; private set; }
 
-    public enum StageResult { None, Win, Loss }
+    public enum StageResult
+    {
+        None,
+        Win,
+        Loss
+    }
 
     [Header("Stage (overridden by SceneFlowManager if available)")]
     public StageData currentStage;
@@ -18,17 +23,18 @@ public class StageManager : MonoBehaviour
     private bool subscribedSpawner;
     private bool subscribedHealth;
 
-    void Awake()
+    private void Awake()
     {
         if (Instance != null && Instance != this)
         {
             Destroy(this);
             return;
         }
+
         Instance = this;
     }
 
-    void Update()
+    private void Update()
     {
         if (!subscribedSpawner && EnemySpawner.Instance != null)
         {
@@ -36,7 +42,12 @@ public class StageManager : MonoBehaviour
                 currentStage = SceneFlowManager.Instance.SelectedStage;
 
             if (currentStage != null)
+            {
                 EnemySpawner.Instance.Configure(currentStage);
+
+                if (ObstacleSpawner.Instance != null)
+                    ObstacleSpawner.Instance.Configure(currentStage);
+            }
 
             EnemySpawner.Instance.OnAllWavesComplete += HandleWin;
             subscribedSpawner = true;
@@ -51,7 +62,7 @@ public class StageManager : MonoBehaviour
 
     public void ForceWin() => HandleWin();
 
-    void HandleWin()
+    private void HandleWin()
     {
         if (Result != StageResult.None) return;
 
@@ -61,7 +72,7 @@ public class StageManager : MonoBehaviour
         OnStageEnded?.Invoke(Result, StarsEarned);
     }
 
-    void HandleLoss()
+    private void HandleLoss()
     {
         if (Result != StageResult.None) return;
 
@@ -71,7 +82,7 @@ public class StageManager : MonoBehaviour
         OnStageEnded?.Invoke(Result, StarsEarned);
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
         if (EnemySpawner.Instance != null)
             EnemySpawner.Instance.OnAllWavesComplete -= HandleWin;
@@ -80,3 +91,6 @@ public class StageManager : MonoBehaviour
             PlayerHealth.Instance.OnPlayerDied -= HandleLoss;
     }
 }
+
+
+

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 768291863247014410}
   - component: {fileID: 2228488628375707320}
+  - component: {fileID: 5299100480186593660}
   m_Layer: 0
   m_Name: EnemySpawner
   m_TagString: Untagged
@@ -44,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae5f89d274087be4d88678cb56963492, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::A_EnemySpawner
+  audioManager: {fileID: 0}
   stageTilemap: {fileID: 0}
   rotateParent: {fileID: 0}
   spawnInterval: 5
@@ -61,6 +63,11 @@ MonoBehaviour:
   - 15
   stageCounter: 0
   spawnCounter: 0
+  cycleCount: 0
+  bonusHPPerCycle: 2
+  bonusEnemiesPerStage: 2
+  baseHPBonus: 0
+  finiteMode: 0
   enemyTypes:
   - name: default
     prefab: {fileID: 234427430957938418, guid: 77d942aacb648b046a6ff80170d05911, type: 3}
@@ -72,3 +79,20 @@ MonoBehaviour:
     prefab: {fileID: 7723241571208371256, guid: 6652d07aad816fe4998348a1b3c81bf2, type: 3}
     spawnWeight: 2
   totalWeight: 0
+--- !u!114 &5299100480186593660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5704722836933540992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86606c858e2367441889d6b71c341f5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObstacleSpawner
+  rotateParent: {fileID: 0}
+  obstaclePrefab: {fileID: 769494669773124322, guid: ffd4f269490b7df4c924eb70ca90bc35, type: 3}
+  obstacles: []
+  spawnOnStart: 1
+  clearExistingOnSpawn: 1
