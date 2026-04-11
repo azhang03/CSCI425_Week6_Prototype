@@ -5500,9 +5500,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58bfc42a74d45fa47b76212ad9692209, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::A_Shooting
-  fireInterval: 0.5
-  spawnOffset: 0.5
+  fireInterval: 1
   staggerDelay: 0.15
+  projectileIndicatorPrefab: {fileID: 5340203472559175124, guid: 46092f2eadaa4eb4780b012555d4b29f, type: 3}
+  projectileTelegraphTime: 0.25
+  spawnOffset: 0.5
   audioManager: {fileID: 670264515}
 --- !u!114 &1308610330
 MonoBehaviour:
