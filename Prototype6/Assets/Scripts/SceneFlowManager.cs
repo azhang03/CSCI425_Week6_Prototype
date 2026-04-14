@@ -32,13 +32,19 @@ public class SceneFlowManager : MonoBehaviour
     public void GoToStage(StageData stage)
     {
         SelectedStage = stage;
-        SceneManager.LoadScene(GAMEPLAY_SCENE);
+        if (LoadingScreen.Instance != null)
+            LoadingScreen.Instance.Transition(GAMEPLAY_SCENE);
+        else
+            SceneManager.LoadScene(GAMEPLAY_SCENE);
     }
 
     public void GoToLobby()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(LOBBY_SCENE);
+        if (LoadingScreen.Instance != null)
+            LoadingScreen.Instance.Transition(LOBBY_SCENE);
+        else
+            SceneManager.LoadScene(LOBBY_SCENE);
     }
 
     public void RetryCurrentStage()
