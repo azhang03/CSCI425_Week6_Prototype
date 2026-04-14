@@ -13,7 +13,13 @@ MonoBehaviour:
   m_Name: BulletWeapon
   m_EditorClassIdentifier: Assembly-CSharp::A_WeaponData
   weaponName: Bullet
+  weaponType: 0
   projectilePrefab: {fileID: 4737467778189878158, guid: 621c3521565839643aa334d2e0dd0f99, type: 3}
   projectileSpeed: 2
   damage: 1
   baseFireChance: 1
+  duration: 0
+  radius: 0
+  isMagnetic: 1
+  magnetRadius: 1
+  magnetStrength: 20
