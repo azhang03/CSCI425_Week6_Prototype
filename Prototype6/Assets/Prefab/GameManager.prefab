@@ -65,7 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c081334e158d6854faf7ea2a0de9c8e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::A_XPManager
-  xpPerLevel: 5
+  xpPerLevel: 3
 --- !u!114 &3442819867565672222
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -21,7 +21,10 @@ public class Moat : MonoBehaviour
 
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         if (sr != null)
+        {
             sr.sprite = CreateCircleSprite(64);
+            sr.sortingOrder = -1;
+        }
 
         CircleCollider2D col = GetComponent<CircleCollider2D>();
         if (col != null)
