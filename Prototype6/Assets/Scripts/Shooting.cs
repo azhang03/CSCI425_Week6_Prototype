@@ -138,7 +138,12 @@ public class Shooting : MonoBehaviour
 
         Projectile proj = projectile.GetComponent<Projectile>();
         if (proj != null)
-            proj.damage = weapon.damage + entry.bonusDamage;
+        {
+            proj.damage         = weapon.damage + entry.bonusDamage;
+            proj.isMagnetic     = weapon.isMagnetic;
+            proj.magnetRadius   = weapon.magnetRadius;
+            proj.magnetStrength = weapon.magnetStrength;
+        }
 
         if (entry.bonusRadius > 0f)
             projectile.transform.localScale *= (1f + entry.bonusRadius);

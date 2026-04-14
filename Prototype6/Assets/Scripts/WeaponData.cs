@@ -17,4 +17,13 @@ public class WeaponData : ScriptableObject
     [Header("Area Weapon (Moat)")]
     public float duration = 0f;
     public float radius = 0f;
+
+    [Header("Magnetic Bullet")]
+    public bool isMagnetic = false;
+
+    [Range(0f, 20f)]
+    public float magnetRadius = 5f;
+
+    [Range(0f, 20f)]
+    public float magnetStrength = 5f;
 }
