@@ -108,6 +108,27 @@ public class A_AugmentUI : MonoBehaviour
         activeCards.Clear();
     }
 
+    void GetAugmentColors(AugmentType type, out Color bg, out Color outlineIdle, out Color outlineHover)
+    {
+        // Background and idle outline match the original scheme across all types.
+        // Only the hover glow changes to reflect the augment category.
+        bg          = cardBackgroundColor;
+        outlineIdle = cardOutlineDefault;
+
+        switch (type)
+        {
+            case AugmentType.NewWeapon:
+                outlineHover = new Color(1.00f, 0.85f, 0.30f, 1f); // original yellow
+                break;
+            case AugmentType.ModifyHealth:
+                outlineHover = new Color(1.00f, 0.30f, 0.30f, 1f); // red
+                break;
+            default: // ModifyWeapon, Tradeoff, ModifyAllWeapons, ModifyFireInterval, ModifyWeaponStat
+                outlineHover = new Color(0.30f, 0.75f, 1.00f, 1f); // blue
+                break;
+        }
+    }
+
     GameObject CreateCard(AugmentData data)
     {
         GameObject cardObj = new GameObject(data.augmentName + "_Card", typeof(RectTransform));
@@ -116,11 +137,13 @@ public class A_AugmentUI : MonoBehaviour
         RectTransform cardRect = cardObj.GetComponent<RectTransform>();
         cardRect.sizeDelta = cardSize;
 
+        GetAugmentColors(data.type, out Color bg, out Color outlineIdle, out Color outlineHover);
+
         Image bgImage = cardObj.AddComponent<Image>();
-        bgImage.color = cardBackgroundColor;
+        bgImage.color = bg;
 
         Outline outline = cardObj.AddComponent<Outline>();
-        outline.effectColor = cardOutlineDefault;
+        outline.effectColor = outlineIdle;
         outline.effectDistance = new Vector2(3, 3);
 
         // Title
@@ -163,8 +186,8 @@ public class A_AugmentUI : MonoBehaviour
         card.outline = outline;
         card.titleText = titleTMP;
         card.descriptionText = descTMP;
-        card.defaultOutlineColor = cardOutlineDefault;
-        card.hoverOutlineColor = cardOutlineHover;
+        card.defaultOutlineColor = outlineIdle;
+        card.hoverOutlineColor = outlineHover;
         card.Setup(data, this);
 
         activeCards.Add(cardObj);

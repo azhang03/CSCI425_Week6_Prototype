@@ -82,7 +82,7 @@ public class StageDataEditor : Editor
         // Difficulty
         EditorGUILayout.LabelField("Difficulty", EditorStyles.boldLabel);
         EditorGUILayout.PropertyField(serializedObject.FindProperty("enemyHPBonus"));
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("bonusHPPerCycle"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("bonusHPPerWave"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("bonusEnemiesPerWave"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("spawnRandomness"));
 

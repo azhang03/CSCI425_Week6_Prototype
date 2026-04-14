@@ -22,7 +22,7 @@ public class StageData: ScriptableObject
 
     [Header("Difficulty")]
     public int enemyHPBonus = 0;
-    public int bonusHPPerCycle = 2;
+    public float bonusHPPerWave = 0f;
     public int bonusEnemiesPerWave = 2;
     public float spawnRandomness = 0.5f;
 }

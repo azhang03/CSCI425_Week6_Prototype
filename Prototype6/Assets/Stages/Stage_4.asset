@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 531ef166c84359441b1ea35e618e8001, type: 3}
+  m_Name: Stage_4
+  m_EditorClassIdentifier: Assembly-CSharp::StageData
+  stageName: The Gauntlet
+  stageNumber: 4
+  spawnIntervals:
+  - 8
+  - 7
+  - 7
+  - 6
+  - 5
+  enemiesPerWave:
+  - 6
+  - 9
+  - 9
+  - 9
+  - 12
+  enemyRoster:
+  - name: 'SpiralEnemy '
+    prefab: {fileID: 864394925426953404, guid: c919020ba51382e4b8ef9102bb0dd8e3, type: 3}
+    spawnWeight: 0.4
+  - name: Shield
+    prefab: {fileID: 7663235475073626573, guid: 303818a4845eb1e47bbc76280e2e4d4b, type: 3}
+    spawnWeight: 0.3
+  - name: TeleportEnemy
+    prefab: {fileID: 7723241571208371256, guid: 6652d07aad816fe4998348a1b3c81bf2, type: 3}
+    spawnWeight: 0.3
+  obstacleLayout:
+  - localPosition: {x: 5, y: 3, z: 0}
+    localScale: {x: 3, y: 1, z: 0}
+    localRotationZ: -75
+  - localPosition: {x: -5, y: -3, z: 0}
+    localScale: {x: 3, y: 1, z: 0}
+    localRotationZ: 75
+  enemyHPBonus: 0
+  bonusHPPerWave: 0.35
+  bonusEnemiesPerWave: 2
+  spawnRandomness: 0.5

@@ -27,7 +27,7 @@ public class EnemySpawner : MonoBehaviour
     public int stageCounter = 0;
     public int spawnCounter = 0;
     public int cycleCount = 0;
-    public int bonusHPPerCycle = 2;
+    public float bonusHPPerWave = 0f;
     public int bonusEnemiesPerStage = 2;
 
     public int baseHPBonus = 0;
@@ -102,7 +102,7 @@ public class EnemySpawner : MonoBehaviour
         stageIntervals = data.spawnIntervals;
         enemiesPerStage = data.enemiesPerWave;
         enemyTypes = new List<EnemyType>(data.enemyRoster);
-        bonusHPPerCycle = data.bonusHPPerCycle;
+        bonusHPPerWave = data.bonusHPPerWave;
         bonusEnemiesPerStage = data.bonusEnemiesPerWave;
         spawnRandmoness = data.spawnRandomness;
         baseHPBonus = data.enemyHPBonus;
@@ -194,7 +194,7 @@ public class EnemySpawner : MonoBehaviour
 
             Enemy enemyComponent = enemy.GetComponent<Enemy>();
             if (enemyComponent != null)
-                enemyComponent.maxHitPoints += baseHPBonus + cycleCount * bonusHPPerCycle;
+                enemyComponent.maxHitPoints += baseHPBonus + Mathf.FloorToInt(stageCounter * bonusHPPerWave);
             
 
             if (rotateParent != null)
