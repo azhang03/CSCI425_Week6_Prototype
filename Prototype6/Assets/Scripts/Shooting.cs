@@ -210,9 +210,12 @@ public class Shooting : MonoBehaviour
 
     Vector2 GetRandomDirection()
     {
-        int random = Random.Range(0, 4);
+        // Use the pre-generated queue when available so BulletDirectionUI can
+        // show upcoming directions.  Falls back to inline random if no queue.
+        if (BulletDirectionQueue.Instance != null)
+            return BulletDirectionQueue.Instance.Dequeue();
 
-        switch (random)
+        switch (Random.Range(0, 4))
         {
             case 0: return Vector2.up;
             case 1: return Vector2.down;
