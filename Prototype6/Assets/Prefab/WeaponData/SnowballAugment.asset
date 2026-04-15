@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SnowballAugment
   m_EditorClassIdentifier: Assembly-CSharp::AugmentData
   augmentName: Snowball
-  description: 20% to fire a slow ball of snow. Grows larger with distance, dealing
+  description: 10% to fire a slow ball of snow. Grows larger with distance, dealing
     more damage. -5% Bullet
   type: 0
   weaponToAdd: {fileID: 11400000, guid: 84ba3b5c2571705439a5effcb173f1d8, type: 2}

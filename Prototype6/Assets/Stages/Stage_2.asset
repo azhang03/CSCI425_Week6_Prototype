@@ -31,7 +31,9 @@ MonoBehaviour:
   - name: 'SpiralEnemy '
     prefab: {fileID: 864394925426953404, guid: c919020ba51382e4b8ef9102bb0dd8e3, type: 3}
     spawnWeight: 0.4
+  obstacleLayout: []
   enemyHPBonus: 1
-  bonusHPPerCycle: 2
+  bonusHPPerWave: 0
   bonusEnemiesPerWave: 2
   spawnRandomness: 0.5
+  coinReward: 15

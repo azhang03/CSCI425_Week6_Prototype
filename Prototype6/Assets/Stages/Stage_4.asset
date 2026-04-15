@@ -47,3 +47,4 @@ MonoBehaviour:
   bonusHPPerWave: 0.35
   bonusEnemiesPerWave: 2
   spawnRandomness: 0.5
+  coinReward: 30

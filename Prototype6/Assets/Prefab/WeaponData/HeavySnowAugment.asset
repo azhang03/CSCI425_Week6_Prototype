@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AugmentData
   augmentName: Heavy Snow
   description: +0.1 Snowball radius increase
-  type: 1
+  type: 6
   weaponToAdd: {fileID: 0}
   weaponToModify: 
   chanceDelta: 0
