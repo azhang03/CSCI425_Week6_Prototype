@@ -213,7 +213,7 @@ public class BulletDirectionUI : MonoBehaviour
         BulletDirectionQueue.Instance.OnQueueChanged += RefreshArrows;
         _subscribed = true;
 
-        if (_shooting == null) _shooting = FindObjectOfType<Shooting>();
+        if (_shooting == null) _shooting = FindAnyObjectByType<Shooting>();
         if (_shooting != null) _fireInterval = _shooting.fireInterval;
 
         _countdown = _fireInterval;
