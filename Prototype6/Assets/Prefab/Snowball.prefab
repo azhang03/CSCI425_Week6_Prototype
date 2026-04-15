@@ -169,6 +169,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3f70287afea0364c8a48044784f4c70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Snowball
-  growthPerUnit: 0.15
+  growthPerUnit: 0.1
   speedBoostOnHit: 1.5
-  maxDistance: 20
+  maxDistance: 15

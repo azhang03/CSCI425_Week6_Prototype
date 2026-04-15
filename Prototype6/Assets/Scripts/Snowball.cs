@@ -20,6 +20,13 @@ public class Snowball : MonoBehaviour
     private float currentSpeed;
     private float baseDamage = 1f;
 
+    void Awake()
+    {
+        // Set cooldown immediately on instantiation — before Start() — so the
+        // one-frame gap between Instantiate() and Start() can't allow a second fire.
+        WeaponManager.Instance?.SetCooldown(WEAPON_NAME, true);
+    }
+
     void Start()
     {
         spawnPosition = transform.position;

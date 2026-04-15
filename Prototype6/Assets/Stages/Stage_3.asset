@@ -38,6 +38,7 @@ MonoBehaviour:
     spawnWeight: 0.2
   obstacleLayout: []
   enemyHPBonus: 0
-  bonusHPPerCycle: 2
+  bonusHPPerWave: 0
   bonusEnemiesPerWave: 2
   spawnRandomness: 0.5
+  coinReward: 20
