@@ -14,13 +14,15 @@ public class WorldRotator2D : MonoBehaviour
         float direction = 0f;
 
         if (Keyboard.current.leftArrowKey.isPressed ||
-            Keyboard.current.qKey.isPressed)
+            Keyboard.current.qKey.isPressed ||
+            Keyboard.current.aKey.isPressed)
         {
             direction += 1f;
         }
 
         if (Keyboard.current.rightArrowKey.isPressed ||
-            Keyboard.current.eKey.isPressed)
+            Keyboard.current.eKey.isPressed ||
+            Keyboard.current.dKey.isPressed)
         {
             direction -= 1f;
         }
