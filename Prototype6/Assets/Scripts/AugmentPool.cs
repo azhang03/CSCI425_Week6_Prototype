@@ -24,6 +24,18 @@ public class AugmentPool : MonoBehaviour
     void Start()
     {
         availablePool = new List<AugmentData>(allAugments);
+
+        if (SceneFlowManager.Instance != null)
+        {
+            foreach (var aug in SceneFlowManager.Instance.GetShopPurchases())
+                AddToPool(aug);
+        }
+    }
+
+    public void AddToPool(AugmentData augment)
+    {
+        if (augment != null && !availablePool.Contains(augment))
+            availablePool.Add(augment);
     }
 
     public List<AugmentData> GetCards(int count)
@@ -33,12 +45,26 @@ public class AugmentPool : MonoBehaviour
         if (firstLevelUp)
         {
             firstLevelUp = false;
+
+            // Collect all available NewWeapon augments then shuffle,
+            // so shop-purchased weapons (e.g. Snowball) have an equal chance to appear.
+            List<AugmentData> newWeapons = new List<AugmentData>();
             foreach (var aug in availablePool)
-            {
                 if (aug.type == AugmentType.NewWeapon)
-                    result.Add(aug);
-                if (result.Count >= count) break;
+                    newWeapons.Add(aug);
+
+            // Fisher-Yates shuffle
+            for (int i = newWeapons.Count - 1; i > 0; i--)
+            {
+                int j = Random.Range(0, i + 1);
+                AugmentData tmp = newWeapons[i];
+                newWeapons[i] = newWeapons[j];
+                newWeapons[j] = tmp;
             }
+
+            for (int i = 0; i < Mathf.Min(count, newWeapons.Count); i++)
+                result.Add(newWeapons[i]);
+
             if (result.Count > 0) return result;
         }
 

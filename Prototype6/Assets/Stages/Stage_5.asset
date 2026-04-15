@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 531ef166c84359441b1ea35e618e8001, type: 3}
+  m_Name: Stage_5
+  m_EditorClassIdentifier: Assembly-CSharp::StageData
+  stageName: Farm
+  stageNumber: 5
+  spawnIntervals:
+  - 2
+  enemiesPerWave:
+  - 1
+  enemyRoster:
+  - name: DefaultEnemy
+    prefab: {fileID: 234427430957938418, guid: 77d942aacb648b046a6ff80170d05911, type: 3}
+    spawnWeight: 1
+  obstacleLayout:
+  - localPosition: {x: 5, y: 3, z: 0}
+    localScale: {x: 3, y: 1, z: 0}
+    localRotationZ: -75
+  - localPosition: {x: -5, y: -3, z: 0}
+    localScale: {x: 3, y: 1, z: 0}
+    localRotationZ: 75
+  enemyHPBonus: 0
+  bonusHPPerWave: 0.35
+  bonusEnemiesPerWave: 2
+  spawnRandomness: 0.5
+  coinReward: 10

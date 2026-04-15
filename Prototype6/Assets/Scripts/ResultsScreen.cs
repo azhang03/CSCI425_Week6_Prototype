@@ -56,6 +56,10 @@ public class ResultsScreen : MonoBehaviour
             if (stageNumber > 0)
                 StageProgressData.SaveResult(stageNumber, stars);
 
+            StageData stage = SceneFlowManager.Instance != null ? SceneFlowManager.Instance.SelectedStage : null;
+            if (stage != null)
+                CurrencyManager.AddCoins(stage.coinReward);
+
             ShowWin(stars, kills);
         }
         else

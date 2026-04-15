@@ -64,4 +64,32 @@ public class SceneFlowManager : MonoBehaviour
         }
         return null;
     }
+
+    // ── Shop purchases ────────────────────────────────────────────────────────
+    private List<AugmentData> _shopPurchases = new List<AugmentData>();
+
+    public void AddShopPurchase(AugmentData augment)
+    {
+        if (!_shopPurchases.Contains(augment))
+            _shopPurchases.Add(augment);
+    }
+
+    public List<AugmentData> GetShopPurchases() => _shopPurchases;
+
+    public void ClearShopPurchases() => _shopPurchases.Clear();
+
+    // Called once from ShopUI.Open() to restore purchases saved in PlayerPrefs.
+    // ShopUI passes every ShopItem it knows about so we can match by name.
+    public void RestoreShopPurchases(List<ShopItem> allItems)
+    {
+        foreach (var item in allItems)
+        {
+            if (item.augment == null) continue;
+            if (PlayerPrefs.GetInt("shop_" + item.augment.augmentName, 0) == 1)
+            {
+                item.purchased = true;
+                AddShopPurchase(item.augment);
+            }
+        }
+    }
 }

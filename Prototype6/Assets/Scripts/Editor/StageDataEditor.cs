@@ -86,6 +86,12 @@ public class StageDataEditor : Editor
         EditorGUILayout.PropertyField(serializedObject.FindProperty("bonusEnemiesPerWave"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("spawnRandomness"));
 
+        EditorGUILayout.Space(10);
+
+        // Rewards
+        EditorGUILayout.LabelField("Rewards", EditorStyles.boldLabel);
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("coinReward"));
+
         serializedObject.ApplyModifiedProperties();
     }
 }

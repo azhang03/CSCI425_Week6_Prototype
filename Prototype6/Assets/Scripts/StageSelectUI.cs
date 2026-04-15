@@ -69,7 +69,16 @@ public class StageSelectUI : MonoBehaviour
         if (Keyboard.current.oKey.wasPressedThisFrame)
         {
             StageProgressData.ClearAllProgress();
+            CurrencyManager.Reset();
+            FindAnyObjectByType<ShopUI>()?.ResetPurchases();
+            CoinTrackerUI.Instance?.Refresh();
             RefreshDisplay();
+        }
+        // DEBUG: 6 = add 10 coins
+        if (Keyboard.current.digit6Key.wasPressedThisFrame)
+        {
+            CurrencyManager.AddCoins(10);
+            CoinTrackerUI.Instance?.Refresh();
         }
     }
 

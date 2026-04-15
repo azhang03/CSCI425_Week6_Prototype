@@ -25,4 +25,7 @@ public class StageData: ScriptableObject
     public float bonusHPPerWave = 0f;
     public int bonusEnemiesPerWave = 2;
     public float spawnRandomness = 0.5f;
+
+    [Header("Rewards")]
+    public int coinReward = 10;
 }
