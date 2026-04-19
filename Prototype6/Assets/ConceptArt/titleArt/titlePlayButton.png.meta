@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: 263cfcbb05c884d60ab3036c468c0dc4
+guid: 84299ecba5e4b4f8aa19116d62209e51
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5348329947048962803
-    second: playButton_0
+      213: -6474151868652121104
+    second: titlePlayButton_0
   - first:
-      213: 6591286298271653515
-    second: playButton_1
+      213: -5158569017854588286
+    second: titlePlayButton_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -49,7 +49,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -103,13 +103,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: playButton_0
+      name: titlePlayButton_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 97
-        width: 158
-        height: 786
+        y: 122
+        width: 183
+        height: 768
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,20 +118,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d051094ff3ae6c5b0800000000000000
-      internalID: -5348329947048962803
+      spriteID: 0f31f0f4d213726a0800000000000000
+      internalID: -6474151868652121104
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: playButton_1
+      name: titlePlayButton_1
       rect:
         serializedVersion: 2
-        x: 328
-        y: 105
-        width: 672
-        height: 782
+        x: 307
+        y: 131
+        width: 693
+        height: 763
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,8 +140,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b8e916557f3f87b50800000000000000
-      internalID: 6591286298271653515
+      spriteID: 28a017d3fc41968b0800000000000000
+      internalID: -5158569017854588286
       vertices: []
       indices: 
       edges: []
@@ -150,7 +150,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -160,8 +160,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      playButton_0: -5348329947048962803
-      playButton_1: 6591286298271653515
+      titlePlayButton_0: -6474151868652121104
+      titlePlayButton_1: -5158569017854588286
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
