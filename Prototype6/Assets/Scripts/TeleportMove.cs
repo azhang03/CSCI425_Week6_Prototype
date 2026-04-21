@@ -24,6 +24,10 @@ public class TeleportMove : MonoBehaviour, ISpeedMultiplierReceiver
     private float baseTeleportInterval;
 
 
+    void Awake()
+    {
+        baseTeleportInterval = teleportInterval;
+    }
 
     void Start()
     {
@@ -33,7 +37,6 @@ public class TeleportMove : MonoBehaviour, ISpeedMultiplierReceiver
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         audioManager = FindAnyObjectByType<AudioManager>();
-        baseTeleportInterval = 2;
 
 
 

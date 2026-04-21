@@ -12,7 +12,10 @@ public class SpiralMove : MonoBehaviour, ISpeedMultiplierReceiver
     private float spiralDirection;
     private float baseMoveSpeed;
 
-
+    void Awake()
+    {
+        baseMoveSpeed = moveSpeed;
+    }
 
     void Start()
     {
@@ -22,8 +25,6 @@ public class SpiralMove : MonoBehaviour, ISpeedMultiplierReceiver
 
 
         spiralDirection = Random.value < 0.5f ? -1f : 1f;
-
-        baseMoveSpeed = 2;
 
     }
 
