@@ -20,6 +20,6 @@ MonoBehaviour:
   baseFireChance: 1
   duration: 0
   radius: 0
-  isMagnetic: 1
+  isMagnetic: 0
   magnetRadius: 2
   magnetStrength: 2
