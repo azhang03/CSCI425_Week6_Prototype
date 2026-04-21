@@ -12,12 +12,6 @@ public class SceneFlowManager : MonoBehaviour
     public List<StageData> allStages = new List<StageData>();
     public StageData SelectedStage { get; private set; }
 
-    [Header("Stage Visuals")]
-    public Sprite[] stageVariants;
-    public int SelectedVariant { get; private set; } = 0;  // 0 = tilemap, 1..n = variants
-
-    public void SetVariant(int index) => SelectedVariant = index;
-
     void Awake()
     {
         if (Instance != null && Instance != this)

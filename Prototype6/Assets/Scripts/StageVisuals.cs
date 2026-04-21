@@ -10,31 +10,12 @@ public class StageVisuals : MonoBehaviour
 
     void Start()
     {
-        int index = SceneFlowManager.Instance != null
-            ? SceneFlowManager.Instance.SelectedVariant
-            : 0;
-        ApplyVariant(index);
-    }
-
-    void ApplyVariant(int index)
-    {
-        if (tilemapRenderer == null || circleStageRenderer == null) return;
-
-        Sprite[] variants = SceneFlowManager.Instance != null
-            ? SceneFlowManager.Instance.stageVariants
-            : null;
-
-        bool useCircle = index > 0 && variants != null && index - 1 < variants.Length;
-
-        tilemapRenderer.enabled = !useCircle;
-
-        if (useCircle)
+        if (tilemapRenderer != null) tilemapRenderer.enabled = false;
+        if (circleStageRenderer != null)
         {
-            circleStageRenderer.sprite = variants[index - 1];
+            circleStageRenderer.enabled = true;
             ScaleToMatchTilemap();
         }
-
-        circleStageRenderer.enabled = useCircle;
     }
 
     void ScaleToMatchTilemap()
@@ -48,6 +29,7 @@ public class StageVisuals : MonoBehaviour
         float     naturalSize = circleStageRenderer.sprite.rect.width
                                 / circleStageRenderer.sprite.pixelsPerUnit;
         float     scale      = (radius * 2f) / naturalSize;
-        circleStageRenderer.transform.localScale = new Vector3(scale, scale, 1f);
+        circleStageRenderer.transform.localScale    = new Vector3(scale, scale, 1f);
+        circleStageRenderer.transform.localPosition = Vector3.zero;
     }
 }

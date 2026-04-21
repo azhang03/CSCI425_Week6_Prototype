@@ -8,6 +8,7 @@ public class Moat : MonoBehaviour
     [HideInInspector] public float radius = 2f;
     [HideInInspector] public string weaponName = "Moat";
     public float tickInterval = 2f;
+    [Range(0f, 1f)] public float opacity = 0.35f;
 
     private float lifetime;
     private Dictionary<int, float> tickTimers = new Dictionary<int, float>();
@@ -24,6 +25,9 @@ public class Moat : MonoBehaviour
         {
             sr.sprite = CreateCircleSprite(64);
             sr.sortingOrder = -1;
+            Color c = sr.color;
+            c.a = opacity;
+            sr.color = c;
         }
 
         CircleCollider2D col = GetComponent<CircleCollider2D>();

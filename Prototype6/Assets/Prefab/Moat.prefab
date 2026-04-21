@@ -80,7 +80,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -59577141
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: d562489b4755dc04b927eca410d59a06, type: 3}
@@ -145,3 +145,5 @@ MonoBehaviour:
   duration: 4
   radius: 2
   weaponName: Moat
+  tickInterval: 2
+  opacity: 0.64

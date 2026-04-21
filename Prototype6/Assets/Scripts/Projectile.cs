@@ -5,6 +5,10 @@ public class Projectile : MonoBehaviour
     [HideInInspector] public int damage = 1;
     public float lifetime = 5f;
 
+    [Header("Glow")]
+    public Color glowColor = new Color(1f, 0.92f, 0.15f, 0.5f);
+    public float glowScale = 2.2f;
+
     // Set by Shooting.FireProjectile() at spawn — same pattern as damage
     [HideInInspector] public bool  isMagnetic     = false;
     [HideInInspector] public float magnetRadius   = 5f;
@@ -23,6 +27,7 @@ public class Projectile : MonoBehaviour
     void Start()
     {
         Destroy(gameObject, lifetime);
+        AddGlow();
     }
 
     void Update()
@@ -97,6 +102,46 @@ public class Projectile : MonoBehaviour
         }
 
         return bestTarget;
+    }
+
+    void AddGlow()
+    {
+        SpriteRenderer parentSr = GetComponent<SpriteRenderer>();
+
+        var glow = new GameObject("Glow");
+        glow.transform.SetParent(transform, false);
+        glow.transform.localPosition = Vector3.zero;
+        glow.transform.localScale    = Vector3.one * glowScale;
+
+        var sr = glow.AddComponent<SpriteRenderer>();
+        sr.sprite           = CreateGlowSprite(32);
+        sr.color            = glowColor;
+        sr.sortingLayerName = parentSr != null ? parentSr.sortingLayerName : "Entities";
+        sr.sortingOrder     = (parentSr != null ? parentSr.sortingOrder : 0) - 1;
+    }
+
+    static Sprite CreateGlowSprite(int res)
+    {
+        var tex = new Texture2D(res, res, TextureFormat.RGBA32, false)
+        {
+            filterMode = FilterMode.Bilinear,
+            wrapMode   = TextureWrapMode.Clamp
+        };
+
+        float center = res * 0.5f;
+        var pixels = new Color[res * res];
+        for (int y = 0; y < res; y++)
+        for (int x = 0; x < res; x++)
+        {
+            float dx = x - center + 0.5f;
+            float dy = y - center + 0.5f;
+            float t  = Mathf.Clamp01(Mathf.Sqrt(dx * dx + dy * dy) / center);
+            pixels[y * res + x] = new Color(1f, 1f, 1f, 1f - t);
+        }
+
+        tex.SetPixels(pixels);
+        tex.Apply();
+        return Sprite.Create(tex, new Rect(0, 0, res, res), new Vector2(0.5f, 0.5f), res);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

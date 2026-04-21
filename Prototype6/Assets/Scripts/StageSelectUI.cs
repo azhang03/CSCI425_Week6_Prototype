@@ -86,6 +86,19 @@ public class StageSelectUI : MonoBehaviour
         if (playButton != null) playButton.onClick.AddListener(OnPlayClicked);
         if (leftArrowButton != null) leftArrowButton.onClick.AddListener(NavigateLeft);
         if (rightArrowButton != null) rightArrowButton.onClick.AddListener(NavigateRight);
+        if (leftRecordButton != null) leftRecordButton.onClick.AddListener(NavigateLeft);
+        if (rightRecordButton != null) rightRecordButton.onClick.AddListener(NavigateRight);
+
+        if (leftRecordButton != null && leftRecordImage != null)
+        {
+            var dimmer = leftRecordButton.gameObject.AddComponent<HoverDimmer>();
+            dimmer.target = leftRecordImage;
+        }
+        if (rightRecordButton != null && rightRecordImage != null)
+        {
+            var dimmer = rightRecordButton.gameObject.AddComponent<HoverDimmer>();
+            dimmer.target = rightRecordImage;
+        }
 
         RefreshDisplay();
     }
@@ -196,18 +209,26 @@ public class StageSelectUI : MonoBehaviour
 
     public void HoverLeftRecord()
     {
-        if (allStages == null || allStages.Count == 0) return;
-        int prevIndex = (currentIndex - 1 + allStages.Count) % allStages.Count;
-        currentIndex = prevIndex;
-        RefreshDisplay();
+        if (leftRecordImage != null)
+            leftRecordImage.color = new Color(0.55f, 0.55f, 0.55f, 1f);
+    }
+
+    public void UnhoverLeftRecord()
+    {
+        if (leftRecordImage != null)
+            leftRecordImage.color = Color.white;
     }
 
     public void HoverRightRecord()
     {
-        if (allStages == null || allStages.Count == 0) return;
-        int nextIndex = (currentIndex + 1) % allStages.Count;
-        currentIndex = nextIndex;
-        RefreshDisplay();
+        if (rightRecordImage != null)
+            rightRecordImage.color = new Color(0.55f, 0.55f, 0.55f, 1f);
+    }
+
+    public void UnhoverRightRecord()
+    {
+        if (rightRecordImage != null)
+            rightRecordImage.color = Color.white;
     }
 
     void SetButtonGreyscale(Button btn, bool active)
