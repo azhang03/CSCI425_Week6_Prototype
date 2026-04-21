@@ -17,13 +17,18 @@ MonoBehaviour:
   spawnIntervals:
   - 5
   - 5
-  - 5
-  - 6
+  - 4
+  - 4
   enemiesPerWave:
   - 4
   - 7
   - 10
   - 14
+  enemySpeedMultipliers:
+  - 1
+  - 2
+  - 2
+  - 3
   enemyRoster:
   - name: 'DefaultEnemy '
     prefab: {fileID: 234427430957938418, guid: 77d942aacb648b046a6ff80170d05911, type: 3}

@@ -11,6 +11,8 @@ public class StageData: ScriptableObject
     [Header("Wave Structure")]
     public float[] spawnIntervals;
     public float[] enemiesPerWave;
+    public float[] enemySpeedMultipliers;
+
 
     public int waveCount => spawnIntervals != null ? spawnIntervals.Length : 0;
 

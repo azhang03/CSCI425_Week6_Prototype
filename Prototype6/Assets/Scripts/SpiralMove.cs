@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SpiralMove : MonoBehaviour
+public class SpiralMove : MonoBehaviour, ISpeedMultiplierReceiver
 {
     [Header("Movement Settings")]
     private Transform target;
@@ -10,6 +10,8 @@ public class SpiralMove : MonoBehaviour
     public float spiralTightness = 1.5f;  // How fast spiral tightens near player
 
     private float spiralDirection;
+    private float baseMoveSpeed;
+
 
 
     void Start()
@@ -20,6 +22,18 @@ public class SpiralMove : MonoBehaviour
 
 
         spiralDirection = Random.value < 0.5f ? -1f : 1f;
+
+        baseMoveSpeed = 2;
+
+    }
+
+    public void SetSpeedMultiplier(float multiplier)
+    {
+        Debug.Log("Base speed: " + baseMoveSpeed);
+
+        moveSpeed = baseMoveSpeed * multiplier;
+        //Debug.Log("Speed: " + moveSpeed);
+
     }
 
     void Update()

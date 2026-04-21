@@ -22,6 +22,10 @@ MonoBehaviour:
   - 3
   - 5
   - 8
+  enemySpeedMultipliers:
+  - 1
+  - 2
+  - 3
   enemyRoster:
   - name: 'DefaultEnemy '
     prefab: {fileID: 234427430957938418, guid: 77d942aacb648b046a6ff80170d05911, type: 3}
@@ -31,6 +35,7 @@ MonoBehaviour:
     localScale: {x: 3, y: 1, z: 0}
     localRotationZ: 90
   enemyHPBonus: 0
-  bonusHPPerCycle: 2
+  bonusHPPerWave: 0
   bonusEnemiesPerWave: 2
   spawnRandomness: 0.5
+  coinReward: 10

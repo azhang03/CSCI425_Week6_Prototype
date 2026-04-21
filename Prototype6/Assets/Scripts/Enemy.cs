@@ -19,18 +19,38 @@ public class Enemy : MonoBehaviour
     private Coroutine flashRoutine;
     private bool deathRegistered;
 
+    private MonoBehaviour[] attachedBehaviours;
+
+    void Awake()
+    {
+        attachedBehaviours = GetComponents<MonoBehaviour>();
+    }
+
     void Start()
     {
         currentHP = maxHitPoints;
         spriteRenderer = GetComponent<SpriteRenderer>();
         originalColor = spriteRenderer.color;
         audioManager = FindAnyObjectByType<AudioManager>();
-
     }
 
-    void Update()
+    public void SetSpeedMultiplier(float multiplier)
     {
+        if (attachedBehaviours == null)
+            attachedBehaviours = GetComponents<MonoBehaviour>();
 
+        Debug.Log("Ememy componet");
+
+        foreach (MonoBehaviour behaviour in attachedBehaviours)
+        {
+            if (behaviour == null || behaviour == this)
+                continue;
+
+            if (behaviour is ISpeedMultiplierReceiver receiver)
+            {
+                receiver.SetSpeedMultiplier(multiplier);
+            }
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -66,14 +86,17 @@ public class Enemy : MonoBehaviour
 
             if (XPManager.Instance != null)
                 XPManager.Instance.AddXP(xpValue);
+
             if (A_ScoreManager.Instance != null)
                 A_ScoreManager.Instance.AddKill();
+
             Destroy(gameObject);
             return;
         }
 
         if (flashRoutine != null)
             StopCoroutine(flashRoutine);
+
         flashRoutine = StartCoroutine(HitFlash());
     }
 
@@ -81,6 +104,7 @@ public class Enemy : MonoBehaviour
     {
         if (deathRegistered) return;
         deathRegistered = true;
+
         if (EnemySpawner.Instance != null)
             EnemySpawner.Instance.RegisterEnemyDeath();
     }
@@ -98,3 +122,4 @@ public class Enemy : MonoBehaviour
         flashRoutine = null;
     }
 }
+

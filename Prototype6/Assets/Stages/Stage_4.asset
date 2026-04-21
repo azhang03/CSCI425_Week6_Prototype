@@ -15,7 +15,7 @@ MonoBehaviour:
   stageName: The Gauntlet
   stageNumber: 4
   spawnIntervals:
-  - 8
+  - 3
   - 7
   - 7
   - 6
@@ -26,6 +26,12 @@ MonoBehaviour:
   - 9
   - 9
   - 12
+  enemySpeedMultipliers:
+  - 5
+  - 1
+  - 2
+  - 2
+  - 3
   enemyRoster:
   - name: 'SpiralEnemy '
     prefab: {fileID: 864394925426953404, guid: c919020ba51382e4b8ef9102bb0dd8e3, type: 3}

@@ -1,30 +1,38 @@
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
-public class DefaultMove : MonoBehaviour
+public class DefaultMove : MonoBehaviour, ISpeedMultiplierReceiver
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     private Transform target;
-    public float moveSpeed = 2f;
 
+    public float moveSpeed = 2f;
+    private float baseMoveSpeed;
+
+    void Awake()
+    {
+        baseMoveSpeed = moveSpeed;
+    }
 
     void Start()
     {
-
         GameObject player = GameObject.Find("Player");
         if (player != null)
             target = player.transform;
-
     }
 
-    // Update is called once per frame
+    public void SetSpeedMultiplier(float multiplier)
+    {
+        moveSpeed = baseMoveSpeed * multiplier;
+        //Debug.Log("Speed: " + moveSpeed);
+    }
+
     void Update()
     {
-
         if (target == null) return;
 
         Vector2 direction = ((Vector2)target.position - (Vector2)transform.position).normalized;
         transform.Translate(direction * moveSpeed * Time.deltaTime, Space.World);
-
     }
 }
+
+
+

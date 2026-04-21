@@ -8,20 +8,28 @@ public class StageDataEditor : Editor
     {
         serializedObject.Update();
 
+        SerializedProperty stageName = serializedObject.FindProperty("stageName");
+        SerializedProperty stageNumber = serializedObject.FindProperty("stageNumber");
+
+        SerializedProperty intervals = serializedObject.FindProperty("spawnIntervals");
+        SerializedProperty enemies = serializedObject.FindProperty("enemiesPerWave");
+        SerializedProperty speedMultipliers = serializedObject.FindProperty("enemySpeedMultipliers");
+
         // Identity
         EditorGUILayout.LabelField("Identity", EditorStyles.boldLabel);
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("stageName"));
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("stageNumber"));
+        EditorGUILayout.PropertyField(stageName);
+        EditorGUILayout.PropertyField(stageNumber);
 
         EditorGUILayout.Space(10);
 
         // Waves
-        SerializedProperty intervals = serializedObject.FindProperty("spawnIntervals");
-        SerializedProperty enemies = serializedObject.FindProperty("enemiesPerWave");
-
-        if (intervals != null && enemies != null)
+        if (intervals != null && enemies != null && speedMultipliers != null)
         {
-            int waveCount = Mathf.Min(intervals.arraySize, enemies.arraySize);
+            int waveCount = Mathf.Max(intervals.arraySize, enemies.arraySize, speedMultipliers.arraySize);
+
+            EnsureArraySize(intervals, waveCount, 2f);
+            EnsureArraySize(enemies, waveCount, 5f);
+            EnsureArraySize(speedMultipliers, waveCount, 1f);
 
             EditorGUILayout.LabelField("Waves", EditorStyles.boldLabel);
             EditorGUILayout.LabelField($"Wave Count: {waveCount}", EditorStyles.miniLabel);
@@ -38,6 +46,7 @@ public class StageDataEditor : Editor
                 {
                     intervals.DeleteArrayElementAtIndex(i);
                     enemies.DeleteArrayElementAtIndex(i);
+                    speedMultipliers.DeleteArrayElementAtIndex(i);
                     break;
                 }
 
@@ -51,17 +60,17 @@ public class StageDataEditor : Editor
                     EditorGUILayout.FloatField("Enemy Count",
                     enemies.GetArrayElementAtIndex(i).floatValue);
 
+                speedMultipliers.GetArrayElementAtIndex(i).floatValue =
+                    EditorGUILayout.FloatField("Enemy Speed Multiplier",
+                    speedMultipliers.GetArrayElementAtIndex(i).floatValue);
+
                 EditorGUILayout.EndVertical();
                 EditorGUILayout.Space(2);
             }
 
             if (GUILayout.Button("+ Add Wave"))
             {
-                intervals.InsertArrayElementAtIndex(intervals.arraySize);
-                enemies.InsertArrayElementAtIndex(enemies.arraySize);
-
-                intervals.GetArrayElementAtIndex(intervals.arraySize - 1).floatValue = 2f;
-                enemies.GetArrayElementAtIndex(enemies.arraySize - 1).floatValue = 5f;
+                AddWave(intervals, enemies, speedMultipliers);
             }
         }
 
@@ -73,7 +82,7 @@ public class StageDataEditor : Editor
 
         EditorGUILayout.Space(10);
 
-        // Obstacles 
+        // Obstacles
         EditorGUILayout.LabelField("Obstacles", EditorStyles.boldLabel);
         EditorGUILayout.PropertyField(serializedObject.FindProperty("obstacleLayout"), true);
 
@@ -94,6 +103,32 @@ public class StageDataEditor : Editor
 
         serializedObject.ApplyModifiedProperties();
     }
+
+    private void EnsureArraySize(SerializedProperty array, int size, float defaultValue)
+    {
+        while (array.arraySize < size)
+        {
+            array.InsertArrayElementAtIndex(array.arraySize);
+            array.GetArrayElementAtIndex(array.arraySize - 1).floatValue = defaultValue;
+        }
+
+        while (array.arraySize > size)
+        {
+            array.DeleteArrayElementAtIndex(array.arraySize - 1);
+        }
+    }
+
+    private void AddWave(SerializedProperty intervals, SerializedProperty enemies, SerializedProperty speedMultipliers)
+    {
+        intervals.InsertArrayElementAtIndex(intervals.arraySize);
+        enemies.InsertArrayElementAtIndex(enemies.arraySize);
+        speedMultipliers.InsertArrayElementAtIndex(speedMultipliers.arraySize);
+
+        intervals.GetArrayElementAtIndex(intervals.arraySize - 1).floatValue = 2f;
+        enemies.GetArrayElementAtIndex(enemies.arraySize - 1).floatValue = 5f;
+        speedMultipliers.GetArrayElementAtIndex(speedMultipliers.arraySize - 1).floatValue = 1f;
+    }
 }
+
 
 

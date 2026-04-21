@@ -8,7 +8,6 @@ public class EnemySpawner : MonoBehaviour
 
     public AudioManager audioManager;
 
-
     [Header("References")]
     public Tilemap stageTilemap;
     public Transform rotateParent;
@@ -23,6 +22,7 @@ public class EnemySpawner : MonoBehaviour
     public float spawnRandmoness = 0.5f;
     public float[] stageIntervals = { 5, 3, 2, 1 };
     public float[] enemiesPerStage = { 2, 5, 8, 15 };
+    public float[] enemySpeedMultipliers = { 1f, 1f, 1f, 1f };
 
     public int stageCounter = 0;
     public int spawnCounter = 0;
@@ -36,9 +36,6 @@ public class EnemySpawner : MonoBehaviour
     public int activeEnemyCount { get; private set; }
     private bool doneSpawning;
     public event System.Action OnAllWavesComplete;
-
-
-
 
     [System.Serializable]
     public class EnemyType
@@ -78,11 +75,11 @@ public class EnemySpawner : MonoBehaviour
             spawnInterval = stageIntervals[stageCounter];
             spawnTimer = spawnInterval;
 
+            totalWeight = 0f;
             foreach (var enemy in enemyTypes)
             {
                 totalWeight += enemy.spawnWeight;
             }
-
         }
     }
 
@@ -101,6 +98,7 @@ public class EnemySpawner : MonoBehaviour
         numStages = data.waveCount;
         stageIntervals = data.spawnIntervals;
         enemiesPerStage = data.enemiesPerWave;
+        enemySpeedMultipliers = data.enemySpeedMultipliers;
         enemyTypes = new List<EnemyType>(data.enemyRoster);
         bonusHPPerWave = data.bonusHPPerWave;
         bonusEnemiesPerStage = data.bonusEnemiesPerWave;
@@ -118,8 +116,12 @@ public class EnemySpawner : MonoBehaviour
         stageCounter = 0;
         spawnCounter = 0;
         cycleCount = 0;
-        spawnInterval = stageIntervals[0];
-        spawnTimer = spawnInterval;
+
+        if (stageIntervals != null && stageIntervals.Length > 0)
+        {
+            spawnInterval = stageIntervals[0];
+            spawnTimer = spawnInterval;
+        }
     }
 
     void Update()
@@ -131,7 +133,7 @@ public class EnemySpawner : MonoBehaviour
         if (spawnTimer <= 0f)
         {
             SpawnEnemy();
-            spawnTimer = Random.Range(spawnInterval - spawnRandmoness, spawnInterval - spawnRandmoness);
+            spawnTimer = Random.Range(spawnInterval - spawnRandmoness, spawnInterval + spawnRandmoness);
             spawnCounter++;
             UpdateStage();
         }
@@ -140,6 +142,14 @@ public class EnemySpawner : MonoBehaviour
     int GetEffectiveEnemiesForStage(int stage)
     {
         return (int)enemiesPerStage[stage] + cycleCount * bonusEnemiesPerStage;
+    }
+
+    float GetSpeedMultiplierForStage(int stage)
+    {
+        if (enemySpeedMultipliers == null || stage < 0 || stage >= enemySpeedMultipliers.Length)
+            return 1f;
+
+        return enemySpeedMultipliers[stage];
     }
 
     void UpdateStage()
@@ -176,33 +186,39 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemy()
     {
-        if (enemyTypes.Count > 0)
+        if (enemyTypes.Count <= 0)
+            return;
+
+        GameObject enemyPrefab = GetRandomEnemyByWeight();
+        if (enemyPrefab == null || stageTilemap == null)
+            return;
+
+        Vector3 center = stageTilemap.transform.position;
+        float angle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
+        Vector3 spawnPos = center + new Vector3(
+            Mathf.Cos(angle) * spawnRadius,
+            Mathf.Sin(angle) * spawnRadius,
+            0f
+        );
+
+        GameObject enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+        activeEnemyCount++;
+
+        float speedMultiplier = GetSpeedMultiplierForStage(stageCounter);
+
+        Enemy enemyComponent = enemy.GetComponent<Enemy>();
+        if (enemyComponent != null)
         {
-            GameObject enemyPrefab = GetRandomEnemyByWeight();
-            if (enemyPrefab == null || stageTilemap == null) return;
+            enemyComponent.maxHitPoints += baseHPBonus + Mathf.FloorToInt(stageCounter * bonusHPPerWave);
 
-            Vector3 center = stageTilemap.transform.position;
-            float angle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
-            Vector3 spawnPos = center + new Vector3(
-                Mathf.Cos(angle) * spawnRadius,
-                Mathf.Sin(angle) * spawnRadius,
-                0f
-            );
-
-            GameObject enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
-            activeEnemyCount++;
-
-            Enemy enemyComponent = enemy.GetComponent<Enemy>();
-            if (enemyComponent != null)
-                enemyComponent.maxHitPoints += baseHPBonus + Mathf.FloorToInt(stageCounter * bonusHPPerWave);
-            
-
-            if (rotateParent != null)
-                enemy.transform.SetParent(rotateParent);
-
-            if(audioManager != null)
-                audioManager.PlayEnemySpawn();
+           enemyComponent.SetSpeedMultiplier(speedMultiplier);
         }
+
+        if (rotateParent != null)
+            enemy.transform.SetParent(rotateParent);
+
+        if (audioManager != null)
+            audioManager.PlayEnemySpawn();
     }
 
     GameObject GetRandomEnemyByWeight()
@@ -216,7 +232,6 @@ public class EnemySpawner : MonoBehaviour
 
             if (randomValue <= cumulativeWeight)
             {
-                //Debug.Log("Enemy anem :" + enemy.name);
                 return enemy.prefab;
             }
         }
@@ -224,3 +239,5 @@ public class EnemySpawner : MonoBehaviour
         return null;
     }
 }
+
+

@@ -2,11 +2,13 @@ using UnityEngine;
 using System.Collections;
 
 
-public class TeleportMove : MonoBehaviour
+public class TeleportMove : MonoBehaviour, ISpeedMultiplierReceiver
 {
     [Header("Teleport Settings")]
     public float teleportInterval = 2f;
-    public float shrinkFactor = 0.75f;           // How much closer each teleport gets (0.5–0.9 works well)
+    public float shrinkFactor = 0.75f;
+    public float maxSpeedMultiplier = 5;
+    public float minTeleportInterval = 0.5f;
 
     private Transform target;
     private float timer;
@@ -19,6 +21,9 @@ public class TeleportMove : MonoBehaviour
 
     public AudioManager audioManager;
 
+    private float baseTeleportInterval;
+
+
 
     void Start()
     {
@@ -27,9 +32,26 @@ public class TeleportMove : MonoBehaviour
             target = player.transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        audioManager = FindAnyObjectByType<AudioManager>(); 
+        audioManager = FindAnyObjectByType<AudioManager>();
+        baseTeleportInterval = 2;
 
 
+
+    }
+
+    public void SetSpeedMultiplier(float multiplier)
+    {
+
+        Debug.Log("Base t:p " + baseTeleportInterval);
+
+        multiplier = maxSpeedMultiplier - multiplier + 1;
+        if(multiplier < 1)
+        {
+            multiplier = 1;
+        }
+
+        teleportInterval =  (multiplier) * ((baseTeleportInterval) / maxSpeedMultiplier);
+        Debug.Log("TP int: " + teleportInterval);
     }
 
     void Update()
