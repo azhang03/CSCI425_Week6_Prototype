@@ -15,22 +15,22 @@ MonoBehaviour:
   stageName: The Gauntlet
   stageNumber: 4
   spawnIntervals:
-  - 8
-  - 7
-  - 7
+  - 6
   - 6
   - 5
+  - 5
+  - 4
   enemiesPerWave:
-  - 6
-  - 9
-  - 9
+  - 3
+  - 5
   - 9
   - 12
+  - 15
   enemySpeedMultipliers:
-  - 5
   - 1
   - 2
   - 2
+  - 3
   - 3
   enemyRoster:
   - name: 'SpiralEnemy '

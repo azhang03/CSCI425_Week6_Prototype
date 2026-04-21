@@ -15,22 +15,22 @@ MonoBehaviour:
   stageName: Barrier Chaos
   stageNumber: 3
   spawnIntervals:
+  - 6
+  - 6
   - 5
   - 5
-  - 4
-  - 4
   - 4
   enemiesPerWave:
+  - 3
   - 5
-  - 8
+  - 7
+  - 9
   - 12
-  - 16
-  - 20
   enemySpeedMultipliers:
   - 1
   - 2
   - 2
-  - 2
+  - 3
   - 3
   enemyRoster:
   - name: 'SpiralEnemy '
