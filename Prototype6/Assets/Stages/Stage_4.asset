@@ -50,7 +50,7 @@ MonoBehaviour:
     localScale: {x: 3, y: 1, z: 0}
     localRotationZ: 75
   enemyHPBonus: 0
-  bonusHPPerWave: 0.35
+  bonusHPPerWave: 0.51
   bonusEnemiesPerWave: 2
   spawnRandomness: 0.5
   coinReward: 30
