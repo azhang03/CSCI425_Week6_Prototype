@@ -45,6 +45,9 @@ public class LoadingScreen : MonoBehaviour
         // Pause menu may have set timeScale = 0; reset so unscaled coroutines work cleanly
         Time.timeScale = 1f;
 
+        LobbyAudioManager.Instance.PlayLoadLevel();
+        //Not really long enough for this audio
+
         // Show canvas (starts transparent) and begin animation
         canvasGroup.gameObject.SetActive(true);
         canvasGroup.alpha = 0f;

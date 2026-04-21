@@ -72,6 +72,8 @@ public class MoveOnInteract : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        LobbyAudioManager.Instance.PlayClickSound();
+
         if (!CanInteract())
         {
             ResetState();
@@ -79,6 +81,7 @@ public class MoveOnInteract : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         }
 
         isClicked = true;
+
         UpdatePosition();
 
         if (clickInvokesPlay)

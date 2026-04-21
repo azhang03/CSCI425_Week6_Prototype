@@ -30,7 +30,7 @@ public class SpiralMove : MonoBehaviour, ISpeedMultiplierReceiver
 
     public void SetSpeedMultiplier(float multiplier)
     {
-        Debug.Log("Base speed: " + baseMoveSpeed);
+        //Debug.Log("Base speed: " + baseMoveSpeed);
 
         moveSpeed = baseMoveSpeed * multiplier;
         //Debug.Log("Speed: " + moveSpeed);

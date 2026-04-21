@@ -6949,6 +6949,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 4336387172393711562, guid: fbdb87669d648c84e9b5627c2609e6e0, type: 3}
+      propertyPath: playerDie
+      value: 
+      objectReference: {fileID: 8300000, guid: 3cbe278dec337c844b93daa670dac79c, type: 3}
     - target: {fileID: 4632736420972211610, guid: fbdb87669d648c84e9b5627c2609e6e0, type: 3}
       propertyPath: allAugments.Array.size
       value: 21
