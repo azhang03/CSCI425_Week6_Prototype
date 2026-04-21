@@ -584,7 +584,7 @@ MonoBehaviour:
     recordSprite: {fileID: 21300000, guid: f1276fccc9a914ff8b7d0e08496b216d, type: 3}
     cornerSprite: {fileID: 1775705854842176582, guid: 98c924087125d47bcb3cdaed11ceca58, type: 3}
   - stageNumber: 4
-    recordSprite: {fileID: 21300000, guid: f1276fccc9a914ff8b7d0e08496b216d, type: 3}
+    recordSprite: {fileID: 21300000, guid: 9a5606702fb9f445b821158b4b037301, type: 3}
     cornerSprite: {fileID: 1775705854842176582, guid: 98c924087125d47bcb3cdaed11ceca58, type: 3}
   playButton: {fileID: 1345171868}
   leftArrowButton: {fileID: 1485052821}
@@ -2362,14 +2362,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6cf56ad370586e84db57c0e7e1699b3d, type: 2}
   - {fileID: 11400000, guid: 25bf605eec400b1449e6ba37fa4532ef, type: 2}
   - {fileID: 11400000, guid: 23bd5d3c945c1aa4c90cc517c246ec16, type: 2}
-  stageVariants:
-  - {fileID: 3412461161510467546, guid: d50e2e2c975127542a43abf9e0662809, type: 3}
-  - {fileID: 6623386477096995268, guid: bd548937ee5148845a577bb73c210925, type: 3}
-  - {fileID: 5957908314452244161, guid: b8b4c377ed4cad145a504195e0c3a2dd, type: 3}
-  - {fileID: -8267502279034916644, guid: dabac160740090c4fab1d4b7b6491743, type: 3}
-  - {fileID: 6832708945246604839, guid: 3d0edbac5d27ce647aa6bc9958a35747, type: 3}
-  - {fileID: -4131546424189399909, guid: 27ce3db5813f685439d1de2acb011cdb, type: 3}
-  - {fileID: -2260469460872921514, guid: 5551e2f813eb63f4496b8dfc3adb42b4, type: 3}
 --- !u!4 &1080859385
 Transform:
   m_ObjectHideFlags: 0
