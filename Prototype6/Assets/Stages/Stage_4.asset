@@ -19,13 +19,13 @@ MonoBehaviour:
   - 4
   - 4
   - 4.5
-  - 4.5
+  - 3
   enemiesPerWave:
   - 6
   - 6
   - 9
-  - 12
   - 15
+  - 12
   enemySpeedMultipliers:
   - 1
   - 2
