@@ -10,13 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c91f22a388007164f9773158e573bbbb, type: 3}
-  m_Name: SnowballAugment
-  m_EditorClassIdentifier: Assembly-CSharp::AugmentData
-  augmentName: Snowball
-  description: 10% to fire a slow ball of snow. Grows larger with distance, dealing
-    more damage. -5% Bullet
-  type: 0
-  weaponToAdd: {fileID: 11400000, guid: 84ba3b5c2571705439a5effcb173f1d8, type: 2}
+  m_Name: FireballShieldBreakAugment
+  m_EditorClassIdentifier: Assembly-CSharp::A_AugmentData
+  augmentName: Shield Break
+  description: Fireball breaks enemy shields instead of dying to them.
+  type: 6
+  weaponToAdd: {fileID: 0}
   weaponToModify: 
   chanceDelta: 0
   boostTarget: 0
@@ -26,8 +25,8 @@ MonoBehaviour:
   allChanceDelta: 0
   healthDelta: 0
   intervalDelta: 0
-  statWeaponName: 
-  statName: 
-  statDelta: 0
+  statWeaponName: Fireball
+  statName: breakShield
+  statDelta: 1
   isUnique: 1
   isPrismatic: 1

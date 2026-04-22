@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GlassCannonAugment
   m_EditorClassIdentifier: Assembly-CSharp::A_AugmentData
   augmentName: Glass Cannon
-  description: All weapons +8%, but lose 1 heart
+  description: All weapons +20%, but lose 1 heart
   type: 4
   weaponToAdd: {fileID: 0}
   weaponToModify: 
@@ -22,10 +22,11 @@ MonoBehaviour:
   boostDelta: 0
   nerfTarget: 0
   nerfDelta: 0
-  allChanceDelta: 0.08
+  allChanceDelta: 0.2
   healthDelta: -1
   intervalDelta: 0
   statWeaponName: 
   statName: 
   statDelta: 0
   isUnique: 1
+  isPrismatic: 0

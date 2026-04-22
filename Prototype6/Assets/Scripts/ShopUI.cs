@@ -148,13 +148,30 @@ public class ShopUI : MonoBehaviour
         Image bgImage = cardObj.AddComponent<Image>();
         bgImage.color = new Color(0.12f, 0.12f, 0.16f, 0.95f);
 
-        // Outline — type-colored and always visible on affordable, dark on unaffordable
-        Color typeColor = GetCardColor(item.augment.type);
-        Color normalOutline = affordable ? typeColor         : new Color(0.25f, 0.25f, 0.25f, 1f);
-        Color hoverOutline  = affordable ? Color.white       : normalOutline;
+        // Outline — type-colored and always visible on affordable, dark on unaffordable.
+        // Prismatic augments (top-strength tier) override with pearl-cyan + pink chromatic shadow.
+        bool prismatic = item.augment.isPrismatic && affordable;
+        Color typeColor = prismatic
+            ? new Color(0.70f, 0.92f, 1.00f, 1f)  // pearl cyan idle
+            : GetCardColor(item.augment.type);
+        Color normalOutline = affordable ? typeColor   : new Color(0.25f, 0.25f, 0.25f, 1f);
+        Color hoverOutline  = affordable
+            ? (prismatic ? new Color(1.00f, 0.95f, 0.80f, 1f) : Color.white)  // pearl gold on hover when prismatic
+            : normalOutline;
+
+        // For prismatic cards, an outer pink Outline sits behind the inner cyan Outline to
+        // produce a chromatic-edge ring. Both are centered (symmetric effectDistance), so the
+        // card's visual footprint stays identical to non-prismatic cards (total 4px outline).
+        if (prismatic)
+        {
+            Outline chroma = cardObj.AddComponent<Outline>();
+            chroma.effectColor = new Color(1.00f, 0.55f, 0.90f, 0.90f);
+            chroma.effectDistance = new Vector2(4, 4);
+        }
+
         Outline outline = cardObj.AddComponent<Outline>();
         outline.effectColor = normalOutline;
-        outline.effectDistance = new Vector2(4, 4);
+        outline.effectDistance = new Vector2(prismatic ? 3 : 4, prismatic ? 3 : 4);
 
         // Title — white, matching AugmentUI
         MakeLabel(cardObj, "Title",

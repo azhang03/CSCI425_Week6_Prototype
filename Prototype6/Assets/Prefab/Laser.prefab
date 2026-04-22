@@ -107,9 +107,9 @@ MonoBehaviour:
   damage: 2
   direction: {x: 0, y: 1}
   blinkCount: 3
-  blinkOnTime: 0.15
-  blinkOffTime: 0.15
-  telegraphAlpha: 0.35
+  blinkOnTime: 0.35
+  blinkOffTime: 0.25
+  telegraphAlpha: 0.18
   fadeOutDuration: 0.3
   boxWidth: 1
   boxLength: 24

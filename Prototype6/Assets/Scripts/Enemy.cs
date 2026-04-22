@@ -9,6 +9,13 @@ public class Enemy : MonoBehaviour
     public int maxHitPoints = 2;
     public int xpValue = 1;
 
+    [Tooltip("How much this enemy reacts to the wave speed multiplier. " +
+             "1 = full effect (default). 0.5 = half-reactive (a 2x wave becomes 1.5x). " +
+             "0 = immune (always prefab base speed). Deviations from 1.0 are scaled; " +
+             "a 1.0 wave is always neutral regardless of this value.")]
+    [Range(0f, 2f)]
+    public float speedMultiplierInfluence = 1f;
+
     [Header("Hit Flash")]
     public float hitFlashDuration = 0.12f;
     public Color hitFlashColor = Color.red;
@@ -39,7 +46,9 @@ public class Enemy : MonoBehaviour
         if (attachedBehaviours == null)
             attachedBehaviours = GetComponents<MonoBehaviour>();
 
-        Debug.Log("Ememy componet");
+        // Attenuate the wave multiplier per-enemy. 1.0 stays 1.0 for any influence value;
+        // only deviations from 1.0 are scaled.
+        float effective = 1f + (multiplier - 1f) * speedMultiplierInfluence;
 
         foreach (MonoBehaviour behaviour in attachedBehaviours)
         {
@@ -48,7 +57,7 @@ public class Enemy : MonoBehaviour
 
             if (behaviour is ISpeedMultiplierReceiver receiver)
             {
-                receiver.SetSpeedMultiplier(multiplier);
+                receiver.SetSpeedMultiplier(effective);
             }
         }
     }

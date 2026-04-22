@@ -13,6 +13,7 @@ public class Projectile : MonoBehaviour
     [HideInInspector] public bool  isMagnetic     = false;
     [HideInInspector] public float magnetRadius   = 5f;
     [HideInInspector] public float magnetStrength = 5f;
+    [HideInInspector] public bool  canBreakShield = false;
 
     private Transform   committedTarget;
     private Rigidbody2D rb;
@@ -146,11 +147,14 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("test collision");
         if (other.gameObject.CompareTag(obstacleTag))
         {
+            Shield shield = other.GetComponent<Shield>();
+            if (shield != null && canBreakShield)
+            {
+                Destroy(other.gameObject);
+            }
             Destroy(gameObject);
-            // add sound effect
         }
     }
 }

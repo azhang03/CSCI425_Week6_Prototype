@@ -18,6 +18,8 @@ MonoBehaviour:
   - 2
   enemiesPerWave:
   - 1
+  enemySpeedMultipliers:
+  - 1
   enemyRoster:
   - name: DefaultEnemy
     prefab: {fileID: 234427430957938418, guid: 77d942aacb648b046a6ff80170d05911, type: 3}

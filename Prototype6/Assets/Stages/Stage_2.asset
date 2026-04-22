@@ -15,10 +15,10 @@ MonoBehaviour:
   stageName: Spiral Assault
   stageNumber: 2
   spawnIntervals:
-  - 6
-  - 6
   - 5
   - 5
+  - 4.7
+  - 4.5
   - 4
   enemiesPerWave:
   - 3
@@ -39,7 +39,13 @@ MonoBehaviour:
   - name: 'SpiralEnemy '
     prefab: {fileID: 864394925426953404, guid: c919020ba51382e4b8ef9102bb0dd8e3, type: 3}
     spawnWeight: 0.4
-  obstacleLayout: []
+  obstacleLayout:
+  - localPosition: {x: 10, y: 0, z: 0}
+    localScale: {x: 3, y: 1, z: 0}
+    localRotationZ: 0
+  - localPosition: {x: -10, y: 0, z: 0}
+    localScale: {x: 3, y: 1, z: 0}
+    localRotationZ: 0
   enemyHPBonus: 0
   bonusHPPerWave: 0
   bonusEnemiesPerWave: 2

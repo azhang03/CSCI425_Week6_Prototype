@@ -15,14 +15,14 @@ MonoBehaviour:
   stageName: The Gauntlet
   stageNumber: 4
   spawnIntervals:
-  - 6
-  - 6
-  - 5
-  - 5
   - 4
+  - 4
+  - 4
+  - 4.5
+  - 4.5
   enemiesPerWave:
-  - 3
-  - 5
+  - 6
+  - 6
   - 9
   - 12
   - 15
@@ -30,25 +30,34 @@ MonoBehaviour:
   - 1
   - 2
   - 2
-  - 3
-  - 3
+  - 2.5
+  - 2.5
   enemyRoster:
   - name: 'SpiralEnemy '
     prefab: {fileID: 864394925426953404, guid: c919020ba51382e4b8ef9102bb0dd8e3, type: 3}
     spawnWeight: 0.4
   - name: Shield
     prefab: {fileID: 7663235475073626573, guid: 303818a4845eb1e47bbc76280e2e4d4b, type: 3}
-    spawnWeight: 0.3
+    spawnWeight: 0.2
   - name: TeleportEnemy
     prefab: {fileID: 7723241571208371256, guid: 6652d07aad816fe4998348a1b3c81bf2, type: 3}
     spawnWeight: 0.3
+  - name: DefaultEnemy
+    prefab: {fileID: 234427430957938418, guid: 77d942aacb648b046a6ff80170d05911, type: 3}
+    spawnWeight: 0.1
   obstacleLayout:
-  - localPosition: {x: 5, y: 3, z: 0}
+  - localPosition: {x: 0, y: 10, z: 0}
     localScale: {x: 3, y: 1, z: 0}
-    localRotationZ: -75
-  - localPosition: {x: -5, y: -3, z: 0}
+    localRotationZ: 0
+  - localPosition: {x: 0, y: -10, z: 0}
     localScale: {x: 3, y: 1, z: 0}
-    localRotationZ: 75
+    localRotationZ: 0
+  - localPosition: {x: 10, y: 0, z: 0}
+    localScale: {x: 3, y: 1, z: 0}
+    localRotationZ: 90
+  - localPosition: {x: -10, y: 0, z: 0}
+    localScale: {x: 3, y: 1, z: 0}
+    localRotationZ: 90
   enemyHPBonus: 0
   bonusHPPerWave: 0.51
   bonusEnemiesPerWave: 2

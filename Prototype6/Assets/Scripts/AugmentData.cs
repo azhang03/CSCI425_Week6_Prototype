@@ -49,4 +49,8 @@ public class AugmentData : ScriptableObject
     public float statDelta;
 
     public bool isUnique = true;
+
+    [Header("Tier")]
+    [Tooltip("Top-strength tier. Shop and level-up cards render with a chromatic pearl/pink border when true.")]
+    public bool isPrismatic = false;
 }

@@ -81,7 +81,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -59577141
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
@@ -232,6 +232,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sheild Enemy Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6181822569228993758, guid: ca2bae82d3fb781408ecc32e198d2882, type: 3}
+      propertyPath: speedMultiplierInfluence
+      value: 0.47
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -265,4 +269,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5811ff3a5fc9694408cbd1e9609fcc13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DefaultMove
-  moveSpeed: 1.3
+  moveSpeed: 1

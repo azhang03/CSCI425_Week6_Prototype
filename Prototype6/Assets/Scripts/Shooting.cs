@@ -143,6 +143,7 @@ public class Shooting : MonoBehaviour
             proj.isMagnetic     = weapon.isMagnetic;
             proj.magnetRadius   = weapon.magnetRadius;
             proj.magnetStrength = weapon.magnetStrength;
+            proj.canBreakShield = entry.bonusBreakShield;
         }
 
         if (entry.bonusRadius > 0f)

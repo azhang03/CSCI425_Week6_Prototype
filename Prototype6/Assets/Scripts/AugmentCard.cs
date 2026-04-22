@@ -15,6 +15,11 @@ public class AugmentCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public Color defaultOutlineColor = new Color(0.25f, 0.25f, 0.25f, 1f);
     public Color hoverOutlineColor = new Color(1f, 0.85f, 0.3f, 1f);
 
+    [Header("Prismatic Chroma (optional)")]
+    public Outline chromaOutline;
+    public Color chromaDefaultColor = new Color(0.25f, 0.25f, 0.25f, 1f);
+    public Color chromaHoverColor   = new Color(1f, 0.55f, 0.90f, 0.90f);
+
     private AugmentData augmentData;
     private A_AugmentUI parentUI;
 
@@ -34,18 +39,25 @@ public class AugmentCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             outline.effectColor = defaultOutlineColor;
             outline.effectDistance = new Vector2(3, 3);
         }
+
+        if (chromaOutline != null)
+            chromaOutline.effectColor = chromaDefaultColor;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (outline != null)
             outline.effectColor = hoverOutlineColor;
+        if (chromaOutline != null)
+            chromaOutline.effectColor = chromaHoverColor;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         if (outline != null)
             outline.effectColor = defaultOutlineColor;
+        if (chromaOutline != null)
+            chromaOutline.effectColor = chromaDefaultColor;
     }
 
     public void OnPointerClick(PointerEventData eventData)

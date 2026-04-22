@@ -120,7 +120,9 @@ public class EnemySpawner : MonoBehaviour
         if (stageIntervals != null && stageIntervals.Length > 0)
         {
             spawnInterval = stageIntervals[0];
-            spawnTimer = spawnInterval;
+            // First enemy of a stage arrives after at most 1s so the player isn't staring at
+            // an empty arena. If wave 1's interval is already shorter, keep that.
+            spawnTimer = Mathf.Min(1f, spawnInterval);
         }
     }
 

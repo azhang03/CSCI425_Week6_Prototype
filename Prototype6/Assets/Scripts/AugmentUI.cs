@@ -108,14 +108,20 @@ public class A_AugmentUI : MonoBehaviour
         activeCards.Clear();
     }
 
-    void GetAugmentColors(AugmentType type, out Color bg, out Color outlineIdle, out Color outlineHover)
+    void GetAugmentColors(AugmentData data, out Color bg, out Color outlineIdle, out Color outlineHover)
     {
-        // Background and idle outline match the original scheme across all types.
-        // Only the hover glow changes to reflect the augment category.
-        bg          = cardBackgroundColor;
+        bg = cardBackgroundColor;
         outlineIdle = cardOutlineDefault;
 
-        switch (type)
+        // Prismatic (top-strength) tier: idle matches the normal grey; hover reveals pearl cyan
+        // (and the sibling chroma outline reveals pink — handled in CreateCard).
+        if (data.isPrismatic)
+        {
+            outlineHover = new Color(0.70f, 0.92f, 1.00f, 1f);
+            return;
+        }
+
+        switch (data.type)
         {
             case AugmentType.NewWeapon:
                 outlineHover = new Color(1.00f, 0.85f, 0.30f, 1f); // original yellow
@@ -137,14 +143,25 @@ public class A_AugmentUI : MonoBehaviour
         RectTransform cardRect = cardObj.GetComponent<RectTransform>();
         cardRect.sizeDelta = cardSize;
 
-        GetAugmentColors(data.type, out Color bg, out Color outlineIdle, out Color outlineHover);
+        GetAugmentColors(data, out Color bg, out Color outlineIdle, out Color outlineHover);
 
         Image bgImage = cardObj.AddComponent<Image>();
         bgImage.color = bg;
 
+        // Prismatic cards stack an outer pink Outline under an inner cyan Outline (both centered).
+        // Idle, both are the default grey so the card blends in with normal ones; hover reveals
+        // the pink + pearl-cyan chroma via AugmentCard's hover swap.
+        Outline chromaOutline = null;
+        if (data.isPrismatic)
+        {
+            chromaOutline = cardObj.AddComponent<Outline>();
+            chromaOutline.effectColor = cardOutlineDefault;
+            chromaOutline.effectDistance = new Vector2(3, 3);
+        }
+
         Outline outline = cardObj.AddComponent<Outline>();
         outline.effectColor = outlineIdle;
-        outline.effectDistance = new Vector2(3, 3);
+        outline.effectDistance = new Vector2(data.isPrismatic ? 2 : 3, data.isPrismatic ? 2 : 3);
 
         // Title
         GameObject titleObj = new GameObject("Title", typeof(RectTransform));
@@ -188,6 +205,12 @@ public class A_AugmentUI : MonoBehaviour
         card.descriptionText = descTMP;
         card.defaultOutlineColor = outlineIdle;
         card.hoverOutlineColor = outlineHover;
+        if (chromaOutline != null)
+        {
+            card.chromaOutline = chromaOutline;
+            card.chromaDefaultColor = cardOutlineDefault;
+            card.chromaHoverColor   = new Color(1.00f, 0.55f, 0.90f, 0.90f);
+        }
         card.Setup(data, this);
 
         activeCards.Add(cardObj);

@@ -17,7 +17,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 4214189542568667277, guid: ed9e8ccdc5aaf594bb9810be86e1a309, type: 3}
   projectileSpeed: 8
   damage: 4
-  baseFireChance: 0.4
+  baseFireChance: 0.25
   duration: 0
   radius: 0
   isMagnetic: 0
