@@ -2332,9 +2332,6 @@ MonoBehaviour:
   - augment: {fileID: 11400000, guid: f9763b8985b093848af2aa218dfce6a8, type: 2}
     price: 20
     purchased: 0
-  - augment: {fileID: 11400000, guid: 7a1c9f3b5e2d4f68a0c1e2f3b4c5d6e7, type: 2}
-    price: 25
-    purchased: 0
   prevButton: {fileID: 2050668455}
   nextButton: {fileID: 786074974}
   cardsPerPage: 3

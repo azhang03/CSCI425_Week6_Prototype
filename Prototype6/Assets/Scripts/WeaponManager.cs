@@ -27,7 +27,6 @@ public class WeaponManager : MonoBehaviour
         public float bonusRadius;
         public float bonusWidth;
         public int bonusDamage;
-        public bool bonusBreakShield;
     }
 
     private List<WeaponEntry> weapons = new List<WeaponEntry>();
@@ -140,9 +139,6 @@ public class WeaponManager : MonoBehaviour
                         break;
                     case "damage":
                         entry.bonusDamage += Mathf.RoundToInt(delta);
-                        break;
-                    case "breakShield":
-                        entry.bonusBreakShield = delta > 0f;
                         break;
                 }
                 OnInventoryChanged?.Invoke();

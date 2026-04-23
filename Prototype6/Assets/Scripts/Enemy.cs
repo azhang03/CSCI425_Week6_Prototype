@@ -20,10 +20,17 @@ public class Enemy : MonoBehaviour
     public float hitFlashDuration = 0.12f;
     public Color hitFlashColor = Color.red;
 
+    [Header("Hit Reaction")]
+    public float knockbackDistance = 0.4f;
+    public float knockbackDuration = 0.08f;
+    public float shakeDuration = 0.15f;
+    public float shakeMagnitude = 0.06f;
+
     private int currentHP;
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
     private Coroutine flashRoutine;
+    private Coroutine reactionRoutine;
     private bool deathRegistered;
 
     private MonoBehaviour[] attachedBehaviours;
@@ -107,6 +114,51 @@ public class Enemy : MonoBehaviour
             StopCoroutine(flashRoutine);
 
         flashRoutine = StartCoroutine(HitFlash());
+
+        if (reactionRoutine != null)
+            StopCoroutine(reactionRoutine);
+
+        reactionRoutine = StartCoroutine(HitReaction());
+    }
+
+    IEnumerator HitReaction()
+    {
+        // Direction away from the player (the stage center).
+        Vector2 awayDir = PlayerHealth.Instance != null
+            ? ((Vector2)transform.position - (Vector2)PlayerHealth.Instance.transform.position).normalized
+            : Vector2.up;
+
+        // Phase 1: knockback — permanent backward displacement, applied incrementally so it
+        // composes additively with whatever the movement script is doing that frame.
+        float elapsed = 0f;
+        float lastApplied = 0f;
+        while (elapsed < knockbackDuration)
+        {
+            float t = elapsed / knockbackDuration;
+            float target = Mathf.SmoothStep(0f, knockbackDistance, t);
+            float delta = target - lastApplied;
+            transform.position += (Vector3)(awayDir * delta);
+            lastApplied = target;
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // Phase 2: shake — visual jitter with net-zero residual displacement. Each frame we
+        // subtract the previous shake offset and add a new one; amplitude tapers to 0.
+        elapsed = 0f;
+        Vector2 prevShake = Vector2.zero;
+        while (elapsed < shakeDuration)
+        {
+            float remaining = 1f - (elapsed / shakeDuration);
+            Vector2 newShake = Random.insideUnitCircle * (shakeMagnitude * remaining);
+            transform.position += (Vector3)(newShake - prevShake);
+            prevShake = newShake;
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position -= (Vector3)prevShake;
+        reactionRoutine = null;
     }
 
     void RegisterDeath()

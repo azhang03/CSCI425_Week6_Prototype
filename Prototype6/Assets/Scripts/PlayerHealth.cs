@@ -16,6 +16,11 @@ public class PlayerHealth : MonoBehaviour
     public float iFrameDuration = 1f;
     public float flashInterval = 0.1f;
 
+    [Header("Hit Feedback")]
+    public float shakeDuration = 0.2f;
+    public float shakeMagnitude = 0.15f;
+    public float vignetteDuration = 0.45f;
+
     public int CurrentHearts { get; private set; }
     public bool IsDead { get; private set; }
 
@@ -63,6 +68,9 @@ public class PlayerHealth : MonoBehaviour
 
         CurrentHearts = Mathf.Max(0, CurrentHearts - amount);
         OnHealthChanged?.Invoke(CurrentHearts, maxHearts);
+
+        CameraShake.Shake(shakeDuration, shakeMagnitude);
+        DamageVignette.Flash(vignetteDuration);
 
         if (CurrentHearts <= 0)
         {

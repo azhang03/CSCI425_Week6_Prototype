@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FocusFireAugment
   m_EditorClassIdentifier: Assembly-CSharp::A_AugmentData
   augmentName: Focus Fire
-  description: +15% to your highest-probability weapon, -10% to your lowest
+  description: +15% to best % weapon, -10% to worst % weapon
   type: 2
   weaponToAdd: {fileID: 0}
   weaponToModify: 

@@ -36,6 +36,7 @@ public class EnemySpawner : MonoBehaviour
     public int activeEnemyCount { get; private set; }
     private bool doneSpawning;
     public event System.Action OnAllWavesComplete;
+    public event System.Action OnEnemyKilled;
 
     [System.Serializable]
     public class EnemyType
@@ -86,6 +87,7 @@ public class EnemySpawner : MonoBehaviour
     public void RegisterEnemyDeath()
     {
         activeEnemyCount--;
+        OnEnemyKilled?.Invoke();
         if (finiteMode && doneSpawning && activeEnemyCount <= 0)
         {
             IsComplete = true;

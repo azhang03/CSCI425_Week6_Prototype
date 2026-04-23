@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UnderdogAugment
   m_EditorClassIdentifier: Assembly-CSharp::A_AugmentData
   augmentName: Underdog
-  description: +20% to your lowest-probability weapon, -10% to your highest
+  description: +20% to worst % weapon, -10% to best % weapon
   type: 2
   weaponToAdd: {fileID: 0}
   weaponToModify: 
