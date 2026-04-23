@@ -52,3 +52,4 @@ MonoBehaviour:
   bonusEnemiesPerWave: 2
   spawnRandomness: 0.5
   coinReward: 20
+  backgroundMusic: {fileID: 8300000, guid: bf7c60b858d3646a3bee052d6571bc85, type: 3}

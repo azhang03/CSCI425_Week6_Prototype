@@ -23,6 +23,8 @@ public class StageManager : MonoBehaviour
     private bool subscribedSpawner;
     private bool subscribedHealth;
 
+    private AudioSource musicSource;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -32,6 +34,24 @@ public class StageManager : MonoBehaviour
         }
 
         Instance = this;
+    }
+
+    private void EnsureStageMusic(StageData stage)
+    {
+        if (stage == null || stage.backgroundMusic == null) return;
+
+        if (musicSource == null)
+        {
+            musicSource = gameObject.AddComponent<AudioSource>();
+            musicSource.playOnAwake = false;
+            musicSource.loop = true;
+            musicSource.spatialBlend = 0f;
+        }
+
+        if (musicSource.clip == stage.backgroundMusic && musicSource.isPlaying) return;
+
+        musicSource.clip = stage.backgroundMusic;
+        musicSource.Play();
     }
 
     private void Update()
@@ -47,6 +67,8 @@ public class StageManager : MonoBehaviour
 
                 if (ObstacleSpawner.Instance != null)
                     ObstacleSpawner.Instance.Configure(currentStage);
+
+                EnsureStageMusic(currentStage);
             }
 
             EnemySpawner.Instance.OnAllWavesComplete += HandleWin;

@@ -31,4 +31,7 @@ public class StageData: ScriptableObject
 
     [Header("Rewards")]
     public int coinReward = 10;
+
+    [Header("Audio")]
+    public AudioClip backgroundMusic;
 }
