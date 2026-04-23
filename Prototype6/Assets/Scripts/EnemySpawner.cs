@@ -23,6 +23,10 @@ public class EnemySpawner : MonoBehaviour
     public float[] stageIntervals = { 5, 3, 2, 1 };
     public float[] enemiesPerStage = { 2, 5, 8, 15 };
     public float[] enemySpeedMultipliers = { 1f, 1f, 1f, 1f };
+    public int[] burstSizes = { 1, 1, 1, 1 };
+
+    [Tooltip("Minimum angular separation between enemies spawned in the same burst (degrees).")]
+    public float minBurstAngularGapDeg = 15f;
 
     public int stageCounter = 0;
     public int spawnCounter = 0;
@@ -101,6 +105,22 @@ public class EnemySpawner : MonoBehaviour
         stageIntervals = data.spawnIntervals;
         enemiesPerStage = data.enemiesPerWave;
         enemySpeedMultipliers = data.enemySpeedMultipliers;
+
+        // burstSizes defaults to 1 per wave if unset or shorter than wave count
+        if (data.burstSizes != null && data.burstSizes.Length >= numStages)
+        {
+            burstSizes = data.burstSizes;
+        }
+        else
+        {
+            burstSizes = new int[numStages];
+            int copyLen = (data.burstSizes != null) ? Mathf.Min(data.burstSizes.Length, numStages) : 0;
+            for (int i = 0; i < copyLen; i++)
+                burstSizes[i] = Mathf.Max(1, data.burstSizes[i]);
+            for (int i = copyLen; i < numStages; i++)
+                burstSizes[i] = 1;
+        }
+
         enemyTypes = new List<EnemyType>(data.enemyRoster);
         bonusHPPerWave = data.bonusHPPerWave;
         bonusEnemiesPerStage = data.bonusEnemiesPerWave;
@@ -122,8 +142,7 @@ public class EnemySpawner : MonoBehaviour
         if (stageIntervals != null && stageIntervals.Length > 0)
         {
             spawnInterval = stageIntervals[0];
-            // First enemy of a stage arrives after at most 1s so the player isn't staring at
-            // an empty arena. If wave 1's interval is already shorter, keep that.
+            // First burst arrives after at most 1s so the player isn't staring at an empty arena.
             spawnTimer = Mathf.Min(1f, spawnInterval);
         }
     }
@@ -136,9 +155,8 @@ public class EnemySpawner : MonoBehaviour
 
         if (spawnTimer <= 0f)
         {
-            SpawnEnemy();
+            SpawnBurst();
             spawnTimer = Random.Range(spawnInterval - spawnRandmoness, spawnInterval + spawnRandmoness);
-            spawnCounter++;
             UpdateStage();
         }
     }
@@ -146,6 +164,13 @@ public class EnemySpawner : MonoBehaviour
     int GetEffectiveEnemiesForStage(int stage)
     {
         return (int)enemiesPerStage[stage] + cycleCount * bonusEnemiesPerStage;
+    }
+
+    int GetBurstSizeForStage(int stage)
+    {
+        if (burstSizes == null || stage < 0 || stage >= burstSizes.Length)
+            return 1;
+        return Mathf.Max(1, burstSizes[stage]);
     }
 
     float GetSpeedMultiplierForStage(int stage)
@@ -188,20 +213,90 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    void SpawnEnemy()
+    void SpawnBurst()
     {
-        if (enemyTypes.Count <= 0)
+        if (enemyTypes.Count <= 0 || stageTilemap == null)
             return;
 
+        int burstSize = GetBurstSizeForStage(stageCounter);
+        int target = GetEffectiveEnemiesForStage(stageCounter);
+        int remaining = target - spawnCounter;
+        int toSpawn = Mathf.Clamp(burstSize, 1, Mathf.Max(1, remaining));
+
+        // If the wave is already at/over target, bail (shouldn't happen because UpdateStage runs after, but be safe)
+        if (remaining <= 0)
+            return;
+
+        List<float> anglesDeg = PickSpacedAnglesDeg(toSpawn, minBurstAngularGapDeg);
+
+        for (int i = 0; i < toSpawn; i++)
+        {
+            SpawnEnemyAtAngle(anglesDeg[i] * Mathf.Deg2Rad);
+            spawnCounter++;
+        }
+
+        if (audioManager != null)
+            audioManager.PlayEnemySpawn();
+    }
+
+    List<float> PickSpacedAnglesDeg(int count, float minGapDeg)
+    {
+        List<float> picked = new List<float>(count);
+
+        // If the minimum gap would require more than 360 degrees, fall back to an
+        // even distribution immediately (can't honor the gap).
+        float maxFeasibleGap = (count > 0) ? (360f / count) : 0f;
+        float effectiveGap = Mathf.Min(minGapDeg, maxFeasibleGap);
+
+        for (int i = 0; i < count; i++)
+        {
+            const int maxAttempts = 20;
+            bool placed = false;
+            for (int attempt = 0; attempt < maxAttempts; attempt++)
+            {
+                float candidate = Random.Range(0f, 360f);
+                if (IsFarEnough(candidate, picked, effectiveGap))
+                {
+                    picked.Add(candidate);
+                    placed = true;
+                    break;
+                }
+            }
+
+            if (!placed)
+            {
+                // Evenly-distributed fallback slot + small jitter inside the remaining headroom
+                float baseAngle = (360f / count) * i;
+                float jitterRange = Mathf.Max(0f, (maxFeasibleGap - effectiveGap) * 0.5f);
+                float jitter = Random.Range(-jitterRange, jitterRange);
+                picked.Add(Mathf.Repeat(baseAngle + jitter, 360f));
+            }
+        }
+
+        return picked;
+    }
+
+    static bool IsFarEnough(float candidate, List<float> picked, float minGap)
+    {
+        for (int i = 0; i < picked.Count; i++)
+        {
+            float diff = Mathf.Abs(Mathf.DeltaAngle(candidate, picked[i]));
+            if (diff < minGap)
+                return false;
+        }
+        return true;
+    }
+
+    void SpawnEnemyAtAngle(float angleRad)
+    {
         GameObject enemyPrefab = GetRandomEnemyByWeight();
-        if (enemyPrefab == null || stageTilemap == null)
+        if (enemyPrefab == null)
             return;
 
         Vector3 center = stageTilemap.transform.position;
-        float angle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
         Vector3 spawnPos = center + new Vector3(
-            Mathf.Cos(angle) * spawnRadius,
-            Mathf.Sin(angle) * spawnRadius,
+            Mathf.Cos(angleRad) * spawnRadius,
+            Mathf.Sin(angleRad) * spawnRadius,
             0f
         );
 
@@ -214,15 +309,11 @@ public class EnemySpawner : MonoBehaviour
         if (enemyComponent != null)
         {
             enemyComponent.maxHitPoints += baseHPBonus + Mathf.FloorToInt(stageCounter * bonusHPPerWave);
-
-           enemyComponent.SetSpeedMultiplier(speedMultiplier);
+            enemyComponent.SetSpeedMultiplier(speedMultiplier);
         }
 
         if (rotateParent != null)
             enemy.transform.SetParent(rotateParent);
-
-        if (audioManager != null)
-            audioManager.PlayEnemySpawn();
     }
 
     GameObject GetRandomEnemyByWeight()
@@ -243,5 +334,3 @@ public class EnemySpawner : MonoBehaviour
         return null;
     }
 }
-
-

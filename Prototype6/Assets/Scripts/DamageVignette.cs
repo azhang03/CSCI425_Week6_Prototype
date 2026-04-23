@@ -19,7 +19,22 @@ public class DamageVignette : MonoBehaviour
     {
         if (instance == null)
         {
-            Canvas canvas = FindAnyObjectByType<Canvas>();
+            // Must attach to a screen-space canvas. FindAnyObjectByType<Canvas> is
+            // nondeterministic and can return a WorldSpace canvas (e.g. a DamagePopup
+            // spawned the same frame), which makes the vignette render as a tiny
+            // red rectangle at the enemy instead of a full-screen overlay.
+            Canvas canvas = null;
+            Canvas[] canvases = FindObjectsByType<Canvas>(FindObjectsSortMode.None);
+            foreach (var c in canvases)
+            {
+                if (c == null) continue;
+                if (c.renderMode == RenderMode.ScreenSpaceOverlay ||
+                    c.renderMode == RenderMode.ScreenSpaceCamera)
+                {
+                    canvas = c;
+                    break;
+                }
+            }
             if (canvas == null) return;
 
             GameObject holder = new GameObject("DamageVignette", typeof(RectTransform));

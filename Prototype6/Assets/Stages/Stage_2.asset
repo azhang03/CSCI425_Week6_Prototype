@@ -15,23 +15,21 @@ MonoBehaviour:
   stageName: Spiral Assault
   stageNumber: 2
   spawnIntervals:
-  - 5
-  - 5
-  - 4.7
-  - 4.5
-  - 4
-  enemiesPerWave:
-  - 3
-  - 3
-  - 5
-  - 6
   - 8
+  - 6
+  - 2
+  - 8
+  enemiesPerWave:
+  - 25
+  - 24
+  - 20
+  - 60
   enemySpeedMultipliers:
   - 1
-  - 2
-  - 2
-  - 3
-  - 3
+  - 1.2
+  - 1.5
+  - 0.7
+  burstSizes: 0500000006000000020000000f000000
   enemyRoster:
   - name: 'DefaultEnemy '
     prefab: {fileID: 234427430957938418, guid: 77d942aacb648b046a6ff80170d05911, type: 3}
@@ -47,7 +45,7 @@ MonoBehaviour:
     localScale: {x: 3, y: 1, z: 0}
     localRotationZ: 0
   enemyHPBonus: 0
-  bonusHPPerWave: 0
+  bonusHPPerWave: 0.5
   bonusEnemiesPerWave: 2
   spawnRandomness: 0.5
   coinReward: 15

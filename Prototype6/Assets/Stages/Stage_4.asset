@@ -32,6 +32,7 @@ MonoBehaviour:
   - 2
   - 2.5
   - 2.5
+  burstSizes: 0100000001000000010000000100000001000000
   enemyRoster:
   - name: 'SpiralEnemy '
     prefab: {fileID: 864394925426953404, guid: c919020ba51382e4b8ef9102bb0dd8e3, type: 3}

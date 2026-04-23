@@ -14,6 +14,7 @@ public class StageDataEditor : Editor
         SerializedProperty intervals = serializedObject.FindProperty("spawnIntervals");
         SerializedProperty enemies = serializedObject.FindProperty("enemiesPerWave");
         SerializedProperty speedMultipliers = serializedObject.FindProperty("enemySpeedMultipliers");
+        SerializedProperty bursts = serializedObject.FindProperty("burstSizes");
 
         // Identity
         EditorGUILayout.LabelField("Identity", EditorStyles.boldLabel);
@@ -23,13 +24,18 @@ public class StageDataEditor : Editor
         EditorGUILayout.Space(10);
 
         // Waves
-        if (intervals != null && enemies != null && speedMultipliers != null)
+        if (intervals != null && enemies != null && speedMultipliers != null && bursts != null)
         {
-            int waveCount = Mathf.Max(intervals.arraySize, enemies.arraySize, speedMultipliers.arraySize);
+            int waveCount = Mathf.Max(
+                intervals.arraySize,
+                enemies.arraySize,
+                speedMultipliers.arraySize,
+                bursts.arraySize);
 
-            EnsureArraySize(intervals, waveCount, 2f);
-            EnsureArraySize(enemies, waveCount, 5f);
-            EnsureArraySize(speedMultipliers, waveCount, 1f);
+            EnsureArraySizeFloat(intervals, waveCount, 2f);
+            EnsureArraySizeFloat(enemies, waveCount, 5f);
+            EnsureArraySizeFloat(speedMultipliers, waveCount, 1f);
+            EnsureArraySizeInt(bursts, waveCount, 1);
 
             EditorGUILayout.LabelField("Waves", EditorStyles.boldLabel);
             EditorGUILayout.LabelField($"Wave Count: {waveCount}", EditorStyles.miniLabel);
@@ -47,6 +53,7 @@ public class StageDataEditor : Editor
                     intervals.DeleteArrayElementAtIndex(i);
                     enemies.DeleteArrayElementAtIndex(i);
                     speedMultipliers.DeleteArrayElementAtIndex(i);
+                    bursts.DeleteArrayElementAtIndex(i);
                     break;
                 }
 
@@ -64,13 +71,18 @@ public class StageDataEditor : Editor
                     EditorGUILayout.FloatField("Enemy Speed Multiplier",
                     speedMultipliers.GetArrayElementAtIndex(i).floatValue);
 
+                int burstVal = Mathf.Max(1, EditorGUILayout.IntField(
+                    "Burst Size (enemies per spawn tick)",
+                    bursts.GetArrayElementAtIndex(i).intValue));
+                bursts.GetArrayElementAtIndex(i).intValue = burstVal;
+
                 EditorGUILayout.EndVertical();
                 EditorGUILayout.Space(2);
             }
 
             if (GUILayout.Button("+ Add Wave"))
             {
-                AddWave(intervals, enemies, speedMultipliers);
+                AddWave(intervals, enemies, speedMultipliers, bursts);
             }
         }
 
@@ -104,7 +116,7 @@ public class StageDataEditor : Editor
         serializedObject.ApplyModifiedProperties();
     }
 
-    private void EnsureArraySize(SerializedProperty array, int size, float defaultValue)
+    private void EnsureArraySizeFloat(SerializedProperty array, int size, float defaultValue)
     {
         while (array.arraySize < size)
         {
@@ -118,17 +130,34 @@ public class StageDataEditor : Editor
         }
     }
 
-    private void AddWave(SerializedProperty intervals, SerializedProperty enemies, SerializedProperty speedMultipliers)
+    private void EnsureArraySizeInt(SerializedProperty array, int size, int defaultValue)
+    {
+        while (array.arraySize < size)
+        {
+            array.InsertArrayElementAtIndex(array.arraySize);
+            array.GetArrayElementAtIndex(array.arraySize - 1).intValue = defaultValue;
+        }
+
+        while (array.arraySize > size)
+        {
+            array.DeleteArrayElementAtIndex(array.arraySize - 1);
+        }
+    }
+
+    private void AddWave(
+        SerializedProperty intervals,
+        SerializedProperty enemies,
+        SerializedProperty speedMultipliers,
+        SerializedProperty bursts)
     {
         intervals.InsertArrayElementAtIndex(intervals.arraySize);
         enemies.InsertArrayElementAtIndex(enemies.arraySize);
         speedMultipliers.InsertArrayElementAtIndex(speedMultipliers.arraySize);
+        bursts.InsertArrayElementAtIndex(bursts.arraySize);
 
         intervals.GetArrayElementAtIndex(intervals.arraySize - 1).floatValue = 2f;
         enemies.GetArrayElementAtIndex(enemies.arraySize - 1).floatValue = 5f;
         speedMultipliers.GetArrayElementAtIndex(speedMultipliers.arraySize - 1).floatValue = 1f;
+        bursts.GetArrayElementAtIndex(bursts.arraySize - 1).intValue = 1;
     }
 }
-
-
-
