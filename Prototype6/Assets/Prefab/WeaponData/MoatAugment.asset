@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MoatAugment
   m_EditorClassIdentifier: Assembly-CSharp::A_AugmentData
   augmentName: Moat
-  description: "25% lay a poison moat. \n1 dmg/2 sec for 4s. -5% Bullet"
+  description: "25% lay a poison moat. \n1 dmg/2 sec for 4s."
   type: 0
   weaponToAdd: {fileID: 11400000, guid: 2453480704d64464fa9984526c71d20f, type: 2}
   weaponToModify: 

@@ -16,35 +16,39 @@ MonoBehaviour:
   stageNumber: 3
   spawnIntervals:
   - 4
-  - 4
-  - 4
-  - 4
-  - 4
-  enemiesPerWave:
   - 3
   - 6
   - 7
-  - 9
-  - 9
+  - 0.5
+  - 0.5
+  enemiesPerWave:
+  - 28
+  - 20
+  - 16
+  - 40
+  - 20
+  - 20
   enemySpeedMultipliers:
   - 1
-  - 2
-  - 2
-  - 2.5
-  - 2.5
+  - 1.5
+  - 0.8
+  - 0.7
+  - 1.4
+  - 1.4
+  burstSizes: 0400000002000000080000000a0000000100000001000000
   enemyRoster:
   - name: 'SpiralEnemy '
     prefab: {fileID: 864394925426953404, guid: c919020ba51382e4b8ef9102bb0dd8e3, type: 3}
-    spawnWeight: 0.4
+    spawnWeight: 0.3
   - name: Shield
     prefab: {fileID: 7663235475073626573, guid: 303818a4845eb1e47bbc76280e2e4d4b, type: 3}
-    spawnWeight: 0.2
+    spawnWeight: 0.5
   - name: DefaultEnemy
     prefab: {fileID: 234427430957938418, guid: 77d942aacb648b046a6ff80170d05911, type: 3}
-    spawnWeight: 0.4
+    spawnWeight: 0.2
   obstacleLayout: []
   enemyHPBonus: 0
-  bonusHPPerWave: 0.35
+  bonusHPPerWave: 0.5
   bonusEnemiesPerWave: 2
   spawnRandomness: 0.5
   coinReward: 20

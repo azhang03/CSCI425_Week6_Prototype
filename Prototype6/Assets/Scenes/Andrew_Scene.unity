@@ -5592,11 +5592,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58bfc42a74d45fa47b76212ad9692209, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::A_Shooting
-  fireInterval: 0.7
+  fireInterval: 1.4
   staggerDelay: 0.15
   projectileIndicatorPrefab: {fileID: 5340203472559175124, guid: 46092f2eadaa4eb4780b012555d4b29f, type: 3}
   projectileTelegraphTime: 0.25
   spawnOffset: 0.5
+  fireballConeHalfAngleDeg: 10
   audioManager: {fileID: 670264515}
 --- !u!114 &1308610330
 MonoBehaviour:
@@ -5614,6 +5615,9 @@ MonoBehaviour:
   maxHearts: 3
   iFrameDuration: 1
   flashInterval: 0.1
+  shakeDuration: 0.2
+  shakeMagnitude: 0.15
+  vignetteDuration: 0.45
 --- !u!114 &1308610331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6495,7 +6499,6 @@ RectTransform:
   - {fileID: 1557513567}
   - {fileID: 794119642}
   - {fileID: 348078991}
-  - {fileID: 1736047988}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -6673,58 +6676,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1736047987
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1736047988}
-  - component: {fileID: 1736047989}
-  m_Layer: 5
-  m_Name: BulletHint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1736047988
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1736047987}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1621778549}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1736047989
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1736047987}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53fb392f1753f704b880af82b2b90102, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BulletDirectionUI
-  arrowTexture: {fileID: -2236324273849735119, guid: 75ae8fca82dd45449ab64106034a3f48, type: 3}
-  arrowCount: 10
-  arrowSize: 16
-  yOffset: 0
 --- !u!1 &1774393163
 GameObject:
   m_ObjectHideFlags: 0
@@ -6950,13 +6901,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3619113566970902681, guid: fbdb87669d648c84e9b5627c2609e6e0, type: 3}
+      propertyPath: xpPerLevel
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3619113566970902681, guid: fbdb87669d648c84e9b5627c2609e6e0, type: 3}
+      propertyPath: xpIncrement
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3619113566970902681, guid: fbdb87669d648c84e9b5627c2609e6e0, type: 3}
+      propertyPath: levelsPerIncrement
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4336387172393711562, guid: fbdb87669d648c84e9b5627c2609e6e0, type: 3}
       propertyPath: playerDie
       value: 
       objectReference: {fileID: 8300000, guid: 3cbe278dec337c844b93daa670dac79c, type: 3}
     - target: {fileID: 4632736420972211610, guid: fbdb87669d648c84e9b5627c2609e6e0, type: 3}
       propertyPath: allAugments.Array.size
-      value: 21
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4632736420972211610, guid: fbdb87669d648c84e9b5627c2609e6e0, type: 3}
       propertyPath: 'allAugments.Array.data[3]'

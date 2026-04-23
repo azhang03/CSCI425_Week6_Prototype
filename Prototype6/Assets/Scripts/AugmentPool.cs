@@ -130,10 +130,7 @@ public class AugmentPool : MonoBehaviour
         {
             case AugmentType.NewWeapon:
                 if (augment.weaponToAdd != null)
-                {
                     WeaponManager.Instance.AddWeapon(augment.weaponToAdd);
-                    WeaponManager.Instance.ModifyChance("Bullet", -0.05f);
-                }
                 break;
 
             case AugmentType.ModifyWeapon:

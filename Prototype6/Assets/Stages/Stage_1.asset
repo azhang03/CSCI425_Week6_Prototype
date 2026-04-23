@@ -15,27 +15,31 @@ MonoBehaviour:
   stageName: The Swarm
   stageNumber: 1
   spawnIntervals:
-  - 6
-  - 6
-  - 6
-  - 5
+  - 8
+  - 7
+  - 7
+  - 1
+  - 8
   enemiesPerWave:
-  - 3
-  - 4
-  - 3
-  - 5
+  - 20
+  - 20
+  - 28
+  - 15
+  - 40
   enemySpeedMultipliers:
   - 1
-  - 2
-  - 3
-  - 3
+  - 1
+  - 1.5
+  - 1.5
+  - 0.5
+  burstSizes: 0500000005000000070000000100000014000000
   enemyRoster:
   - name: 'DefaultEnemy '
     prefab: {fileID: 234427430957938418, guid: 77d942aacb648b046a6ff80170d05911, type: 3}
     spawnWeight: 1
   obstacleLayout: []
   enemyHPBonus: 0
-  bonusHPPerWave: 0
-  bonusEnemiesPerWave: 2
+  bonusHPPerWave: 0.7
+  bonusEnemiesPerWave: 0
   spawnRandomness: 0.5
   coinReward: 10

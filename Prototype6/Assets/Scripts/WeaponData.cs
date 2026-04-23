@@ -18,6 +18,10 @@ public class WeaponData : ScriptableObject
     public float duration = 0f;
     public float radius = 0f;
 
+    [Header("Aim")]
+    [Tooltip("If true, the default single-shot path picks a direction uniformly in 360 degrees instead of a random cardinal. Snowball uses this.")]
+    public bool randomize360Direction = false;
+
     [Header("Magnetic Bullet")]
     public bool isMagnetic = false;
 
