@@ -50,7 +50,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3161132119900996692, guid: ca2bae82d3fb781408ecc32e198d2882, type: 3}
       propertyPath: m_Name
-      value: S_DefaultEnemy Variant
+      value: DefaultEnemy Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 6181822569228993758, guid: ca2bae82d3fb781408ecc32e198d2882, type: 3}
+      propertyPath: shakeMagnitude
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

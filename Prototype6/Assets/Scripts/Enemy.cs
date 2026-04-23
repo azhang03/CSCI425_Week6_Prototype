@@ -23,8 +23,8 @@ public class Enemy : MonoBehaviour
     [Header("Hit Reaction")]
     public float knockbackDistance = 0.4f;
     public float knockbackDuration = 0.08f;
-    public float shakeDuration = 0.15f;
-    public float shakeMagnitude = 0.06f;
+    public float shakeDuration = 0.2f;
+    public float shakeMagnitude = 0.25f;
 
     private int currentHP;
     private SpriteRenderer spriteRenderer;
@@ -144,15 +144,21 @@ public class Enemy : MonoBehaviour
         }
 
         // Phase 2: shake — visual jitter with net-zero residual displacement. Each frame we
-        // subtract the previous shake offset and add a new one; amplitude tapers to 0.
+        // subtract the previous shake offset and add a new one; amplitude tapers to 0. Using
+        // a normalized random direction (not insideUnitCircle) gives a consistent full-strength
+        // radius, and flipping sign each frame produces a readable back-and-forth wiggle.
         elapsed = 0f;
         Vector2 prevShake = Vector2.zero;
+        int sign = 1;
         while (elapsed < shakeDuration)
         {
             float remaining = 1f - (elapsed / shakeDuration);
-            Vector2 newShake = Random.insideUnitCircle * (shakeMagnitude * remaining);
+            Vector2 dir = Random.insideUnitCircle.normalized;
+            if (dir == Vector2.zero) dir = Vector2.right;
+            Vector2 newShake = dir * (shakeMagnitude * remaining) * sign;
             transform.position += (Vector3)(newShake - prevShake);
             prevShake = newShake;
+            sign = -sign;
             elapsed += Time.deltaTime;
             yield return null;
         }
