@@ -68,7 +68,7 @@ public class DeathScreen : MonoBehaviour
         canvasGroup = gameObject.AddComponent<CanvasGroup>();
 
         Image bg = gameObject.AddComponent<Image>();
-        bg.color = new Color(0f, 0f, 0f, 0.82f);
+        bg.color = new Color(0f, 0f, 0f, 0.92f);
 
         // GAME OVER
         if (gameOverScreenSprite != null)

@@ -169,6 +169,13 @@ public class ResultsScreen : MonoBehaviour
         root.transform.SetParent(transform, false);
         StretchFill(root.GetComponent<RectTransform>());
 
+        GameObject darken = new GameObject("DarkenOverlay", typeof(RectTransform));
+        darken.transform.SetParent(root.transform, false);
+        StretchFill(darken.GetComponent<RectTransform>());
+        Image darkenImg = darken.AddComponent<Image>();
+        darkenImg.color = new Color(0f, 0f, 0f, 0.55f);
+        darkenImg.raycastTarget = false;
+
         if (gameOverScreenSprite != null)
         {
             GameObject artObj = new GameObject("GameOverScreen", typeof(RectTransform));

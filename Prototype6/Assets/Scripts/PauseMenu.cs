@@ -88,7 +88,7 @@ public class PauseMenu : MonoBehaviour
         overlayRect.offsetMin = Vector2.zero;
         overlayRect.offsetMax = Vector2.zero;
         Image overlayImg = overlay.AddComponent<Image>();
-        overlayImg.color = new Color(0f, 0f, 0f, 0.6f);
+        overlayImg.color = new Color(0f, 0f, 0f, 0.88f);
 
         if (pauseScreenSprite != null)
         {

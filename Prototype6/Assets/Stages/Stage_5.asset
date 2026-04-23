@@ -20,6 +20,7 @@ MonoBehaviour:
   - 1
   enemySpeedMultipliers:
   - 1
+  burstSizes: 01000000
   enemyRoster:
   - name: DefaultEnemy
     prefab: {fileID: 234427430957938418, guid: 77d942aacb648b046a6ff80170d05911, type: 3}
@@ -36,3 +37,4 @@ MonoBehaviour:
   bonusEnemiesPerWave: 2
   spawnRandomness: 0.5
   coinReward: 10
+  backgroundMusic: {fileID: 0}

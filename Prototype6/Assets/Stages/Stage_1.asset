@@ -15,8 +15,8 @@ MonoBehaviour:
   stageName: The Swarm
   stageNumber: 1
   spawnIntervals:
-  - 8
-  - 7
+  - 6
+  - 6
   - 7
   - 1
   - 8

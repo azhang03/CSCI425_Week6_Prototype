@@ -54,6 +54,12 @@ public class StageManager : MonoBehaviour
         musicSource.Play();
     }
 
+    private void StopStageMusic()
+    {
+        if (musicSource != null && musicSource.isPlaying)
+            musicSource.Stop();
+    }
+
     private void Update()
     {
         if (!subscribedSpawner && EnemySpawner.Instance != null)
@@ -91,6 +97,7 @@ public class StageManager : MonoBehaviour
         Result = StageResult.Win;
         StarsEarned = Mathf.Clamp(PlayerHealth.Instance.CurrentHearts, 1, 3);
         Time.timeScale = 0f;
+        StopStageMusic();
         OnStageEnded?.Invoke(Result, StarsEarned);
     }
 
@@ -101,6 +108,7 @@ public class StageManager : MonoBehaviour
         Result = StageResult.Loss;
         StarsEarned = 0;
         Time.timeScale = 0f;
+        StopStageMusic();
         OnStageEnded?.Invoke(Result, StarsEarned);
     }
 
