@@ -34,7 +34,7 @@ MonoBehaviour:
   - 0.8
   - 0.7
   - 1.4
-  - 1.4
+  - 1.5
   burstSizes: 0400000002000000080000000a0000000100000001000000
   enemyRoster:
   - name: 'SpiralEnemy '
