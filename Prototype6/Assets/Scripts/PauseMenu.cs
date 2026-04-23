@@ -8,6 +8,9 @@ public class PauseMenu : MonoBehaviour
     public static bool IsPaused { get; private set; }
     public static bool AugmentsEnabled { get; private set; } = true;
 
+    [Header("Art")]
+    [SerializeField] private Sprite pauseScreenSprite;
+
     private CanvasGroup canvasGroup;
     private bool built;
     private TextMeshProUGUI toggleLabel;
@@ -87,19 +90,37 @@ public class PauseMenu : MonoBehaviour
         Image overlayImg = overlay.AddComponent<Image>();
         overlayImg.color = new Color(0f, 0f, 0f, 0.6f);
 
-        GameObject titleObj = new GameObject("Title", typeof(RectTransform));
-        titleObj.transform.SetParent(transform, false);
-        RectTransform titleRect = titleObj.GetComponent<RectTransform>();
-        titleRect.anchorMin = new Vector2(0.5f, 0.7f);
-        titleRect.anchorMax = new Vector2(0.5f, 0.7f);
-        titleRect.anchoredPosition = Vector2.zero;
-        titleRect.sizeDelta = new Vector2(400f, 80f);
-        TextMeshProUGUI titleTMP = titleObj.AddComponent<TextMeshProUGUI>();
-        titleTMP.text = "PAUSED";
-        titleTMP.fontSize = 48;
-        titleTMP.fontStyle = FontStyles.Bold;
-        titleTMP.alignment = TextAlignmentOptions.Center;
-        titleTMP.color = Color.white;
+        if (pauseScreenSprite != null)
+        {
+            GameObject artObj = new GameObject("PauseScreen", typeof(RectTransform));
+            artObj.transform.SetParent(transform, false);
+            RectTransform artRect = artObj.GetComponent<RectTransform>();
+            artRect.anchorMin = new Vector2(0.5f, 0.5f);
+            artRect.anchorMax = new Vector2(0.5f, 0.5f);
+            artRect.anchoredPosition = new Vector2(-6f, 0f);
+            artRect.sizeDelta = new Vector2(720f, 980f);
+
+            Image artImg = artObj.AddComponent<Image>();
+            artImg.sprite = pauseScreenSprite;
+            artImg.preserveAspect = true;
+            artImg.raycastTarget = false;
+        }
+        else
+        {
+            GameObject titleObj = new GameObject("Title", typeof(RectTransform));
+            titleObj.transform.SetParent(transform, false);
+            RectTransform titleRect = titleObj.GetComponent<RectTransform>();
+            titleRect.anchorMin = new Vector2(0.5f, 0.7f);
+            titleRect.anchorMax = new Vector2(0.5f, 0.7f);
+            titleRect.anchoredPosition = Vector2.zero;
+            titleRect.sizeDelta = new Vector2(400f, 80f);
+            TextMeshProUGUI titleTMP = titleObj.AddComponent<TextMeshProUGUI>();
+            titleTMP.text = "PAUSED";
+            titleTMP.fontSize = 48;
+            titleTMP.fontStyle = FontStyles.Bold;
+            titleTMP.alignment = TextAlignmentOptions.Center;
+            titleTMP.color = Color.white;
+        }
 
         CreateButton("ResumeBtn", "Resume", new Vector2(0.5f, 0.57f), Resume);
         CreateButton("LobbyBtn", "Return to Lobby", new Vector2(0.5f, 0.46f), ReturnToLobby);

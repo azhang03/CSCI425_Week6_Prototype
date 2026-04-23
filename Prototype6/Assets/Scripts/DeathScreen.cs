@@ -4,6 +4,9 @@ using TMPro;
 
 public class DeathScreen : MonoBehaviour
 {
+    [Header("Art")]
+    [SerializeField] private Sprite gameOverScreenSprite;
+
     private CanvasGroup canvasGroup;
     private TextMeshProUGUI scoreText;
     private TextMeshProUGUI highScoreText;
@@ -68,7 +71,26 @@ public class DeathScreen : MonoBehaviour
         bg.color = new Color(0f, 0f, 0f, 0.82f);
 
         // GAME OVER
-        MakeLabel("Title", "GAME OVER", 60, FontStyles.Bold, Color.white, new Vector2(0f, 110f), new Vector2(500f, 80f));
+        if (gameOverScreenSprite != null)
+        {
+            GameObject artObj = new GameObject("GameOverScreen");
+            artObj.transform.SetParent(transform, false);
+
+            RectTransform artRt = artObj.AddComponent<RectTransform>();
+            artRt.anchorMin = new Vector2(0.5f, 0.5f);
+            artRt.anchorMax = new Vector2(0.5f, 0.5f);
+            artRt.anchoredPosition = new Vector2(-10f, 25f);
+            artRt.sizeDelta = new Vector2(900f, 900f);
+
+            Image artImg = artObj.AddComponent<Image>();
+            artImg.sprite = gameOverScreenSprite;
+            artImg.preserveAspect = true;
+            artImg.raycastTarget = false;
+        }
+        else
+        {
+            MakeLabel("Title", "GAME OVER", 60, FontStyles.Bold, Color.white, new Vector2(0f, 110f), new Vector2(500f, 80f));
+        }
 
         // Score
         scoreText = MakeLabel("Score", "Score: 0", 34, FontStyles.Normal, Color.white, new Vector2(0f, 30f), new Vector2(400f, 50f));

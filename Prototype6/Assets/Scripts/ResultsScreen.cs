@@ -8,6 +8,9 @@ public class ResultsScreen : MonoBehaviour
     // If left empty, falls back to Unity's built-in circle knob sprite.
     [SerializeField] public Sprite starSprite;
 
+    [Header("Loss Art")]
+    [SerializeField] private Sprite gameOverScreenSprite;
+
     private CanvasGroup canvasGroup;
     private bool subscribed;
 
@@ -166,7 +169,25 @@ public class ResultsScreen : MonoBehaviour
         root.transform.SetParent(transform, false);
         StretchFill(root.GetComponent<RectTransform>());
 
-        MakeLabel(root, "Title", "GAME OVER", 56, FontStyles.Bold, new Color(1f, 0.3f, 0.3f), new Vector2(0f, 110f), new Vector2(500f, 80f));
+        if (gameOverScreenSprite != null)
+        {
+            GameObject artObj = new GameObject("GameOverScreen", typeof(RectTransform));
+            artObj.transform.SetParent(root.transform, false);
+            RectTransform artRt = artObj.GetComponent<RectTransform>();
+            artRt.anchorMin = new Vector2(0.5f, 0.5f);
+            artRt.anchorMax = new Vector2(0.5f, 0.5f);
+            artRt.anchoredPosition = new Vector2(-10f, 15f);
+            artRt.sizeDelta = new Vector2(900f, 900f);
+
+            Image artImg = artObj.AddComponent<Image>();
+            artImg.sprite = gameOverScreenSprite;
+            artImg.preserveAspect = true;
+            artImg.raycastTarget = false;
+        }
+        else
+        {
+            MakeLabel(root, "Title", "GAME OVER", 56, FontStyles.Bold, new Color(1f, 0.3f, 0.3f), new Vector2(0f, 110f), new Vector2(500f, 80f));
+        }
 
         lossKillText = MakeLabel(root, "Kills", "Kills: 0", 30, FontStyles.Normal, Color.white, new Vector2(0f, 20f), new Vector2(300f, 50f));
 

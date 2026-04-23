@@ -168,6 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResultsScreen
   starSprite: {fileID: 0}
+  gameOverScreenSprite: {fileID: 21300000, guid: 835668ef6fcd64cf3aa7e36da5aea3f3, type: 3}
 --- !u!1 &426604811
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,6 +364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa1127a2975a52a458e568a5a46ba14e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::A_PauseMenu
+  pauseScreenSprite: {fileID: 21300000, guid: cc0d7e9cba8c74e908237cdd520b1d05, type: 3}
 --- !u!1 &794119641
 GameObject:
   m_ObjectHideFlags: 0
