@@ -13,19 +13,13 @@ public class TitleScreenUI : MonoBehaviour
         Time.timeScale = 1f;
 
         if (playButton != null)
-            playButton.onClick.AddListener(GoToStage1);
+            playButton.onClick.AddListener(GoToLobby);
 
         if (lobbyButton != null)
             lobbyButton.onClick.AddListener(GoToLobby);
     }
 
-    void GoToStage1()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("Andrew_Scene");
-    }
-
-    void GoToLobby()
+    public void GoToLobby()
     {
         Time.timeScale = 1f;
 
