@@ -56,6 +56,9 @@ public class Snowball : MonoBehaviour
 
         // Block re-firing until this snowball leaves the scene (same as Moat pattern)
         WeaponManager.Instance?.SetCooldown(WEAPON_NAME, true);
+
+        if (GetComponent<TrailEmitter>() == null)
+            gameObject.AddComponent<TrailEmitter>();
     }
 
     void Update()

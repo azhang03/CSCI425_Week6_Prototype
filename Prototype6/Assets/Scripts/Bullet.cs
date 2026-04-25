@@ -8,6 +8,9 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         Destroy(gameObject, lifetime);
+
+        if (GetComponent<TrailEmitter>() == null)
+            gameObject.AddComponent<TrailEmitter>();
     }
 
 //    private void OnCollisionEnter2D(Collision2D collision)

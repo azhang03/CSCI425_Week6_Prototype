@@ -21,6 +21,10 @@ public class Shooting : MonoBehaviour
 
     public AudioManager audioManager;
 
+    [Header("Juice")]
+    [Tooltip("Optional. Arcade-style scale pop triggered whenever a weapon fires. Auto-resolved from this GameObject if left empty.")]
+    public ShootPunch shootPunch;
+
     private const float DIAG = 0.7071068f;
 
     private static readonly Vector2[] Cardinals = {
@@ -32,6 +36,21 @@ public class Shooting : MonoBehaviour
         new Vector2( DIAG,  DIAG), new Vector2( DIAG, -DIAG),
         new Vector2(-DIAG,  DIAG), new Vector2(-DIAG, -DIAG),
     };
+
+    void Awake()
+    {
+        if (shootPunch == null)
+            shootPunch = GetComponent<ShootPunch>();
+
+        if (shootPunch == null)
+            shootPunch = gameObject.AddComponent<ShootPunch>();
+    }
+
+    void TriggerShootPunch()
+    {
+        if (shootPunch != null)
+            shootPunch.Punch();
+    }
 
     void Update()
     {
@@ -120,10 +139,12 @@ public class Shooting : MonoBehaviour
         {
             case WeaponType.Area:
                 FireArea(entry);
+                TriggerShootPunch();
                 break;
 
             case WeaponType.Line:
                 FireLine(entry);
+                TriggerShootPunch();
                 break;
         }
     }
@@ -150,6 +171,8 @@ public class Shooting : MonoBehaviour
             if (ind != null)
                 Destroy(ind);
         }
+
+        TriggerShootPunch();
 
         foreach (var dir in directions)
             FireProjectile(entry, dir);

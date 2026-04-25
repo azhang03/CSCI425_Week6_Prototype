@@ -50,6 +50,10 @@ public class Shield : MonoBehaviour
         currentHP -= dmg;
         if (currentHP <= 0)
         {
+            if (spriteRenderer == null)
+                spriteRenderer = GetComponent<SpriteRenderer>();
+            if (spriteRenderer != null)
+                DeathParticles.Spawn(spriteRenderer, forceSquare: true);
             Destroy(gameObject);
             return true;
         }

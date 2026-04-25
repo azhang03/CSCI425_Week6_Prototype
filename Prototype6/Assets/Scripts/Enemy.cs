@@ -26,12 +26,28 @@ public class Enemy : MonoBehaviour
     public float shakeDuration = 0.2f;
     public float shakeMagnitude = 0.25f;
 
+    [Header("Death Camera Shake")]
+    public float deathShakeDuration  = 0.18f;
+    public float deathShakeMagnitude = 0.35f;
+
+    [Header("Breathing")]
+    [Tooltip("Fractional scale amplitude of the breathing sine wave. 0.1 = ±10%.")]
+    public float breathAmount = 0.1f;
+    [Tooltip("Angular speed of the breathing sine wave (radians/sec). 10π ≈ 31.416 = 0.2s per cycle.")]
+    public float breathSpeed = 10f * Mathf.PI;
+    [Tooltip("When damaged, sprite dims to this fraction of original brightness on each breath peak.")]
+    [Range(0f, 1f)]
+    public float damagedDimFactor = 0.6f;
+
     private int currentHP;
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
     private Coroutine flashRoutine;
     private Coroutine reactionRoutine;
     private bool deathRegistered;
+
+    private Vector3 baseScale;
+    private float breathPhaseOffset;
 
     private MonoBehaviour[] attachedBehaviours;
 
@@ -46,6 +62,40 @@ public class Enemy : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         originalColor = spriteRenderer.color;
         audioManager = FindAnyObjectByType<AudioManager>();
+
+        baseScale = transform.localScale;
+        // Random phase so a wave of enemies doesn't breathe in lockstep.
+        breathPhaseOffset = Random.Range(0f, Mathf.PI * 2f);
+    }
+
+    void Update()
+    {
+        float sineWave = Mathf.Sin(Time.time * breathSpeed + breathPhaseOffset);
+
+        float s = 1f + sineWave * breathAmount;
+        transform.localScale = baseScale * s;
+
+        // Damaged enemies pulse darker in sync with the breath. Skip while a hit-flash is
+        // playing so we don't fight that coroutine for control of the sprite color.
+        if (spriteRenderer != null && flashRoutine == null)
+        {
+            if (currentHP < maxHitPoints && currentHP > 0)
+            {
+                // Map sine [-1, +1] -> brightness [1.0, damagedDimFactor]: darkest at peak inhale.
+                float halfRange = (1f - damagedDimFactor) * 0.5f;
+                float midpoint  = 1f - halfRange;
+                float brightness = midpoint - halfRange * sineWave;
+                spriteRenderer.color = new Color(
+                    originalColor.r * brightness,
+                    originalColor.g * brightness,
+                    originalColor.b * brightness,
+                    originalColor.a);
+            }
+            else
+            {
+                spriteRenderer.color = originalColor;
+            }
+        }
     }
 
     public void SetSpeedMultiplier(float multiplier)
@@ -97,6 +147,11 @@ public class Enemy : MonoBehaviour
         if (currentHP <= 0)
         {
             audioManager.PlayEnemyDie();
+
+            if (spriteRenderer != null)
+                DeathParticles.Spawn(spriteRenderer);
+
+            CameraShake.Shake(deathShakeDuration, deathShakeMagnitude);
 
             RegisterDeath();
 

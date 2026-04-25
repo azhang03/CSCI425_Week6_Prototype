@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -36,10 +37,21 @@ public class StageSelectUI : MonoBehaviour
     public Sprite lockedOverlaySprite;
     public float sideScale = 0.88f;
     public float centerScale = 1.0f;
+    public float hoverScaleMultiplier = 1.1f;
     public List<StageArtMapping> stageArt = new List<StageArtMapping>();
+
+    [Header("Rotation Animation")]
+    public float rotationDuration = 0.4f;
+    public AnimationCurve rotationEasing = new AnimationCurve(
+        new Keyframe(0f, 0f, 0f, 0f),
+        new Keyframe(1f, 1f, 0f, 0f)
+    );
+
+    private bool isRotating;
 
     [Header("Buttons")]
     public Button playButton;
+    public Button shopButton;
     public Button leftArrowButton;
     public Button rightArrowButton;
 
@@ -99,6 +111,12 @@ public class StageSelectUI : MonoBehaviour
             var dimmer = rightRecordButton.gameObject.AddComponent<HoverDimmer>();
             dimmer.target = rightRecordImage;
         }
+
+        EnsureHoverScaler(leftRecordButton);
+        EnsureHoverScaler(centerRecordButton);
+        EnsureHoverScaler(rightRecordButton);
+        EnsureHoverScaler(playButton);
+        EnsureHoverScaler(shopButton);
 
         RefreshDisplay();
     }
@@ -195,16 +213,229 @@ public class StageSelectUI : MonoBehaviour
 
     void NavigateRight()
     {
-        int nextIndex = (currentIndex + 1) % allStages.Count;
-        currentIndex = nextIndex;
-        RefreshDisplay();
+        if (isRotating) return;
+        if (allStages == null || allStages.Count == 0) return;
+        if (HasCarousel() && allStages.Count > 1)
+        {
+            StartCoroutine(AnimateRotation(1));
+        }
+        else
+        {
+            currentIndex = (currentIndex + 1) % allStages.Count;
+            RefreshDisplay();
+        }
     }
 
     void NavigateLeft()
     {
-        int prevIndex = (currentIndex - 1 + allStages.Count) % allStages.Count;
-        currentIndex = prevIndex;
+        if (isRotating) return;
+        if (allStages == null || allStages.Count == 0) return;
+        if (HasCarousel() && allStages.Count > 1)
+        {
+            StartCoroutine(AnimateRotation(-1));
+        }
+        else
+        {
+            currentIndex = (currentIndex - 1 + allStages.Count) % allStages.Count;
+            RefreshDisplay();
+        }
+    }
+
+    IEnumerator AnimateRotation(int direction)
+    {
+        isRotating = true;
+        int count = allStages.Count;
+
+        RectTransform leftRT = leftRecordButton.GetComponent<RectTransform>();
+        RectTransform centerRT = centerRecordButton.GetComponent<RectTransform>();
+        RectTransform rightRT = rightRecordButton.GetComponent<RectTransform>();
+
+        Transform parent = centerRT.parent;
+        Vector3 posL = leftRT.position;
+        Vector3 posC = centerRT.position;
+        Vector3 posR = rightRT.position;
+
+        int oldLeft = (currentIndex - 1 + count) % count;
+        int oldCenter = currentIndex;
+        int oldRight = (currentIndex + 1) % count;
+
+        StageData outgoingStage;
+        StageData currentToOuterStage;
+        StageData outerToCenterStage;
+        StageData incomingStage;
+        Vector3 outerPos;
+        Vector3 oppositeOuterPos;
+        Vector3 movingToCenterStart;
+
+        if (direction == 1)
+        {
+            outgoingStage = allStages[oldLeft];
+            currentToOuterStage = allStages[oldCenter];
+            outerToCenterStage = allStages[oldRight];
+            incomingStage = allStages[(currentIndex + 2) % count];
+            outerPos = posL;
+            oppositeOuterPos = posR;
+            movingToCenterStart = posR;
+        }
+        else
+        {
+            outgoingStage = allStages[oldRight];
+            currentToOuterStage = allStages[oldCenter];
+            outerToCenterStage = allStages[oldLeft];
+            incomingStage = allStages[(currentIndex - 2 + count) % count];
+            outerPos = posR;
+            oppositeOuterPos = posL;
+            movingToCenterStart = posL;
+        }
+
+        Vector3 outgoingStart = (direction == 1) ? posL : posR;
+
+        leftRecordButton.gameObject.SetActive(false);
+        centerRecordButton.gameObject.SetActive(false);
+        rightRecordButton.gameObject.SetActive(false);
+        if (leftLockOverlay != null) leftLockOverlay.gameObject.SetActive(false);
+        if (centerLockOverlay != null) centerLockOverlay.gameObject.SetActive(false);
+        if (rightLockOverlay != null) rightLockOverlay.gameObject.SetActive(false);
+        if (centerCornerImage != null) centerCornerImage.gameObject.SetActive(false);
+
+        RectTransform outerRT = (direction == 1) ? leftRT : rightRT;
+        RectTransform oppositeOuterRT = (direction == 1) ? rightRT : leftRT;
+
+        Vector2 centerSize = centerRT.rect.size;
+        Vector2 outerSize = outerRT.rect.size;
+        Vector2 oppositeOuterSize = oppositeOuterRT.rect.size;
+
+        // Outgoing/incoming stay at side state the whole animation; moving cards interpolate
+        // BOTH sizeDelta and localScale so the visible size transitions smoothly between
+        // center-state and side-state along the easing curve.
+        GameObject outgoingCard = CreateRotationCard(outerSize, parent, outgoingStage, IsLocked(outgoingStage));
+        GameObject incomingCard = CreateRotationCard(oppositeOuterSize, parent, incomingStage, IsLocked(incomingStage));
+        GameObject movingToOuterCard = CreateRotationCard(centerSize, parent, currentToOuterStage, IsLocked(currentToOuterStage));
+        GameObject movingToCenterCard = CreateRotationCard(oppositeOuterSize, parent, outerToCenterStage, IsLocked(outerToCenterStage));
+
+        outgoingCard.transform.position = outgoingStart;
+        incomingCard.transform.position = posC;
+        movingToOuterCard.transform.position = posC;
+        movingToCenterCard.transform.position = movingToCenterStart;
+
+        SetCardScale(outgoingCard, sideScale);
+        SetCardScale(incomingCard, sideScale);
+        SetCardScale(movingToOuterCard, centerScale);
+        SetCardScale(movingToCenterCard, sideScale);
+
+        // Sibling order (later = on top): outgoing back, incoming back, then movingToOuter, movingToCenter front.
+        // SetSiblingIndex(parent.childCount - 1) places at the END (top); call in desired back→front order.
+        outgoingCard.transform.SetSiblingIndex(parent.childCount - 1);
+        incomingCard.transform.SetSiblingIndex(parent.childCount - 1);
+        movingToOuterCard.transform.SetSiblingIndex(parent.childCount - 1);
+        movingToCenterCard.transform.SetSiblingIndex(parent.childCount - 1);
+
+        float elapsed = 0f;
+        while (elapsed < rotationDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float t = Mathf.Clamp01(elapsed / rotationDuration);
+            float eased = rotationEasing.Evaluate(t);
+
+            outgoingCard.transform.position = Vector3.LerpUnclamped(outgoingStart, posC, eased);
+            SetCardAlpha(outgoingCard, 1f - eased);
+
+            incomingCard.transform.position = Vector3.LerpUnclamped(posC, oppositeOuterPos, eased);
+            SetCardAlpha(incomingCard, eased);
+
+            movingToOuterCard.transform.position = Vector3.LerpUnclamped(posC, outerPos, eased);
+            SetCardSize(movingToOuterCard, Vector2.LerpUnclamped(centerSize, outerSize, eased));
+            SetCardScale(movingToOuterCard, Mathf.LerpUnclamped(centerScale, sideScale, eased));
+
+            movingToCenterCard.transform.position = Vector3.LerpUnclamped(movingToCenterStart, posC, eased);
+            SetCardSize(movingToCenterCard, Vector2.LerpUnclamped(oppositeOuterSize, centerSize, eased));
+            SetCardScale(movingToCenterCard, Mathf.LerpUnclamped(sideScale, centerScale, eased));
+
+            yield return null;
+        }
+
+        Destroy(outgoingCard);
+        Destroy(incomingCard);
+        Destroy(movingToOuterCard);
+        Destroy(movingToCenterCard);
+
+        currentIndex = (currentIndex + direction + count) % count;
+
         RefreshDisplay();
+
+        leftRecordButton.gameObject.SetActive(true);
+        centerRecordButton.gameObject.SetActive(true);
+        rightRecordButton.gameObject.SetActive(true);
+        if (leftLockOverlay != null) leftLockOverlay.gameObject.SetActive(true);
+        if (centerLockOverlay != null) centerLockOverlay.gameObject.SetActive(true);
+        if (rightLockOverlay != null) rightLockOverlay.gameObject.SetActive(true);
+        if (centerCornerImage != null) centerCornerImage.gameObject.SetActive(true);
+
+        isRotating = false;
+    }
+
+    GameObject CreateRotationCard(Vector2 size, Transform parent, StageData stage, bool locked)
+    {
+        GameObject go = new GameObject("RotationCard", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+        RectTransform rt = (RectTransform)go.transform;
+        rt.SetParent(parent, false);
+
+        // Point-center anchors so sizeDelta is the literal size, independent of parent rect.
+        rt.anchorMin = new Vector2(0.5f, 0.5f);
+        rt.anchorMax = new Vector2(0.5f, 0.5f);
+        rt.pivot = new Vector2(0.5f, 0.5f);
+        rt.sizeDelta = size;
+
+        Image img = go.GetComponent<Image>();
+        if (TryGetMapping(stage.stageNumber, out StageArtMapping mapping) && mapping.recordSprite != null)
+            img.sprite = mapping.recordSprite;
+        img.preserveAspect = true;
+        img.raycastTarget = false;
+
+        if (locked && lockedOverlaySprite != null)
+        {
+            GameObject lockGO = new GameObject("LockOverlay", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+            RectTransform lockRT = (RectTransform)lockGO.transform;
+            lockRT.SetParent(rt, false);
+            // Stretch to fill the card so the overlay scales/moves with it.
+            lockRT.anchorMin = Vector2.zero;
+            lockRT.anchorMax = Vector2.one;
+            lockRT.pivot = new Vector2(0.5f, 0.5f);
+            lockRT.sizeDelta = Vector2.zero;
+            lockRT.anchoredPosition = Vector2.zero;
+
+            Image lockImg = lockGO.GetComponent<Image>();
+            lockImg.sprite = lockedOverlaySprite;
+            lockImg.preserveAspect = true;
+            lockImg.raycastTarget = false;
+        }
+
+        return go;
+    }
+
+    bool IsLocked(StageData stage)
+    {
+        return stage != null && !StageProgressData.IsUnlocked(stage.stageNumber);
+    }
+
+    void SetCardSize(GameObject card, Vector2 size)
+    {
+        RectTransform rt = card.GetComponent<RectTransform>();
+        if (rt != null) rt.sizeDelta = size;
+    }
+
+    void SetCardAlpha(GameObject card, float a)
+    {
+        Image img = card.GetComponent<Image>();
+        if (img == null) return;
+        Color c = img.color;
+        c.a = Mathf.Clamp01(a);
+        img.color = c;
+    }
+
+    void SetCardScale(GameObject card, float scale)
+    {
+        card.transform.localScale = new Vector3(scale, scale, 1f);
     }
 
     public void HoverLeftRecord()
@@ -299,7 +530,21 @@ public class StageSelectUI : MonoBehaviour
         }
 
         if (recordButton != null)
-            recordButton.transform.localScale = Vector3.one * scale;
+        {
+            HoverScaler scaler = recordButton.GetComponent<HoverScaler>();
+            if (scaler != null)
+                scaler.SetBaseScale(scale);
+            else
+                recordButton.transform.localScale = Vector3.one * scale;
+        }
+    }
+
+    void EnsureHoverScaler(Button btn)
+    {
+        if (btn == null) return;
+        HoverScaler scaler = btn.GetComponent<HoverScaler>();
+        if (scaler == null) scaler = btn.gameObject.AddComponent<HoverScaler>();
+        scaler.hoverMultiplier = hoverScaleMultiplier;
     }
 
     bool TryGetMapping(int stageNumber, out StageArtMapping mapping)

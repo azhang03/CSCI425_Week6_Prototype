@@ -28,6 +28,9 @@ public class Projectile : MonoBehaviour
     {
         Destroy(gameObject, lifetime);
         AddGlow();
+
+        if (GetComponent<TrailEmitter>() == null)
+            gameObject.AddComponent<TrailEmitter>();
     }
 
     void Update()
