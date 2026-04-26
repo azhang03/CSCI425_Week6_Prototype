@@ -15,24 +15,48 @@ MonoBehaviour:
   stageName: The Gauntlet
   stageNumber: 4
   spawnIntervals:
-  - 4
-  - 4
-  - 4
-  - 4.5
-  - 3
-  enemiesPerWave:
-  - 6
-  - 6
-  - 9
-  - 15
-  - 12
-  enemySpeedMultipliers:
   - 1
   - 2
+  - 10
+  - 10
+  - 4
+  - 15
   - 2
-  - 2.5
-  - 2.5
-  burstSizes: 0100000001000000010000000100000001000000
+  - 3
+  - 6
+  - 4
+  - 3
+  - 1
+  - 2
+  enemiesPerWave:
+  - 10
+  - 10
+  - 10
+  - 10
+  - 48
+  - 1
+  - 10
+  - 20
+  - 48
+  - 48
+  - 10
+  - 12
+  - 30
+  enemySpeedMultipliers:
+  - 1
+  - 1.3
+  - 0.7
+  - 0.7
+  - 0.6
+  - 3
+  - 2
+  - 2
+  - 1.5
+  - 1.5
+  - 3
+  - 4
+  - 1.5
+  burstSizes: 01000000010000000a0000000a0000000c0000000100000002000000020000000c0000001800000001000000020000001e000000
   enemyRoster:
   - name: 'SpiralEnemy '
     prefab: {fileID: 864394925426953404, guid: c919020ba51382e4b8ef9102bb0dd8e3, type: 3}
