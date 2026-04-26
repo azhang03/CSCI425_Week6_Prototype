@@ -18,6 +18,7 @@ public class Shooting : MonoBehaviour
     public float fireballConeHalfAngleDeg = 10f;
 
     private float fireTimer;
+    private float baseFireInterval;
 
     public AudioManager audioManager;
 
@@ -44,6 +45,8 @@ public class Shooting : MonoBehaviour
 
         if (shootPunch == null)
             shootPunch = gameObject.AddComponent<ShootPunch>();
+
+        baseFireInterval = fireInterval;
     }
 
     void TriggerShootPunch()
@@ -253,6 +256,9 @@ public class Shooting : MonoBehaviour
             moat.duration = weapon.duration + entry.bonusDuration;
             moat.radius = weapon.radius + entry.bonusRadius;
             moat.weaponName = weapon.weaponName;
+
+            if (baseFireInterval > 0f)
+                moat.tickInterval *= fireInterval / baseFireInterval;
         }
 
         WeaponManager.Instance.SetCooldown(weapon.weaponName, true);
