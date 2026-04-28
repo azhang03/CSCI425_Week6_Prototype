@@ -145,6 +145,11 @@ public class StageSelectUI : MonoBehaviour
             CurrencyManager.AddCoins(10);
             CoinTrackerUI.Instance?.Refresh();
         }
+
+        if (Keyboard.current.leftArrowKey.wasPressedThisFrame)
+            NavigateLeft();
+        if (Keyboard.current.rightArrowKey.wasPressedThisFrame)
+            NavigateRight();
     }
 
     void RefreshDisplay()

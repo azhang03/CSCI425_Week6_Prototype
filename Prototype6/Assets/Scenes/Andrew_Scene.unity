@@ -680,6 +680,7 @@ MonoBehaviour:
   heartColor: {r: 0.9, g: 0.15, b: 0.2, a: 1}
   emptyHeartColor: {r: 0.3, g: 0.3, b: 0.3, a: 0.6}
   heartFontSize: 28
+  heartBurstCount: 20
 --- !u!114 &1125794154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5601,6 +5602,7 @@ MonoBehaviour:
   spawnOffset: 0.5
   fireballConeHalfAngleDeg: 10
   audioManager: {fileID: 670264515}
+  shootPunch: {fileID: 0}
 --- !u!114 &1308610330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6237,8 +6239,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4287072135
+  m_fontColor: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -6889,8 +6891,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68693ea9f4d3e4a4b906c8df6c480d64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::A_XPBar
-  fillImage: {fileID: 1612120984}
-  label: {fileID: 1374918156}
+  segmentFills: []
+  autoGenerate: 1
+  segmentsContainer: {fileID: 0}
+  hideExistingChildren: 1
+  segmentCount: 5
+  matchSegmentsToMaxXP: 1
+  segmentSpacing: 4
+  segmentFillColor: {r: 1, g: 0.78, b: 0.16, a: 1}
+  segmentBackgroundColor: {r: 0.55, g: 0.57, b: 0.62, a: 1}
+  segmentSprite: {fileID: 0}
+  taperHeights: 1
+  leftSegmentHeight: 28
+  rightSegmentHeight: 20
+  legacyFillImage: {fileID: 0}
+  legacyLabel: {fileID: 0}
+  additionalHideOnAwake: []
+  tiltRoot: {fileID: 0}
+  tiltDegrees: 6
+  punchScale: 1.45
+  punchInTime: 0.06
+  punchOutTime: 0.18
+  fillTime: 0.14
+  flashOnFill: 1
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  shakeOnFill: 1
+  fillShakeMagnitude: 4
+  fillShakeDuration: 0.18
+  levelUpShakeMagnitude: 14
+  levelUpShakeDuration: 0.45
+  shatterOnLevelUp: 1
+  shatterParticlesPerSegment: 14
+  emptyShatterColor: {r: 0.7, g: 0.72, b: 0.78, a: 1}
 --- !u!1001 &4310778267533751989
 PrefabInstance:
   m_ObjectHideFlags: 0
