@@ -92,6 +92,14 @@ public class Snowball : MonoBehaviour
         }
         else if (other.CompareTag("Obstacle"))
         {
+            Shield shield = other.GetComponent<Shield>();
+            if (shield != null)
+            {
+                int damage = Mathf.Max(1, Mathf.RoundToInt(baseDamage * transform.localScale.x));
+                shield.TakeHit(damage);
+                return;
+            }
+
             Destroy(gameObject);
         }
     }
